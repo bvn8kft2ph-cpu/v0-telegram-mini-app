@@ -136,6 +136,8 @@ const i18n = {
     emptyOrders: "עוד אין הזמנות",
     emptyOrdersCta: "לגלות מוצרים",
     emptyFavorites: "עוד אין מועדפים",
+    favoritesReminder: "עדיין בסל הלב שלך",
+    addToCartReminder: "הוסיפי לסל ותהני מיופי מושלם",
     // Order details
     orderDetails: "פרטי הזמנה",
     orderProducts: "מוצרים",
@@ -234,6 +236,8 @@ const i18n = {
     emptyOrders: "Пока нет заказов",
     emptyOrdersCta: "Открыть каталог",
     emptyFavorites: "Пока нет избранного",
+    favoritesReminder: "Ждут в избранном",
+    addToCartReminder: "Добавьте в корзину и насладитесь красотой",
     // Order details
     orderDetails: "Детали заказа",
     orderProducts: "Товары",
@@ -705,6 +709,8 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [expandedOrders, setExpandedOrders] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<typeof orders[0] | null>(null);
+  const [favorites, setFavorites] = useState<number[]>([1, 4, 7]); // Mock favorites - product IDs
+  const [expandedFavorites, setExpandedFavorites] = useState(false);
   const [consents, setConsents] = useState({
     orders: true,
     procedures: true,
@@ -1580,6 +1586,79 @@ export default function App() {
       color: c.text,
       fontWeight: 400,
     },
+    // Favorites styles
+    favoriteItem: {
+      display: "flex",
+      alignItems: "center",
+      gap: 14,
+      padding: "16px 0",
+      borderBottom: `1px solid ${c.border}`,
+    },
+    favoriteImage: (brand: string) => ({
+      width: 56,
+      height: 56,
+      borderRadius: 14,
+      background: brandGradients[theme][brand as keyof typeof brandGradients.light] || brandGradients[theme]["Dermalosophy"],
+      flexShrink: 0,
+    }),
+    favoriteInfo: {
+      flex: 1,
+      minWidth: 0,
+    },
+    favoriteName: {
+      fontSize: 14,
+      fontWeight: 500,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      marginBottom: 4,
+      whiteSpace: "nowrap" as const,
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+    },
+    favoritePrice: {
+      fontSize: 14,
+      fontWeight: 600,
+      color: c.accent,
+      fontFamily: "'Inter', sans-serif",
+    },
+    favoriteAddBtn: {
+      padding: "10px 16px",
+      borderRadius: 12,
+      backgroundColor: c.accent,
+      color: "#FFF",
+      border: "none",
+      cursor: "pointer",
+      fontSize: 12,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      whiteSpace: "nowrap" as const,
+      transition: "all 0.2s ease",
+    },
+    favoriteReminder: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      padding: "14px 16px",
+      backgroundColor: theme === "light" ? `${c.accent}08` : `${c.accent}15`,
+      borderRadius: 14,
+      marginTop: 16,
+    },
+    favoriteReminderIcon: {
+      width: 36,
+      height: 36,
+      borderRadius: 10,
+      backgroundColor: `${c.accent}20`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+    },
+    favoriteReminderText: {
+      fontSize: 13,
+      color: c.textSecondary,
+      fontFamily: "'Heebo', sans-serif",
+      lineHeight: 1.5,
+    },
     // Order Detail Modal
     orderDetailOverlay: {
       position: "fixed" as const,
@@ -2354,15 +2433,85 @@ export default function App() {
         ))}
       </div>
 
-      {/* Favorites */}
-      <div style={styles.ordersSection}>
-        <div style={styles.ordersHeader}>
-          <span style={styles.ordersTitle}>
-            <Icons.Heart size={20} color={c.text} />
-            {t.favorites}
-          </span>
+        {/* Favorites */}
+        <div style={styles.ordersSection}>
+          <div 
+            style={styles.ordersHeader}
+            onClick={() => setExpandedFavorites(!expandedFavorites)}
+          >
+            <span style={styles.ordersTitle}>
+              <Icons.Heart size={20} color={c.text} filled={favorites.length > 0} />
+              {t.favorites}
+              {favorites.length > 0 && (
+                <span style={{
+                  marginInlineStart: 8,
+                  fontSize: 12,
+                  color: c.textMuted,
+                  fontWeight: 400,
+                }}>
+                  ({favorites.length})
+                </span>
+              )}
+            </span>
+            <div style={{
+              transform: expandedFavorites ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}>
+              <Icons.ChevronDown size={20} color={c.textMuted} />
+            </div>
+          </div>
+          
+          {expandedFavorites && favorites.length > 0 && (
+            <>
+              {favorites.map((productId) => {
+                const product = products.find(p => p.id === productId);
+                if (!product) return null;
+                return (
+                  <div key={productId} style={styles.favoriteItem}>
+                    <div style={styles.favoriteImage(product.brand)} />
+                    <div style={styles.favoriteInfo}>
+                      <p style={styles.favoriteName}>
+                        {lang === "he" ? product.name_he : product.name_ru}
+                      </p>
+                      <span style={styles.favoritePrice}>{"\u20AA"}{product.price}</span>
+                    </div>
+                    <button 
+                      style={styles.favoriteAddBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(productId);
+                      }}
+                    >
+                      {t.addToCart}
+                    </button>
+                  </div>
+                );
+              })}
+              
+              {/* Soft reminder */}
+              <div style={styles.favoriteReminder}>
+                <div style={styles.favoriteReminderIcon}>
+                  <Icons.Heart size={18} color={c.accent} filled />
+                </div>
+                <p style={styles.favoriteReminderText}>
+                  {t.addToCartReminder}
+                </p>
+              </div>
+            </>
+          )}
+          
+          {expandedFavorites && favorites.length === 0 && (
+            <div style={{
+              padding: "24px 0",
+              textAlign: "center",
+              color: c.textMuted,
+              fontSize: 14,
+              fontFamily: "'Heebo', sans-serif",
+            }}>
+              {t.emptyFavorites}
+            </div>
+          )}
         </div>
-      </div>
 
       {/* Settings */}
       <h2 style={{ ...styles.sectionTitle, marginTop: 36 }}>{t.settings}</h2>
