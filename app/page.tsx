@@ -395,7 +395,7 @@ const services = [
     duration: 60,
     price: 350,
     desc_he: "טיפול מקיף לניקוי עמוק של העור, חילוץ ראשים שחורים והזנה",
-    desc_ru: "Комплексный уход для глубокого очищения кожи, экстракция и питание",
+    desc_ru: "Комплексный уход для глубокого очищения кожи, экстракц��я и питание",
     gradient: "linear-gradient(145deg, #E8DDD4 0%, #D4C4B0 50%, #C4A77D 100%)",
   },
   {
@@ -485,168 +485,166 @@ const orders = [
 ];
 
 // ─────────────────────────────────────────────────
-// ICONS (SVG) - Redesigned for clarity
+// ICONS (SVG) - Premium Luxury Design
+// Thin strokes, elegant curves, refined details
 // ─────────────────────────────────────────────────
 
 const Icons = {
+  // Shopping bag - elegant tote silhouette
   Cart: ({ size = 24, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <path d="M16 10a4 4 0 0 1-8 0" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M5 7.5C5 6.67 5.67 6 6.5 6h11c.83 0 1.5.67 1.5 1.5V19c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V7.5z" stroke={color} strokeWidth="1.2"/>
+      <path d="M8 6V5a4 4 0 1 1 8 0v1" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
     </svg>
   ),
+  // Sun - refined rays
   Sun: ({ size = 24, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
     </svg>
   ),
+  // Moon - elegant crescent
   Moon: ({ size = 24, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M20.5 12.5c0 4.7-3.8 8.5-8.5 8.5-3.4 0-6.4-2-7.8-5 .6.1 1.2.2 1.8.2 4.7 0 8.5-3.8 8.5-8.5 0-.6-.1-1.2-.2-1.8 3 1.4 5 4.4 5 7.8v-.2z" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
-  // Catalog - Grid icon (Витрина)
+  // Catalog - elegant grid with offset
   Catalog: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="3" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="3" y="3" width="8" height="8" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2"/>
+      <rect x="13" y="3" width="8" height="8" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2"/>
+      <rect x="3" y="13" width="8" height="8" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2"/>
+      <rect x="13" y="13" width="8" height="8" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2"/>
     </svg>
   ),
-  // Services - Calendar icon (Ритуалы)
+  // Services - spa lotus flower
   Services: ({ size = 22, color = "currentColor", filled = false }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" fill={filled ? color : "none"} />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-      <path d="M8 14h.01" />
-      <path d="M12 14h.01" />
-      <path d="M16 14h.01" />
-      <path d="M8 18h.01" />
-      <path d="M12 18h.01" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 21c-4-3-7-6.5-7-10.5C5 6.5 8 4 12 4s7 2.5 7 6.5c0 4-3 7.5-7 10.5z" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2"/>
+      <path d="M12 4c0 3.5-2 6-4.5 7.5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <path d="M12 4c0 3.5 2 6 4.5 7.5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <path d="M12 12v5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
+      <circle cx="12" cy="9" r="1.5" fill={filled ? "#FFF" : color}/>
     </svg>
   ),
-  // Brand - Heart icon (О нас)
+  // Brand - elegant diamond
   Brand: ({ size = 22, color = "currentColor", filled = false }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L3 9l9 13 9-13-9-7z" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2" strokeLinejoin="round"/>
+      <path d="M3 9h18" stroke={color} strokeWidth="1.2"/>
+      <path d="M7.5 9L12 22l4.5-13" stroke={color} strokeWidth="1.2" strokeLinejoin="round"/>
+      <path d="M7.5 9L12 2l4.5 7" stroke={color} strokeWidth="1.2" strokeLinejoin="round"/>
     </svg>
   ),
-  // Profile - User silhouette (Кабинет)
+  // Profile - refined silhouette
   Profile: ({ size = 22, color = "currentColor", filled = false }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="8" r="4" fill={filled ? color : "none"} />
-      <path d="M20 21c0-4-4-6-8-6s-8 2-8 6" fill={filled ? color : "none"} />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="8" r="3.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2"/>
+      <path d="M19 20c0-3.5-3.1-6-7-6s-7 2.5-7 6" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
     </svg>
   ),
+  // Close - elegant X
   Close: ({ size = 24, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
     </svg>
   ),
+  // Arrow right - refined
   ArrowRight: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14M13 5l7 7-7 7"/>
     </svg>
   ),
+  // Check - elegant curve
   Check: ({ size = 16, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 12l6 6L20 6"/>
     </svg>
   ),
+  // Heart - refined curves
   Heart: ({ size = 20, color = "currentColor", filled = false }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : "none"}>
+      <path d="M12 21C12 21 4 14.5 4 9c0-2.5 2-4.5 4.5-4.5 1.5 0 2.9.8 3.5 2 .6-1.2 2-2 3.5-2C18 4.5 20 6.5 20 9c0 5.5-8 12-8 12z" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
+  // Chevrons - refined angles
   ChevronDown: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="6 9 12 15 18 9" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 9l6 6 6-6"/>
     </svg>
   ),
   ChevronRight: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="9 18 15 12 9 6" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 6l6 6-6 6"/>
     </svg>
   ),
+  // Package - elegant box
   Package: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="16.5" y1="9.4" x2="7.5" y2="4.21" />
-      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-      <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-      <line x1="12" y1="22.08" x2="12" y2="12" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2l8 4v8l-8 4-8-4V6l8-4z"/>
+      <path d="M12 10v8M4 6l8 4 8-4"/>
     </svg>
   ),
+  // Truck - refined delivery
   Truck: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="1" y="3" width="15" height="13" rx="2" />
-      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-      <circle cx="5.5" cy="18.5" r="2.5" />
-      <circle cx="18.5" cy="18.5" r="2.5" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 5h12v11H2zM14 9h4l3 3v4h-7V9z"/>
+      <circle cx="6" cy="18" r="2"/>
+      <circle cx="18" cy="18" r="2"/>
     </svg>
   ),
+  // FileText - elegant document
   FileText: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="16" y1="13" x2="8" y2="13" />
-      <line x1="16" y1="17" x2="8" y2="17" />
-      <line x1="10" y1="9" x2="8" y2="9" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+      <path d="M14 2v6h6M8 13h8M8 17h5"/>
     </svg>
   ),
+  // Copy - refined layers
   Copy: ({ size = 16, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="9" y="9" width="13" height="13" rx="2" />
-      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="9" width="12" height="12" rx="2"/>
+      <path d="M5 15V5a2 2 0 0 1 2-2h10"/>
     </svg>
   ),
+  // Arrow left - refined
   ArrowLeft: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="19" y1="12" x2="5" y2="12" />
-      <polyline points="12 19 5 12 12 5" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 12H5M11 19l-7-7 7-7"/>
     </svg>
   ),
+  // Download - elegant
   Download: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="7 10 12 15 17 10" />
-      <line x1="12" y1="15" x2="12" y2="3" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3v12M7 10l5 5 5-5M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/>
     </svg>
   ),
+  // Clock - refined circle
   Clock: ({ size = 16, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 6v6l4 2"/>
     </svg>
   ),
+  // MapPin - elegant drop
   MapPin: ({ size = 16, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-      <circle cx="12" cy="10" r="3" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 21c-4-4-7-7.5-7-11a7 7 0 1 1 14 0c0 3.5-3 7-7 11z"/>
+      <circle cx="12" cy="10" r="2.5"/>
     </svg>
   ),
+  // Send - refined paper plane
   Send: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="22" y1="2" x2="11" y2="13" />
-      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
     </svg>
   ),
+  // Sparkle - elegant 4-point star
   Sparkle: ({ size = 16, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
-      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 2l2 7h7l-5.5 4.5 2 7L12 16l-5.5 4.5 2-7L3 9h7l2-7z" fill={color}/>
     </svg>
   ),
   // WhatsApp icon
@@ -695,7 +693,7 @@ const Icons = {
   ),
 };
 
-// ─────────────────────────────────────────────────
+// ──────────���──────────────────────────────────────
 // MAIN APP COMPONENT
 // ─────────────────────────────────────────────────
 
