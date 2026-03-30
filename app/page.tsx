@@ -136,6 +136,12 @@ const i18n = {
     emptyOrders: "עוד אין הזמנות",
     emptyOrdersCta: "לגלות מוצרים",
     emptyFavorites: "עוד אין מועדפים",
+    // Consents
+    consents: "הסכמות",
+    consentOrders: "עיבוד הזמנות ונתונים",
+    consentProcedures: "טיפולים קוסמטיים",
+    consentMarketing: "דיוור שיווקי",
+    consentPhotos: "פרסום תמונות לפני/אחרי",
   },
   ru: {
     // Navigation - clearer labels
@@ -213,6 +219,12 @@ const i18n = {
     emptyOrders: "Пока нет заказов",
     emptyOrdersCta: "Открыть каталог",
     emptyFavorites: "Пока нет избранного",
+    // Consents
+    consents: "Согласия",
+    consentOrders: "Обработка заказов и данных",
+    consentProcedures: "Косметологические процедуры",
+    consentMarketing: "Маркетинговые рассылки",
+    consentPhotos: "Публикация фото до/после",
   },
 };
 
@@ -557,13 +569,23 @@ const Icons = {
       <path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="#fff"/>
     </svg>
   ),
-  // Apple Maps icon
+  // Apple Maps icon (authentic style)
   AppleMaps: ({ size = 24 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="2" y="2" width="20" height="20" rx="4" fill="#34C759"/>
-      <path d="M12 6L8 18h2l1-3h2l1 3h2L12 6zm0 4l1 3h-2l1-3z" fill="#fff"/>
-      <path d="M6 8l6 2-6 6V8z" fill="#fff" opacity="0.8"/>
-      <path d="M18 16l-6-2 6-6v8z" fill="#fff" opacity="0.6"/>
+      <defs>
+        <linearGradient id="appleMapsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#52D367"/>
+          <stop offset="50%" stopColor="#3AC653"/>
+          <stop offset="100%" stopColor="#5AC770"/>
+        </linearGradient>
+      </defs>
+      <rect x="2" y="2" width="20" height="20" rx="4.5" fill="url(#appleMapsGrad)"/>
+      <path d="M7 8.5L12 6l5 2.5v7L12 18l-5-2.5v-7z" fill="#F5F5DC" fillOpacity="0.9"/>
+      <path d="M7 8.5L12 11l5-2.5" stroke="#E8C547" strokeWidth="0.5" fill="none"/>
+      <path d="M12 11v7" stroke="#E8C547" strokeWidth="0.5"/>
+      <path d="M9 9.5l2-1 2 1v4l-2 1-2-1v-4z" fill="#FFD93D" fillOpacity="0.6"/>
+      <circle cx="12" cy="10" r="1.5" fill="#FF3B30"/>
+      <path d="M12 10l1.5 3" stroke="#FF3B30" strokeWidth="1.2" strokeLinecap="round"/>
     </svg>
   ),
 };
@@ -581,6 +603,12 @@ export default function App() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [expandedOrders, setExpandedOrders] = useState(false);
+  const [consents, setConsents] = useState({
+    orders: true,
+    procedures: true,
+    marketing: false,
+    photos: false,
+  });
   const [mounted, setMounted] = useState(false);
   const [animateIn, setAnimateIn] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -1382,6 +1410,55 @@ export default function App() {
       boxShadow: "0 8px 32px rgba(37, 211, 102, 0.35)",
       transition: "all 0.3s ease",
     },
+    // Consents block styles
+    consentsCard: {
+      backgroundColor: c.cardSolid,
+      borderRadius: 20,
+      padding: 24,
+      marginTop: 24,
+      border: `1px solid ${c.border}`,
+      boxShadow: c.shadow,
+    },
+    consentsTitle: {
+      fontSize: 18,
+      fontWeight: 600,
+      fontFamily: "'Cormorant Garamond', serif",
+      color: c.text,
+      marginBottom: 20,
+    },
+    consentItem: {
+      display: "flex",
+      alignItems: "center",
+      gap: 14,
+      padding: "14px 0",
+      borderBottom: `1px solid ${c.border}`,
+      cursor: "pointer",
+    },
+    consentItemLast: {
+      display: "flex",
+      alignItems: "center",
+      gap: 14,
+      padding: "14px 0",
+      cursor: "pointer",
+    },
+    consentCheckbox: (checked: boolean) => ({
+      width: 22,
+      height: 22,
+      borderRadius: 6,
+      backgroundColor: checked ? c.accent : "transparent",
+      border: checked ? "none" : `2px solid ${c.borderStrong}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      transition: "all 0.2s ease",
+    }),
+    consentLabel: {
+      fontSize: 15,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      fontWeight: 400,
+    },
     // Profile
     welcomeCard: {
       padding: "36px 28px",
@@ -1963,27 +2040,72 @@ export default function App() {
       <div style={styles.settingsItem}>
         <span style={styles.settingsLabel}>{t.theme}</span>
         <div style={styles.themeToggle}>
-          <button 
+          <button
             style={styles.themeBtn(theme === "light")}
             onClick={() => setTheme("light")}
           >
             {t.light}
           </button>
-          <button 
+          <button
             style={styles.themeBtn(theme === "dark")}
             onClick={() => setTheme("dark")}
           >
-            {t.dark}
-          </button>
-        </div>
+          {t.dark}
+        </button>
       </div>
+    </div>
 
-      <div style={{ 
-        textAlign: "center", 
-        marginTop: 44, 
-        fontSize: 13, 
-        color: c.textMuted,
-        fontFamily: "'Heebo', sans-serif",
+    {/* Consents Block */}
+    <div style={styles.consentsCard}>
+      <h3 style={styles.consentsTitle}>{t.consents}</h3>
+      
+      <div 
+        style={styles.consentItem}
+        onClick={() => setConsents(prev => ({ ...prev, orders: !prev.orders }))}
+      >
+        <div style={styles.consentCheckbox(consents.orders)}>
+          {consents.orders && <Icons.Check size={14} color="#FFF" />}
+        </div>
+        <span style={styles.consentLabel}>{t.consentOrders}</span>
+      </div>
+      
+      <div 
+        style={styles.consentItem}
+        onClick={() => setConsents(prev => ({ ...prev, procedures: !prev.procedures }))}
+      >
+        <div style={styles.consentCheckbox(consents.procedures)}>
+          {consents.procedures && <Icons.Check size={14} color="#FFF" />}
+        </div>
+        <span style={styles.consentLabel}>{t.consentProcedures}</span>
+      </div>
+      
+      <div 
+        style={styles.consentItem}
+        onClick={() => setConsents(prev => ({ ...prev, marketing: !prev.marketing }))}
+      >
+        <div style={styles.consentCheckbox(consents.marketing)}>
+          {consents.marketing && <Icons.Check size={14} color="#FFF" />}
+        </div>
+        <span style={styles.consentLabel}>{t.consentMarketing}</span>
+      </div>
+      
+      <div 
+        style={styles.consentItemLast}
+        onClick={() => setConsents(prev => ({ ...prev, photos: !prev.photos }))}
+      >
+        <div style={styles.consentCheckbox(consents.photos)}>
+          {consents.photos && <Icons.Check size={14} color="#FFF" />}
+        </div>
+        <span style={styles.consentLabel}>{t.consentPhotos}</span>
+      </div>
+    </div>
+
+    <div style={{
+      textAlign: "center",
+      marginTop: 44,
+      fontSize: 13,
+      color: c.textMuted,
+      fontFamily: "'Heebo', sans-serif",
       }}>
         <p>{t.help} · v2.0.0</p>
       </div>
