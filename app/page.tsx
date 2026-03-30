@@ -159,6 +159,46 @@ const i18n = {
     consentProcedures: "טיפולים קוסמטיים",
     consentMarketing: "דיוור שיווקי",
     consentPhotos: "פרסום תמונות לפני/אחרי",
+    // Cart & Checkout
+    cartTitle: "סל קניות",
+    cartEmpty: "הסל ריק",
+    cartBackToCatalog: "חזרה לקטלוג",
+    cartClearAll: "נקה סל",
+    checkout: "לתשלום",
+    checkoutTitle: "השלמת הזמנה",
+    back: "חזרה",
+    // Customer data
+    customerData: "פרטי הלקוח",
+    firstName: "שם פרטי",
+    lastName: "שם משפחה",
+    email: "אימייל",
+    phone: "טלפון",
+    // Delivery
+    delivery: "משלוח",
+    deliveryBoxit: "לוקר Boxit",
+    deliveryCourier: "שליח עד הדלת",
+    deliveryPickup: "איסוף עצמי",
+    freeDelivery: "חינם",
+    freeFrom: "חינם מ-",
+    // Promo
+    promoCode: "קוד הנחה",
+    promoPlaceholder: "קוד",
+    promoApply: "החל",
+    // Summary
+    subtotal: "סכום ביניים",
+    deliveryFee: "משלוח",
+    total: "סה״כ",
+    inclVat: "כולל מע״מ 18%",
+    // Payment
+    paymentCount: "מספר תשלומים",
+    singlePayment: "תשלום אחד (ללא פריסה)",
+    payments: "תשלומים",
+    // Terms
+    termsAgree: "אני מסכים/ה לתנאי השימוש ולמדיניות הפרטיות",
+    proceedToPayment: "המשך לתשלום",
+    termsOfUse: "תנאי שימוש",
+    privacyPolicy: "מדיניות פרטיות",
+    accessibility: "נגישות",
   },
   ru: {
     // Navigation - clearer labels
@@ -259,6 +299,46 @@ const i18n = {
     consentProcedures: "Косметологические процедуры",
     consentMarketing: "Маркетинговые рассылки",
     consentPhotos: "Публикация фото до/после",
+    // Cart & Checkout
+    cartTitle: "Корзина",
+    cartEmpty: "Корзина пуста",
+    cartBackToCatalog: "Назад в каталог",
+    cartClearAll: "Очистить корзину",
+    checkout: "Оформить заказ",
+    checkoutTitle: "Оформление заказа",
+    back: "Назад",
+    // Customer data
+    customerData: "Данные покупателя",
+    firstName: "Имя",
+    lastName: "Фамилия",
+    email: "Email",
+    phone: "Телефон",
+    // Delivery
+    delivery: "Доставка",
+    deliveryBoxit: "Локер Boxit",
+    deliveryCourier: "Курьер HFD до двери",
+    deliveryPickup: "Самовывоз",
+    freeDelivery: "Бесплатно",
+    freeFrom: "бесплатно от",
+    // Promo
+    promoCode: "Промокод",
+    promoPlaceholder: "CODE",
+    promoApply: "Применить",
+    // Summary
+    subtotal: "Подытог",
+    deliveryFee: "Доставка",
+    total: "Итого",
+    inclVat: "включая НДС 18%",
+    // Payment
+    paymentCount: "Количество платежей",
+    singlePayment: "Один платёж (без рассрочки)",
+    payments: "платежей",
+    // Terms
+    termsAgree: "Я согласен(-на) с Условиями использования и Политикой конфиденциальности",
+    proceedToPayment: "Перейти к оплате",
+    termsOfUse: "Условия использования",
+    privacyPolicy: "Политика конфиденциальности",
+    accessibility: "Доступность",
   },
 };
 
@@ -395,7 +475,7 @@ const services = [
     duration: 60,
     price: 350,
     desc_he: "טיפול מקיף לניקוי עמוק של העור, חילוץ ראשים שחורים והזנה",
-    desc_ru: "Комплексный уход для глубокого очищения кожи, экстракц��я и питание",
+    desc_ru: "Комплексный уход для глубокого очищения кожи, экстракц����я и питание",
     gradient: "linear-gradient(145deg, #E8DDD4 0%, #D4C4B0 50%, #C4A77D 100%)",
   },
   {
@@ -647,6 +727,37 @@ const Icons = {
       <path d="M12 2l2 7h7l-5.5 4.5 2 7L12 16l-5.5 4.5 2-7L3 9h7l2-7z" fill={color}/>
     </svg>
   ),
+  // Minus - for quantity
+  Minus: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round">
+      <path d="M5 12h14"/>
+    </svg>
+  ),
+  // Plus - for quantity
+  Plus: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round">
+      <path d="M12 5v14M5 12h14"/>
+    </svg>
+  ),
+  // Trash - for remove item
+  Trash: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+    </svg>
+  ),
+  // Radio - circle for delivery options
+  Radio: ({ size = 20, color = "currentColor", filled = false }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.2"/>
+      {filled && <circle cx="12" cy="12" r="5" fill={color}/>}
+    </svg>
+  ),
+  // Select chevrons
+  SelectChevrons: ({ size = 16, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round">
+      <path d="M7 10l5-5 5 5M7 14l5 5 5-5"/>
+    </svg>
+  ),
   // WhatsApp icon
   WhatsApp: ({ size = 24 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -701,7 +812,23 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<"catalog" | "services" | "brand" | "profile">("catalog");
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [lang, setLang] = useState<"he" | "ru">("ru");
-  const [cart, setCart] = useState<number[]>([]);
+  const [cart, setCart] = useState<{productId: number; quantity: number}[]>([
+    { productId: 2, quantity: 1 }, // Mock initial cart
+  ]);
+  const [showCart, setShowCart] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [selectedDelivery, setSelectedDelivery] = useState<"boxit" | "courier" | "pickup">("boxit");
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
+  const [paymentCount, setPaymentCount] = useState(1);
+  const [showPaymentDropdown, setShowPaymentDropdown] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [customerData, setCustomerData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -745,7 +872,62 @@ export default function App() {
   }, [activeSection]);
 
   const addToCart = (productId: number) => {
-    setCart((prev) => [...prev, productId]);
+    setCart((prev) => {
+      const existing = prev.find(item => item.productId === productId);
+      if (existing) {
+        return prev.map(item => 
+          item.productId === productId 
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { productId, quantity: 1 }];
+    });
+  };
+
+  const updateCartQuantity = (productId: number, delta: number) => {
+    setCart((prev) => {
+      return prev.map(item => {
+        if (item.productId === productId) {
+          const newQty = item.quantity + delta;
+          return newQty > 0 ? { ...item, quantity: newQty } : item;
+        }
+        return item;
+      }).filter(item => item.quantity > 0);
+    });
+  };
+
+  const removeFromCart = (productId: number) => {
+    setCart((prev) => prev.filter(item => item.productId !== productId));
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  // Calculate cart totals
+  const cartItems = cart.map(item => {
+    const product = products.find(p => p.id === item.productId);
+    return product ? { ...item, product } : null;
+  }).filter(Boolean) as { productId: number; quantity: number; product: typeof products[0] }[];
+
+  const cartSubtotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+  
+  const deliveryPrices = {
+    boxit: cartSubtotal >= 300 ? 0 : 25,
+    courier: cartSubtotal >= 400 ? 0 : 35,
+    pickup: 0,
+  };
+  
+  const deliveryFee = deliveryPrices[selectedDelivery];
+  const promoDiscount = appliedPromo ? Math.round(cartSubtotal * 0.1) : 0;
+  const cartTotal = cartSubtotal - promoDiscount + deliveryFee;
+  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const applyPromoCode = () => {
+    if (promoCode.toUpperCase() === "WELCOME10" || promoCode.toUpperCase() === "SILVER15") {
+      setAppliedPromo(promoCode.toUpperCase());
+    }
   };
 
   // Handle brand selection - reset category when brand changes
@@ -1656,6 +1838,398 @@ export default function App() {
       color: c.textSecondary,
       fontFamily: "'Heebo', sans-serif",
       lineHeight: 1.5,
+    },
+    // Cart & Checkout styles
+    cartOverlay: {
+      position: "fixed" as const,
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.6)",
+      zIndex: 300,
+      display: "flex",
+      alignItems: "flex-end",
+      justifyContent: "center",
+      animation: "fadeIn 0.3s ease",
+    },
+    cartModal: {
+      width: "100%",
+      maxWidth: 430,
+      maxHeight: "95vh",
+      backgroundColor: c.bg,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column" as const,
+      animation: "slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    cartHeader: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "20px 24px",
+      borderBottom: `1px solid ${c.border}`,
+      backgroundColor: c.cardSolid,
+    },
+    cartTitle: {
+      fontSize: 20,
+      fontWeight: 600,
+      fontFamily: "'Cormorant Garamond', serif",
+      color: c.text,
+    },
+    cartContent: {
+      flex: 1,
+      overflowY: "auto" as const,
+      padding: "0 24px",
+    },
+    cartItem: {
+      display: "flex",
+      alignItems: "flex-start",
+      gap: 16,
+      padding: "20px 0",
+      borderBottom: `1px solid ${c.border}`,
+    },
+    cartItemImage: (brand: string) => ({
+      width: 80,
+      height: 80,
+      borderRadius: 12,
+      background: brandGradients[theme][brand as keyof typeof brandGradients.light] || brandGradients[theme]["Dermalosophy"],
+      flexShrink: 0,
+    }),
+    cartItemInfo: {
+      flex: 1,
+      minWidth: 0,
+    },
+    cartItemName: {
+      fontSize: 15,
+      fontWeight: 500,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      marginBottom: 4,
+      lineHeight: 1.4,
+    },
+    cartItemPrice: {
+      fontSize: 15,
+      fontWeight: 600,
+      color: c.accent,
+      fontFamily: "'Inter', sans-serif",
+    },
+    cartQuantity: {
+      display: "flex",
+      alignItems: "center",
+      gap: 0,
+      marginTop: 12,
+    },
+    cartQuantityBtn: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.accent,
+      border: "none",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#FFF",
+    },
+    cartQuantityValue: {
+      width: 40,
+      textAlign: "center" as const,
+      fontSize: 16,
+      fontWeight: 600,
+      fontFamily: "'Inter', sans-serif",
+      color: c.text,
+    },
+    cartFooter: {
+      padding: 24,
+      borderTop: `1px solid ${c.border}`,
+      backgroundColor: c.cardSolid,
+    },
+    cartTotalRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    cartTotalLabel: {
+      fontSize: 18,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+    },
+    cartTotalValue: {
+      fontSize: 24,
+      fontWeight: 700,
+      fontFamily: "'Inter', sans-serif",
+      color: c.accent,
+    },
+    cartCheckoutBtn: {
+      width: "100%",
+      padding: "18px 24px",
+      borderRadius: 16,
+      backgroundColor: c.accent,
+      color: "#FFF",
+      border: "none",
+      cursor: "pointer",
+      fontSize: 16,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      marginBottom: 12,
+    },
+    cartClearBtn: {
+      width: "100%",
+      padding: "14px 20px",
+      borderRadius: 12,
+      backgroundColor: "transparent",
+      color: c.textMuted,
+      border: "none",
+      cursor: "pointer",
+      fontSize: 14,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    cartBackBtn: {
+      width: "100%",
+      padding: "14px 20px",
+      borderRadius: 12,
+      backgroundColor: "transparent",
+      color: c.textSecondary,
+      border: "none",
+      cursor: "pointer",
+      fontSize: 14,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    // Checkout specific
+    checkoutBlock: {
+      backgroundColor: c.cardSolid,
+      borderRadius: 20,
+      padding: 24,
+      marginTop: 20,
+      border: `1px solid ${c.border}`,
+    },
+    checkoutBlockTitle: {
+      fontSize: 18,
+      fontWeight: 600,
+      fontFamily: "'Cormorant Garamond', serif",
+      color: c.accent,
+      marginBottom: 20,
+    },
+    checkoutInput: {
+      width: "100%",
+      padding: "16px 18px",
+      borderRadius: 14,
+      backgroundColor: theme === "light" ? "#FFF" : c.bgSecondary,
+      border: `1px solid ${c.borderStrong}`,
+      fontSize: 15,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      outline: "none",
+      marginBottom: 14,
+    },
+    checkoutInputRow: {
+      display: "flex",
+      gap: 14,
+    },
+    checkoutLabel: {
+      fontSize: 13,
+      fontWeight: 500,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.textSecondary,
+      marginBottom: 8,
+      display: "flex",
+      alignItems: "center",
+      gap: 4,
+    },
+    deliveryOption: (selected: boolean) => ({
+      display: "flex",
+      alignItems: "flex-start",
+      gap: 14,
+      padding: "18px 20px",
+      borderRadius: 16,
+      backgroundColor: selected ? `${c.accent}08` : "transparent",
+      border: `1.5px solid ${selected ? c.accent : c.borderStrong}`,
+      cursor: "pointer",
+      marginBottom: 12,
+      transition: "all 0.2s ease",
+    }),
+    deliveryOptionContent: {
+      flex: 1,
+    },
+    deliveryOptionTitle: {
+      fontSize: 15,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      marginBottom: 4,
+    },
+    deliveryOptionDesc: {
+      fontSize: 13,
+      color: c.textMuted,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    deliveryOptionPrice: {
+      fontSize: 15,
+      fontWeight: 600,
+      fontFamily: "'Inter', sans-serif",
+      color: c.accent,
+    },
+    promoRow: {
+      display: "flex",
+      gap: 12,
+    },
+    promoInput: {
+      flex: 1,
+      padding: "16px 18px",
+      borderRadius: 14,
+      backgroundColor: theme === "light" ? "#FFF" : c.bgSecondary,
+      border: `1px solid ${c.borderStrong}`,
+      fontSize: 15,
+      fontFamily: "'Inter', monospace",
+      color: c.text,
+      outline: "none",
+      textTransform: "uppercase" as const,
+    },
+    promoBtn: {
+      padding: "16px 24px",
+      borderRadius: 14,
+      backgroundColor: c.bgTertiary,
+      color: c.textSecondary,
+      border: "none",
+      cursor: "pointer",
+      fontSize: 14,
+      fontWeight: 500,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    summaryRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "14px 0",
+      borderBottom: `1px solid ${c.border}`,
+    },
+    summaryLabel: {
+      fontSize: 15,
+      color: c.textSecondary,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    summaryValue: {
+      fontSize: 15,
+      fontWeight: 500,
+      color: c.text,
+      fontFamily: "'Inter', sans-serif",
+    },
+    summaryTotal: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      padding: "18px 0 8px",
+    },
+    summaryTotalLabel: {
+      fontSize: 20,
+      fontWeight: 700,
+      fontFamily: "'Cormorant Garamond', serif",
+      color: c.text,
+    },
+    summaryTotalValue: {
+      fontSize: 28,
+      fontWeight: 700,
+      fontFamily: "'Inter', sans-serif",
+      color: c.accent,
+    },
+    summaryVat: {
+      fontSize: 12,
+      color: c.textMuted,
+      fontFamily: "'Heebo', sans-serif",
+      textAlign: "right" as const,
+    },
+    paymentSelect: {
+      width: "100%",
+      padding: "16px 18px",
+      borderRadius: 14,
+      backgroundColor: theme === "light" ? "#FFF" : c.bgSecondary,
+      border: `1px solid ${c.accent}`,
+      fontSize: 15,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      position: "relative" as const,
+    },
+    paymentDropdown: {
+      position: "absolute" as const,
+      top: "100%",
+      left: 0,
+      right: 0,
+      backgroundColor: c.cardSolid,
+      borderRadius: 14,
+      border: `1px solid ${c.border}`,
+      boxShadow: c.shadowDeep,
+      marginTop: 8,
+      zIndex: 10,
+      maxHeight: 300,
+      overflowY: "auto" as const,
+    },
+    paymentOption: (selected: boolean) => ({
+      padding: "14px 18px",
+      fontSize: 15,
+      fontFamily: "'Heebo', sans-serif",
+      color: selected ? c.accent : c.text,
+      backgroundColor: selected ? `${c.accent}10` : "transparent",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+    }),
+    termsRow: {
+      display: "flex",
+      alignItems: "flex-start",
+      gap: 14,
+      marginTop: 24,
+    },
+    termsCheckbox: (checked: boolean) => ({
+      width: 24,
+      height: 24,
+      borderRadius: 6,
+      backgroundColor: checked ? c.accent : "transparent",
+      border: checked ? "none" : `2px solid ${c.borderStrong}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      cursor: "pointer",
+      marginTop: 2,
+    }),
+    termsText: {
+      fontSize: 14,
+      color: c.textSecondary,
+      fontFamily: "'Heebo', sans-serif",
+      lineHeight: 1.5,
+    },
+    checkoutSubmitBtn: (enabled: boolean) => ({
+      width: "100%",
+      padding: "20px 24px",
+      borderRadius: 16,
+      backgroundColor: enabled ? c.accent : c.bgTertiary,
+      color: enabled ? "#FFF" : c.textMuted,
+      border: "none",
+      cursor: enabled ? "pointer" : "not-allowed",
+      fontSize: 16,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      marginTop: 24,
+    }),
+    checkoutFooter: {
+      display: "flex",
+      justifyContent: "center",
+      gap: 8,
+      marginTop: 32,
+      flexWrap: "wrap" as const,
+    },
+    checkoutFooterLink: {
+      fontSize: 12,
+      color: c.textMuted,
+      fontFamily: "'Heebo', sans-serif",
+      textDecoration: "none",
     },
     // Order Detail Modal
     orderDetailOverlay: {
@@ -2784,12 +3358,15 @@ export default function App() {
                 <Icons.Sun size={20} color={c.text} />
               )}
             </button>
-            <button style={{ ...styles.iconBtn, position: "relative" }}>
-              <Icons.Cart size={20} color={c.text} />
-              {cart.length > 0 && (
-                <span style={styles.cartBadge}>{cart.length}</span>
-              )}
-            </button>
+        <button 
+          style={{ ...styles.iconBtn, position: "relative" }}
+          onClick={() => setShowCart(true)}
+        >
+          <Icons.Cart size={20} color={c.text} />
+          {cartItemCount > 0 && (
+            <span style={styles.cartBadge}>{cartItemCount}</span>
+          )}
+        </button>
           </div>
         </header>
 
@@ -2834,6 +3411,322 @@ export default function App() {
 
       {/* Product Modal */}
       {selectedProduct && renderProductModal()}
+
+      {/* Cart Modal */}
+      {showCart && !showCheckout && (
+        <div style={styles.cartOverlay} onClick={() => setShowCart(false)}>
+          <div style={styles.cartModal} onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div style={styles.cartHeader}>
+              <span style={styles.cartTitle}>{t.cartTitle}</span>
+              <button 
+                style={{ background: "none", border: "none", cursor: "pointer", padding: 8 }}
+                onClick={() => setShowCart(false)}
+              >
+                <Icons.Close size={24} color={c.text} />
+              </button>
+            </div>
+
+            {/* Cart Content */}
+            <div style={styles.cartContent}>
+              {cartItems.length === 0 ? (
+                <div style={{ padding: "60px 0", textAlign: "center" }}>
+                  <Icons.Cart size={48} color={c.textMuted} />
+                  <p style={{ marginTop: 16, fontSize: 16, color: c.textMuted, fontFamily: "'Heebo', sans-serif" }}>
+                    {t.cartEmpty}
+                  </p>
+                </div>
+              ) : (
+                cartItems.map((item) => (
+                  <div key={item.productId} style={styles.cartItem}>
+                    <div style={styles.cartItemImage(item.product.brand)} />
+                    <div style={styles.cartItemInfo}>
+                      <p style={styles.cartItemName}>
+                        {lang === "he" ? item.product.name_he : item.product.name_ru}
+                      </p>
+                      <span style={styles.cartItemPrice}>
+                        {"\u20AA"}{(item.product.price * item.quantity).toFixed(2)}
+                      </span>
+                      <div style={styles.cartQuantity}>
+                        <button 
+                          style={styles.cartQuantityBtn}
+                          onClick={() => updateCartQuantity(item.productId, -1)}
+                        >
+                          <Icons.Minus size={16} color="#FFF" />
+                        </button>
+                        <span style={styles.cartQuantityValue}>{item.quantity}</span>
+                        <button 
+                          style={styles.cartQuantityBtn}
+                          onClick={() => updateCartQuantity(item.productId, 1)}
+                        >
+                          <Icons.Plus size={16} color="#FFF" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Footer */}
+            {cartItems.length > 0 && (
+              <div style={styles.cartFooter}>
+                <div style={styles.cartTotalRow}>
+                  <span style={styles.cartTotalLabel}>{t.total}:</span>
+                  <span style={styles.cartTotalValue}>{"\u20AA"}{cartSubtotal}</span>
+                </div>
+                <button 
+                  style={styles.cartCheckoutBtn}
+                  onClick={() => setShowCheckout(true)}
+                >
+                  {t.checkout}
+                </button>
+                <button 
+                  style={styles.cartClearBtn}
+                  onClick={clearCart}
+                >
+                  {t.cartClearAll}
+                </button>
+                <button 
+                  style={styles.cartBackBtn}
+                  onClick={() => { setShowCart(false); setActiveSection("catalog"); }}
+                >
+                  {t.cartBackToCatalog}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Checkout Modal */}
+      {showCart && showCheckout && (
+        <div style={styles.cartOverlay} onClick={() => { setShowCheckout(false); setShowCart(false); }}>
+          <div style={styles.cartModal} onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div style={styles.cartHeader}>
+              <button 
+                style={{ background: "none", border: "none", cursor: "pointer", padding: 8, display: "flex", alignItems: "center", gap: 8 }}
+                onClick={() => setShowCheckout(false)}
+              >
+                <Icons.ArrowLeft size={20} color={c.text} />
+                <span style={{ fontSize: 14, color: c.textSecondary, fontFamily: "'Heebo', sans-serif" }}>{t.back}</span>
+              </button>
+              <button 
+                style={{ background: "none", border: "none", cursor: "pointer", padding: 8 }}
+                onClick={() => { setShowCheckout(false); setShowCart(false); }}
+              >
+                <Icons.Close size={24} color={c.text} />
+              </button>
+            </div>
+
+            {/* Checkout Content */}
+            <div style={styles.cartContent}>
+              <h1 style={{ fontSize: 26, fontWeight: 600, fontFamily: "'Cormorant Garamond', serif", color: c.text, marginTop: 8, marginBottom: 8 }}>
+                {t.checkoutTitle}
+              </h1>
+
+              {/* Customer Data Block */}
+              <div style={styles.checkoutBlock}>
+                <h2 style={styles.checkoutBlockTitle}>{t.customerData}</h2>
+                <div style={styles.checkoutInputRow}>
+                  <div style={{ flex: 1 }}>
+                    <label style={styles.checkoutLabel}>{t.firstName} <span style={{ color: c.accent }}>*</span></label>
+                    <input 
+                      type="text"
+                      style={styles.checkoutInput}
+                      value={customerData.firstName}
+                      onChange={(e) => setCustomerData(prev => ({ ...prev, firstName: e.target.value }))}
+                    />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <label style={styles.checkoutLabel}>{t.lastName} <span style={{ color: c.accent }}>*</span></label>
+                    <input 
+                      type="text"
+                      style={styles.checkoutInput}
+                      value={customerData.lastName}
+                      onChange={(e) => setCustomerData(prev => ({ ...prev, lastName: e.target.value }))}
+                    />
+                  </div>
+                </div>
+                <label style={styles.checkoutLabel}>{t.email} <span style={{ color: c.accent }}>*</span></label>
+                <input 
+                  type="email"
+                  style={styles.checkoutInput}
+                  placeholder="user@example.com"
+                  value={customerData.email}
+                  onChange={(e) => setCustomerData(prev => ({ ...prev, email: e.target.value }))}
+                />
+                <label style={styles.checkoutLabel}>{t.phone} <span style={{ color: c.accent }}>*</span></label>
+                <input 
+                  type="tel"
+                  style={{ ...styles.checkoutInput, marginBottom: 0 }}
+                  placeholder="05X-XXX-XXXX"
+                  value={customerData.phone}
+                  onChange={(e) => setCustomerData(prev => ({ ...prev, phone: e.target.value }))}
+                />
+              </div>
+
+              {/* Delivery Block */}
+              <div style={styles.checkoutBlock}>
+                <h2 style={styles.checkoutBlockTitle}>{t.delivery}</h2>
+                
+                <div 
+                  style={styles.deliveryOption(selectedDelivery === "boxit")}
+                  onClick={() => setSelectedDelivery("boxit")}
+                >
+                  <Icons.Radio size={20} color={c.accent} filled={selectedDelivery === "boxit"} />
+                  <div style={styles.deliveryOptionContent}>
+                    <p style={styles.deliveryOptionTitle}>{t.deliveryBoxit}</p>
+                    <p style={styles.deliveryOptionDesc}>
+                      {"\u20AA"}25 ({t.freeFrom}{"\u20AA"}300)
+                    </p>
+                  </div>
+                  <span style={styles.deliveryOptionPrice}>
+                    {deliveryPrices.boxit === 0 ? t.freeDelivery : `${"\u20AA"}${deliveryPrices.boxit}`}
+                  </span>
+                </div>
+
+                <div 
+                  style={styles.deliveryOption(selectedDelivery === "courier")}
+                  onClick={() => setSelectedDelivery("courier")}
+                >
+                  <Icons.Radio size={20} color={c.accent} filled={selectedDelivery === "courier"} />
+                  <div style={styles.deliveryOptionContent}>
+                    <p style={styles.deliveryOptionTitle}>{t.deliveryCourier}</p>
+                    <p style={styles.deliveryOptionDesc}>
+                      {"\u20AA"}35 ({t.freeFrom}{"\u20AA"}400)
+                    </p>
+                  </div>
+                  <span style={styles.deliveryOptionPrice}>
+                    {deliveryPrices.courier === 0 ? t.freeDelivery : `${"\u20AA"}${deliveryPrices.courier}`}
+                  </span>
+                </div>
+
+                <div 
+                  style={styles.deliveryOption(selectedDelivery === "pickup")}
+                  onClick={() => setSelectedDelivery("pickup")}
+                >
+                  <Icons.Radio size={20} color={c.accent} filled={selectedDelivery === "pickup"} />
+                  <div style={styles.deliveryOptionContent}>
+                    <p style={styles.deliveryOptionTitle}>{t.deliveryPickup}</p>
+                    <p style={styles.deliveryOptionDesc}>{t.freeDelivery}</p>
+                  </div>
+                  <span style={styles.deliveryOptionPrice}>{t.freeDelivery}</span>
+                </div>
+              </div>
+
+              {/* Promo Code Block */}
+              <div style={styles.checkoutBlock}>
+                <h2 style={styles.checkoutBlockTitle}>{t.promoCode}</h2>
+                <div style={styles.promoRow}>
+                  <input 
+                    type="text"
+                    style={styles.promoInput}
+                    placeholder={t.promoPlaceholder}
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                  />
+                  <button style={styles.promoBtn} onClick={applyPromoCode}>
+                    {t.promoApply}
+                  </button>
+                </div>
+                {appliedPromo && (
+                  <p style={{ marginTop: 12, fontSize: 13, color: "#22C55E", fontFamily: "'Heebo', sans-serif" }}>
+                    {appliedPromo} - 10% {t.orderDiscount}
+                  </p>
+                )}
+              </div>
+
+              {/* Summary Block */}
+              <div style={styles.checkoutBlock}>
+                <div style={styles.summaryRow}>
+                  <span style={styles.summaryLabel}>{t.subtotal}</span>
+                  <span style={styles.summaryValue}>{"\u20AA"}{cartSubtotal}</span>
+                </div>
+                {promoDiscount > 0 && (
+                  <div style={styles.summaryRow}>
+                    <span style={{ ...styles.summaryLabel, color: "#22C55E" }}>{t.orderDiscount}</span>
+                    <span style={{ ...styles.summaryValue, color: "#22C55E" }}>-{"\u20AA"}{promoDiscount}</span>
+                  </div>
+                )}
+                <div style={styles.summaryRow}>
+                  <span style={styles.summaryLabel}>{t.deliveryFee}</span>
+                  <span style={{ ...styles.summaryValue, color: deliveryFee === 0 ? "#22C55E" : c.text }}>
+                    {deliveryFee === 0 ? t.freeDelivery : `${"\u20AA"}${deliveryFee}`}
+                  </span>
+                </div>
+                <div style={styles.summaryTotal}>
+                  <span style={styles.summaryTotalLabel}>{t.total}</span>
+                  <span style={styles.summaryTotalValue}>{"\u20AA"}{cartTotal}</span>
+                </div>
+                <p style={styles.summaryVat}>{t.inclVat}</p>
+              </div>
+
+              {/* Payment Block */}
+              <div style={styles.checkoutBlock}>
+                <h2 style={styles.checkoutBlockTitle}>{t.paymentCount}</h2>
+                <div style={{ position: "relative" }}>
+                  <div 
+                    style={styles.paymentSelect}
+                    onClick={() => setShowPaymentDropdown(!showPaymentDropdown)}
+                  >
+                    <span>
+                      {paymentCount === 1 ? t.singlePayment : `${paymentCount} ${t.payments}`}
+                    </span>
+                    <Icons.SelectChevrons size={16} color={c.textMuted} />
+                  </div>
+                  {showPaymentDropdown && (
+                    <div style={styles.paymentDropdown}>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
+                        <div 
+                          key={num}
+                          style={styles.paymentOption(paymentCount === num)}
+                          onClick={() => { setPaymentCount(num); setShowPaymentDropdown(false); }}
+                        >
+                          {paymentCount === num && <Icons.Check size={16} color={c.accent} />}
+                          {num === 1 ? t.singlePayment : `${num} ${t.payments}`}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Terms */}
+              <div style={styles.termsRow}>
+                <div 
+                  style={styles.termsCheckbox(termsAccepted)}
+                  onClick={() => setTermsAccepted(!termsAccepted)}
+                >
+                  {termsAccepted && <Icons.Check size={14} color="#FFF" />}
+                </div>
+                <p style={styles.termsText}>{t.termsAgree}</p>
+              </div>
+
+              {/* Submit Button */}
+              <button 
+                style={styles.checkoutSubmitBtn(termsAccepted)}
+                disabled={!termsAccepted}
+              >
+                {t.proceedToPayment}
+              </button>
+
+              {/* Footer Links */}
+              <div style={styles.checkoutFooter}>
+                <span style={styles.checkoutFooterLink}>{t.termsOfUse}</span>
+                <span style={{ color: c.textMuted }}>·</span>
+                <span style={styles.checkoutFooterLink}>{t.privacyPolicy}</span>
+                <span style={{ color: c.textMuted }}>·</span>
+                <span style={styles.checkoutFooterLink}>{t.accessibility}</span>
+              </div>
+              <p style={{ textAlign: "center", fontSize: 12, color: c.textMuted, marginTop: 16, fontFamily: "'Heebo', sans-serif" }}>
+                © 2026 Freger Cosmetics
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Order Detail Modal */}
       {selectedOrder && (
