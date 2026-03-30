@@ -106,6 +106,10 @@ const i18n = {
     brands: "מותגים",
     products: "מוצרים",
     contactOlga: "לשוחח עם אולגה",
+    whatsappOlga: "כתבי לי בווטסאפ",
+    openInWaze: "פתח ב-Waze",
+    openInGoogle: "פתח במפות גוגל",
+    openInApple: "פתח במפות אפל",
     location: "קריית גת",
     hours: "א׳-ה׳ 9:00-19:00",
     ourStory: "הסיפור שלנו",
@@ -179,6 +183,10 @@ const i18n = {
     brands: "бренда",
     products: "продуктов",
     contactOlga: "Написать Ольге",
+    whatsappOlga: "Написать в WhatsApp",
+    openInWaze: "Открыть в Waze",
+    openInGoogle: "Открыть в Google Maps",
+    openInApple: "Открыть в Apple Maps",
     location: "Кирьят-Гат",
     hours: "Вс-Чт 9:00-19:00",
     ourStory: "Наша история",
@@ -522,6 +530,40 @@ const Icons = {
   Sparkle: ({ size = 16, color = "currentColor" }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
       <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+    </svg>
+  ),
+  // WhatsApp icon
+  WhatsApp: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#25D366"/>
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.66 0-3.203-.506-4.485-1.371l-.256-.152-2.65.695.707-2.579-.168-.266A7.955 7.955 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" fill="#25D366"/>
+    </svg>
+  ),
+  // Waze icon (official style)
+  Waze: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 2C7.031 2 3 6.031 3 11c0 2.124.756 4.076 2 5.594V21l3.4-2.267A8.938 8.938 0 0012 20c4.969 0 9-4.031 9-9s-4.031-9-9-9z" fill="#33CCFF"/>
+      <circle cx="8.5" cy="10" r="1.5" fill="#000"/>
+      <circle cx="15.5" cy="10" r="1.5" fill="#000"/>
+      <path d="M8 14c0 0 1.5 2 4 2s4-2 4-2" stroke="#000" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  ),
+  // Google Maps icon
+  GoogleMaps: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
+      <circle cx="12" cy="9" r="2.5" fill="#fff"/>
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84L12 22l5.59-8.16C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7z" fill="#EA4335"/>
+      <path d="M12 6.5c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5-1.12-2.5-2.5-2.5z" fill="#fff"/>
+    </svg>
+  ),
+  // Apple Maps icon
+  AppleMaps: ({ size = 24 }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="#34C759"/>
+      <path d="M12 6L8 18h2l1-3h2l1 3h2L12 6zm0 4l1 3h-2l1-3z" fill="#fff"/>
+      <path d="M6 8l6 2-6 6V8z" fill="#fff" opacity="0.8"/>
+      <path d="M18 16l-6-2 6-6v8z" fill="#fff" opacity="0.6"/>
     </svg>
   ),
 };
@@ -1301,6 +1343,45 @@ export default function App() {
       color: c.textMuted,
       fontFamily: "'Heebo', sans-serif",
     },
+    mapLinksRow: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 16,
+      marginTop: 16,
+    },
+    mapLinkBtn: {
+      width: 48,
+      height: 48,
+      borderRadius: 14,
+      backgroundColor: theme === "light" ? "#FFF" : c.bgSecondary,
+      border: `1px solid ${c.border}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      transition: "all 0.25s ease",
+      boxShadow: c.shadow,
+    },
+    whatsappBtn: {
+      width: "100%",
+      padding: "16px 28px",
+      borderRadius: 16,
+      backgroundColor: "#25D366",
+      color: "#FFF",
+      border: "none",
+      cursor: "pointer",
+      fontSize: 16,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 12,
+      marginTop: 32,
+      boxShadow: "0 8px 32px rgba(37, 211, 102, 0.35)",
+      transition: "all 0.3s ease",
+    },
     // Profile
     welcomeCard: {
       padding: "36px 28px",
@@ -1744,6 +1825,48 @@ export default function App() {
             {t.hours}
           </div>
         </div>
+
+        {/* Map Links */}
+        <div style={styles.mapLinksRow}>
+          <a
+            href="https://waze.com/ul?ll=31.6086,34.7643&navigate=yes"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.mapLinkBtn}
+            title={t.openInWaze}
+          >
+            <Icons.Waze size={26} />
+          </a>
+          <a
+            href="https://maps.google.com/?q=31.6086,34.7643"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.mapLinkBtn}
+            title={t.openInGoogle}
+          >
+            <Icons.GoogleMaps size={26} />
+          </a>
+          <a
+            href="https://maps.apple.com/?ll=31.6086,34.7643"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.mapLinkBtn}
+            title={t.openInApple}
+          >
+            <Icons.AppleMaps size={26} />
+          </a>
+        </div>
+
+        {/* WhatsApp Link */}
+        <a
+          href="https://wa.me/972501234567?text=שלום%20אולגה"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ ...styles.whatsappBtn, textDecoration: "none" }}
+        >
+          <Icons.WhatsApp size={24} />
+          {t.whatsappOlga}
+        </a>
       </div>
     </div>
   );
