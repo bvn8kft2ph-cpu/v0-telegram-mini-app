@@ -62,10 +62,10 @@ const tokens = {
 const i18n = {
   he: {
     // Navigation - clearer labels
-    navCatalog: "קטלוג",
-    navServices: "שירותים",
-    navBrand: "המותג",
-    navProfile: "פרופיל",
+    navCatalog: "ויטרינה",
+    navServices: "ריטואלים",
+    navBrand: "עלינו",
+    navProfile: "קבינט",
     
     // Header
     cart: "סל קניות",
@@ -135,10 +135,10 @@ const i18n = {
   },
   ru: {
     // Navigation - clearer labels
-    navCatalog: "Каталог",
-    navServices: "Услуги",
-    navBrand: "Бренд",
-    navProfile: "Профиль",
+    navCatalog: "Витрина",
+    navServices: "Ритуалы",
+    navBrand: "О нас",
+    navProfile: "Кабинет",
     
     // Header
     cart: "Корзина",
@@ -212,6 +212,20 @@ const i18n = {
 // MOCK DATA
 // ─────────────────────────────────────────────────
 
+// Brand-specific gradient backgrounds
+const brandGradients = {
+  light: {
+    "Dermalosophy": "linear-gradient(145deg, #D4A574 0%, #C9986A 40%, #B8845A 100%)", // warm gold → sand
+    "ONmacabim": "linear-gradient(145deg, #A8A095 0%, #C4B8A8 50%, #E5DED5 100%)", // warm gray → beige
+    "Hikari": "linear-gradient(145deg, #8BA888 0%, #A8C4A0 50%, #C5E0C0 100%)", // sage green → mint
+  },
+  dark: {
+    "Dermalosophy": "linear-gradient(145deg, #8B6B48 0%, #7A5D3D 40%, #5C4530 100%)", // darkened gold
+    "ONmacabim": "linear-gradient(145deg, #5A5550 0%, #6B6358 50%, #7A7268 100%)", // darkened gray
+    "Hikari": "linear-gradient(145deg, #4A5E48 0%, #5A7358 50%, #6A8568 100%)", // darkened green
+  },
+};
+
 const products = [
   {
     id: 1,
@@ -220,7 +234,7 @@ const products = [
     brand: "Dermalosophy",
     category: "anti-age",
     price: 320,
-    image: "linear-gradient(145deg, #E8DDD4 0%, #D4C4B0 50%, #C9B8A0 100%)",
+    oldPrice: 380,
     desc_he: "סרום אנטי-אייג׳ מתקדם עם רטינול מיוצב",
     desc_ru: "Продвинутая anti-age сыворотка со стабилизированным ретинолом",
     ingredients: ["Retinol", "Vitamin E", "Squalane"],
@@ -233,7 +247,7 @@ const products = [
     brand: "ONmacabim",
     category: "hydration",
     price: 280,
-    image: "linear-gradient(145deg, #F5EBE0 0%, #E5D5C5 50%, #DBC8B5 100%)",
+    oldPrice: null,
     desc_he: "קרם עשיר להזנה עמוקה ושיקום מחסום העור",
     desc_ru: "Насыщенный крем для глубокого питания и восстановления барьера кожи",
     ingredients: ["Hyaluronic Acid", "Ceramides", "Shea Butter"],
@@ -246,7 +260,7 @@ const products = [
     brand: "Hikari",
     category: "cleansing",
     price: 145,
-    image: "linear-gradient(145deg, #E8F0EA 0%, #D0E0D5 50%, #C2D4C8 100%)",
+    oldPrice: null,
     desc_he: "ג׳ל ניקוי טבעי לעור רגיש",
     desc_ru: "Натуральный очищающий гель для чувствительной кожи",
     ingredients: ["Aloe Vera", "Green Tea", "Chamomile"],
@@ -259,7 +273,7 @@ const products = [
     brand: "Dermalosophy",
     category: "anti-age",
     price: 195,
-    image: "linear-gradient(145deg, #F8EDE2 0%, #EBD9C8 50%, #E0CCB8 100%)",
+    oldPrice: 240,
     desc_he: "מסכת פילינג עדינה עם AHA ו-BHA",
     desc_ru: "Мягкая пилинг-маска с AHA и BHA кислотами",
     ingredients: ["Glycolic Acid", "Salicylic Acid", "Niacinamide"],
@@ -272,7 +286,7 @@ const products = [
     brand: "ONmacabim",
     category: "anti-age",
     price: 260,
-    image: "linear-gradient(145deg, #F0E8E0 0%, #E0D0C4 50%, #D5C2B4 100%)",
+    oldPrice: null,
     desc_he: "קרם עיניים עשיר לטיפול בקמטוטים",
     desc_ru: "Насыщенный крем для глаз против морщин",
     ingredients: ["Peptides", "Caffeine", "Vitamin C"],
@@ -285,7 +299,7 @@ const products = [
     brand: "Hikari",
     category: "cleansing",
     price: 125,
-    image: "linear-gradient(145deg, #ECF2EE 0%, #D8E4DC 50%, #C8D8CE 100%)",
+    oldPrice: null,
     desc_he: "טונר טבעי לאיזון ה-pH של העור",
     desc_ru: "Натуральный тоник для баланса pH кожи",
     ingredients: ["Rose Water", "Witch Hazel", "Panthenol"],
@@ -298,7 +312,7 @@ const products = [
     brand: "Dermalosophy",
     category: "anti-age",
     price: 290,
-    image: "linear-gradient(145deg, #FFF8EC 0%, #FFE8CC 50%, #F8DCB8 100%)",
+    oldPrice: 350,
     desc_he: "סרום מבהיר עם ויטמין C יציב 15%",
     desc_ru: "Осветляющая сыворотка со стабильным витамином C 15%",
     ingredients: ["Vitamin C", "Ferulic Acid", "Vitamin E"],
@@ -311,7 +325,7 @@ const products = [
     brand: "Hikari",
     category: "hydration",
     price: 175,
-    image: "linear-gradient(145deg, #FAF2E8 0%, #EBD9C8 50%, #E0CDB8 100%)",
+    oldPrice: null,
     desc_he: "תערובת שמנים טבעיים להזנת העור",
     desc_ru: "Смесь натуральных масел для питания кожи",
     ingredients: ["Jojoba Oil", "Rosehip Oil", "Argan Oil"],
@@ -416,32 +430,36 @@ const Icons = {
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   ),
-  // Catalog - Grid of products
+  // Catalog - Grid icon (Витрина)
   Catalog: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="3" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="3" y="3" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
     </svg>
   ),
-  // Services - Spa/hands
+  // Services - Calendar icon (Ритуалы)
   Services: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22c5-3 9-7.5 9-12 0-3-2-6-5-6-2 0-3 1-4 3-1-2-2-3-4-3-3 0-5 3-5 6 0 4.5 4 9 9 12z" fill={filled ? color : "none"} />
-      <path d="M12 6v4" />
-      <path d="M10 8h4" />
+      <rect x="3" y="4" width="18" height="18" rx="2" fill={filled ? color : "none"} />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+      <path d="M8 14h.01" />
+      <path d="M12 14h.01" />
+      <path d="M16 14h.01" />
+      <path d="M8 18h.01" />
+      <path d="M12 18h.01" />
     </svg>
   ),
-  // Brand - Diamond/gem shape
+  // Brand - Heart icon (О нас)
   Brand: ({ size = 22, color = "currentColor", filled = false }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 3h12l4 6-10 12L2 9z" fill={filled ? color : "none"} />
-      <path d="M2 9h20" />
-      <path d="M12 3l-2 6 2 12 2-12-2-6" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </svg>
   ),
-  // Profile - User silhouette
+  // Profile - User silhouette (Кабинет)
   Profile: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="8" r="4" fill={filled ? color : "none"} />
@@ -611,12 +629,26 @@ export default function App() {
       transition: "background-color 0.6s ease",
     },
     logo: {
+      width: 42,
+      height: 42,
+      borderRadius: 21,
+      border: `2px solid ${c.accent}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      overflow: "hidden",
+    },
+    logoImage: {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover" as const,
+    },
+    logoPlaceholder: {
       fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 24,
-      fontWeight: 600,
-      letterSpacing: "0.12em",
-      color: c.text,
-      textTransform: "uppercase" as const,
+      fontSize: 22,
+      fontWeight: 500,
+      color: c.accent,
+      lineHeight: 1,
     },
     headerActions: {
       display: "flex",
@@ -693,19 +725,21 @@ export default function App() {
       height: 48,
       borderRadius: 24,
       display: "flex",
+      flexDirection: "column" as const,
       alignItems: "center",
       justifyContent: "center",
-      gap: 10,
-      padding: active ? "0 20px" : "0 14px",
+      gap: 2,
+      padding: "0 14px",
       backgroundColor: active ? c.accent : "transparent",
       border: "none",
       cursor: "pointer",
       color: active ? "#FFF" : c.textSecondary,
       transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
       fontFamily: "'Heebo', sans-serif",
-      fontSize: 13,
+      fontSize: 10,
       fontWeight: 500,
       boxShadow: active ? `0 4px 16px ${c.accent}40` : "none",
+      minWidth: 58,
     }),
     section: {
       padding: "28px 20px",
@@ -719,7 +753,24 @@ export default function App() {
       borderRadius: 0,
       overflow: "hidden",
       marginBottom: 32,
-      background: `linear-gradient(180deg, ${c.bgTertiary} 0%, ${c.bgSecondary} 100%)`,
+      background: theme === "light" 
+        ? `linear-gradient(160deg, #F5EBE0 0%, #E8D5C4 30%, ${c.accent}40 70%, #1F1A16 100%)`
+        : `linear-gradient(160deg, #2A2420 0%, #3A3028 30%, ${c.accent}30 70%, #0A0908 100%)`,
+    },
+    heroNoise: {
+      position: "absolute" as const,
+      inset: 0,
+      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+      opacity: 0.06,
+      mixBlendMode: "overlay" as const,
+    },
+    heroMesh: {
+      position: "absolute" as const,
+      inset: 0,
+      background: `
+        radial-gradient(ellipse 80% 50% at 20% 80%, ${c.accent}35 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 20%, ${theme === "light" ? "#D4A87440" : "#8B6B4830"} 0%, transparent 40%)
+      `,
     },
     heroContent: {
       position: "absolute" as const,
@@ -848,10 +899,10 @@ export default function App() {
       transform: animateIn ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
       transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`,
     }),
-    productImage: (gradient: string, large: boolean) => ({
+    productImage: (brand: string, large: boolean) => ({
       width: "100%",
       height: large ? 260 : 200,
-      background: gradient,
+      background: brandGradients[theme][brand as keyof typeof brandGradients.light] || brandGradients[theme]["Dermalosophy"],
       position: "relative" as const,
     }),
     productInfo: {
@@ -964,12 +1015,30 @@ export default function App() {
       zIndex: 10,
       backgroundColor: "transparent",
     },
-    modalImage: (gradient: string) => ({
+    modalImage: (brand: string) => ({
       width: "100%",
       height: 340,
-      background: gradient,
+      background: brandGradients[theme][brand as keyof typeof brandGradients.light] || brandGradients[theme]["Dermalosophy"],
       flexShrink: 0,
     }),
+    modalPrice: {
+      display: "flex",
+      alignItems: "baseline",
+      gap: 12,
+      marginBottom: 20,
+    },
+    modalPriceMain: {
+      fontSize: 32,
+      fontWeight: 700,
+      color: c.accent,
+      fontFamily: "'Inter', sans-serif",
+    },
+    modalPriceOld: {
+      fontSize: 18,
+      color: c.textMuted,
+      textDecoration: "line-through",
+      fontFamily: "'Inter', sans-serif",
+    },
     modalContent: {
       flex: 1,
       padding: "28px 24px",
@@ -1113,15 +1182,26 @@ export default function App() {
       width: 130,
       height: 130,
       borderRadius: 65,
-      background: `linear-gradient(145deg, ${c.accentLight} 0%, ${c.accent} 50%, ${c.accentDark} 100%)`,
       margin: "0 auto 24px",
+      position: "relative" as const,
+      overflow: "hidden",
+      boxShadow: `0 12px 40px ${c.accent}40, 0 0 0 3px ${c.accentLight}, 0 0 0 6px ${c.accent}30`,
+    },
+    avatarImage: {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover" as const,
+    },
+    avatarPlaceholder: {
+      width: "100%",
+      height: "100%",
+      background: `linear-gradient(145deg, ${c.accentLight} 0%, ${c.accent} 50%, ${c.accentDark} 100%)`,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       fontSize: 44,
       fontFamily: "'Cormorant Garamond', serif",
       color: "#FFF",
-      boxShadow: `0 12px 40px ${c.accent}40`,
       fontWeight: 300,
     },
     brandName: {
@@ -1389,65 +1469,47 @@ export default function App() {
 
   const renderCatalog = () => (
     <div>
-      {/* Hero */}
+      {/* Hero with atmospheric background */}
       <div style={styles.hero}>
-        {/* Glow effect */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: `radial-gradient(ellipse at ${isRTL ? "25%" : "75%"} 30%, ${c.accent}25 0%, transparent 55%)`,
-        }} />
-        {/* Secondary glow */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: `radial-gradient(ellipse at ${isRTL ? "75%" : "25%"} 70%, ${c.accentLight}15 0%, transparent 45%)`,
-        }} />
-        {/* Noise texture */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          opacity: 0.035,
-        }} />
+        {/* Gradient mesh background */}
+        <div style={styles.heroMesh} />
+        {/* Noise texture overlay */}
+        <div style={styles.heroNoise} />
+        {/* Content */}
         <div style={styles.heroContent}>
           <h1 style={styles.heroTitle}>{t.heroTitle}</h1>
           <p style={styles.heroSubtitle}>{t.heroSubtitle}</p>
         </div>
       </div>
 
-  <div style={styles.section}>
-        {/* Brand Selection */}
-        <div style={styles.filterSection}>
-          <p style={styles.filterLabel}>{t.selectBrand}</p>
-          <div style={styles.brandRow}>
+      <div style={styles.section}>
+        {/* Brand Filter Row - horizontal scroll pills */}
+        <div style={styles.brandRow}>
+          <button
+            style={styles.brandPill(selectedBrand === null)}
+            onClick={() => handleBrandSelect(null)}
+          >
+            {lang === "he" ? "הכל" : "Все"}
+          </button>
+          {brands.map((brand) => (
             <button
-              style={styles.brandPill(selectedBrand === null)}
-              onClick={() => handleBrandSelect(null)}
+              key={brand}
+              style={styles.brandPill(selectedBrand === brand)}
+              onClick={() => handleBrandSelect(brand)}
             >
-              {t.allBrands}
+              {brand}
             </button>
-            {brands.map((brand) => (
-              <button
-                key={brand}
-                style={styles.brandPill(selectedBrand === brand)}
-                onClick={() => handleBrandSelect(brand)}
-              >
-                {brand}
-              </button>
-            ))}
-          </div>
+          ))}
         </div>
 
-        {/* Category Selection */}
-        <div style={styles.filterSection}>
-          <p style={styles.filterLabel}>{t.selectCategory}</p>
-          <div style={styles.categoryRow}>
+        {/* Category Row - appears when brand is selected */}
+        {selectedBrand && (
+          <div style={{ ...styles.categoryRow, marginTop: 12 }}>
             <button
               style={styles.categoryPill(selectedCategory === null, false)}
               onClick={() => setSelectedCategory(null)}
             >
-              {t.allCategories}
+              {lang === "he" ? "כל הקטגוריות" : "Все категории"}
             </button>
             {["anti-age", "hydration", "cleansing"].map((cat) => {
               const isAvailable = availableCategories.includes(cat);
@@ -1463,13 +1525,14 @@ export default function App() {
               );
             })}
           </div>
-        </div>
+        )}
 
         {/* Results count */}
         <p style={{
-          fontSize: 13,
+          fontSize: 12,
           color: c.textMuted,
           fontFamily: "'Heebo', sans-serif",
+          marginTop: 16,
           marginBottom: 24,
         }}>
           {lang === "he" 
@@ -1510,7 +1573,7 @@ export default function App() {
                 style={styles.productCard(isLarge, index)}
                 onClick={() => setSelectedProduct(product)}
               >
-                <div style={styles.productImage(product.image, isLarge)}>
+                <div style={styles.productImage(product.brand, isLarge)}>
                   {/* Subtle shine effect */}
                   <div style={{
                     position: "absolute",
@@ -1545,7 +1608,7 @@ export default function App() {
               style={styles.carouselCard}
               onClick={() => setSelectedProduct(product)}
             >
-              <div style={{ ...styles.productImage(product.image, false), height: 150 }} />
+              <div style={{ ...styles.productImage(product.brand, false), height: 150 }} />
               <div style={{ padding: 14 }}>
                 <p style={{ ...styles.productBrand, fontSize: 9 }}>{product.brand}</p>
                 <h3 style={{ ...styles.productName, fontSize: 15 }}>
@@ -1823,7 +1886,7 @@ export default function App() {
           </button>
         </div>
 
-        <div style={styles.modalImage(selectedProduct.image)}>
+<div style={styles.modalImage(selectedProduct.brand)}>
           <div style={{
             position: "absolute",
             top: 0,
@@ -1839,6 +1902,15 @@ export default function App() {
           <h1 style={styles.modalName}>
             {lang === "he" ? selectedProduct.name_he : selectedProduct.name_ru}
           </h1>
+          
+          {/* Price display */}
+          <div style={styles.modalPrice}>
+            <span style={styles.modalPriceMain}>{"\u20AA"}{selectedProduct.price}</span>
+            {selectedProduct.oldPrice && (
+              <span style={styles.modalPriceOld}>{"\u20AA"}{selectedProduct.oldPrice}</span>
+            )}
+          </div>
+
           <p style={styles.modalDesc}>
             {lang === "he" ? selectedProduct.desc_he : selectedProduct.desc_ru}
           </p>
@@ -1874,7 +1946,7 @@ export default function App() {
                   style={{ ...styles.carouselCard, minWidth: 150 }}
                   onClick={() => setSelectedProduct(product)}
                 >
-                  <div style={{ ...styles.productImage(product.image, false), height: 110 }} />
+                  <div style={{ ...styles.productImage(product.brand, false), height: 110 }} />
                   <div style={{ padding: 12 }}>
                     <p style={{ ...styles.productBrand, fontSize: 8 }}>{product.brand}</p>
                     <h3 style={{ ...styles.productName, fontSize: 14 }}>
@@ -1930,7 +2002,19 @@ export default function App() {
       <div style={styles.app}>
         {/* Header */}
         <header style={styles.header}>
-          <div style={styles.logo}>FREGER</div>
+          <div style={styles.logo}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src="/logo.png" 
+              alt="Freger" 
+              style={styles.logoImage}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+                (e.target as HTMLImageElement).nextElementSibling?.setAttribute('style', 'display: flex;');
+              }}
+            />
+            <span style={{ ...styles.logoPlaceholder, display: 'none' }}>F</span>
+          </div>
           <div style={styles.headerActions}>
             <button 
               style={styles.langToggle}
