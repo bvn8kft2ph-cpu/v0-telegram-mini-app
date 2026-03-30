@@ -263,7 +263,7 @@ const products = [
   {
     id: 2,
     name_he: "קרם לחות אינטנסיבי",
-    name_ru: "Интенсивный увлажняющий крем",
+    name_ru: "Интенсивный увлажняющ��й крем",
     brand: "ONmacabim",
     category: "hydration",
     price: 280,
@@ -511,6 +511,11 @@ const Icons = {
   ChevronDown: ({ size = 20, color = "currentColor" }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="6 9 12 15 18 9" />
+    </svg>
+  ),
+  ChevronRight: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6" />
     </svg>
   ),
   Package: ({ size = 20, color = "currentColor" }) => (
@@ -1323,12 +1328,31 @@ export default function App() {
       letterSpacing: "0.03em",
     },
     brandCardItem: {
-      padding: "24px 22px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "20px 22px",
       backgroundColor: c.cardSolid,
       borderRadius: 20,
       marginBottom: 14,
       boxShadow: c.shadow,
       border: `1px solid ${c.border}`,
+      cursor: "pointer",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    brandCardItemContent: {
+      flex: 1,
+    },
+    brandCardItemArrow: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: theme === "light" ? c.bgSecondary : c.bgTertiary,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      marginInlineStart: 16,
     },
     brandCardName: {
       fontSize: 20,
@@ -1881,9 +1905,21 @@ export default function App() {
           { name: "ONmacabim", desc: lang === "he" ? "אנטי-אייג׳ מקצועי" : "Профессиональный anti-age" },
           { name: "Hikari", desc: lang === "he" ? "קוסמצבטיקה טבעית" : "Натуральная космецевтика" },
         ].map((brand) => (
-          <div key={brand.name} style={styles.brandCardItem}>
-            <h3 style={styles.brandCardName}>{brand.name}</h3>
-            <p style={styles.brandCardDesc}>{brand.desc}</p>
+          <div 
+            key={brand.name} 
+            style={styles.brandCardItem}
+            onClick={() => {
+              handleBrandSelect(brand.name);
+              setActiveSection("catalog");
+            }}
+          >
+            <div style={styles.brandCardItemContent}>
+              <h3 style={styles.brandCardName}>{brand.name}</h3>
+              <p style={styles.brandCardDesc}>{brand.desc}</p>
+            </div>
+            <div style={styles.brandCardItemArrow}>
+              <Icons.ChevronRight size={18} color={c.accent} />
+            </div>
           </div>
         ))}
 
