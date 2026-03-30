@@ -390,7 +390,7 @@ const products = [
   {
     id: 3,
     name_he: "ג׳ל ניקוי עדין",
-    name_ru: "Мягкий очищающий гель",
+    name_ru: "Мягк��й очищающий гель",
     brand: "Hikari",
     category: "cleansing",
     price: 145,
@@ -725,6 +725,34 @@ const Icons = {
   Sparkle: ({ size = 16, color = "currentColor" }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <path d="M12 2l2 7h7l-5.5 4.5 2 7L12 16l-5.5 4.5 2-7L3 9h7l2-7z" fill={color}/>
+    </svg>
+  ),
+  // Product bottle silhouette placeholder
+  ProductBottle: ({ size = 64, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" opacity="0.3">
+      <path d="M24 8h16v4c4 0 6 2 6 6v36c0 4-4 6-8 6H26c-4 0-8-2-8-6V18c0-4 2-6 6-6V8z" fill={color}/>
+      <rect x="26" y="4" width="12" height="6" rx="2" fill={color}/>
+      <rect x="22" y="20" width="20" height="2" rx="1" fill={color} opacity="0.5"/>
+    </svg>
+  ),
+  // Product jar silhouette placeholder  
+  ProductJar: ({ size = 64, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" opacity="0.3">
+      <ellipse cx="32" cy="50" rx="20" ry="8" fill={color}/>
+      <path d="M12 30c0-8 9-14 20-14s20 6 20 14v20c0 2-9 8-20 8s-20-6-20-8V30z" fill={color}/>
+      <rect x="20" y="10" width="24" height="6" rx="3" fill={color}/>
+    </svg>
+  ),
+  // Star icon for loyalty levels
+  Star: ({ size = 16, color = "currentColor", filled = true }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={filled ? color : "none"} stroke={color} strokeWidth="1.2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+  ),
+  // Diamond icon for Gold level
+  Diamond: ({ size = 16, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M12 2L3 9l9 13 9-13-9-7z"/>
     </svg>
   ),
   // Minus - for quantity
@@ -1086,10 +1114,11 @@ export default function App() {
       flexDirection: "column" as const,
       alignItems: "center",
       justifyContent: "center",
-      gap: 3,
+      gap: 4,
       padding: "6px 12px",
       backgroundColor: active ? c.accent : "transparent",
       border: "none",
+      opacity: active ? 1 : 0.85,
       cursor: "pointer",
       color: active ? "#FFF" : c.textSecondary,
       transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -1111,9 +1140,20 @@ export default function App() {
       borderRadius: 0,
       overflow: "hidden",
       marginBottom: 32,
-      background: theme === "light" 
-        ? `linear-gradient(160deg, #F5EBE0 0%, #E8D5C4 30%, ${c.accent}40 70%, #1F1A16 100%)`
-        : `linear-gradient(160deg, #2A2420 0%, #3A3028 30%, ${c.accent}30 70%, #0A0908 100%)`,
+      background: c.bg,
+    },
+    heroImage: {
+      position: "absolute" as const,
+      inset: 0,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover" as const,
+      opacity: 0.35,
+    },
+    heroGradientOverlay: {
+      position: "absolute" as const,
+      inset: 0,
+      background: `linear-gradient(to bottom, transparent 0%, transparent 40%, ${c.bg} 100%)`,
     },
     heroNoise: {
       position: "absolute" as const,
@@ -1129,6 +1169,12 @@ export default function App() {
         radial-gradient(ellipse 80% 50% at 20% 80%, ${c.accent}35 0%, transparent 50%),
         radial-gradient(ellipse 60% 40% at 80% 20%, ${theme === "light" ? "#D4A87440" : "#8B6B4830"} 0%, transparent 40%)
       `,
+    },
+    heroBokeh: {
+      position: "absolute" as const,
+      borderRadius: "50%",
+      filter: "blur(40px)",
+      animation: "bokehFloat 8s ease-in-out infinite",
     },
     heroContent: {
       position: "absolute" as const,
@@ -1196,6 +1242,8 @@ export default function App() {
       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       boxShadow: active ? `0 4px 16px ${c.accent}35` : c.shadow,
       transform: active ? "scale(1.02)" : "scale(1)",
+      position: "relative" as const,
+      overflow: "hidden",
     }),
     categoryRow: {
       display: "flex",
@@ -1453,6 +1501,9 @@ export default function App() {
       marginBottom: 28,
       border: `1px solid ${c.accent}30`,
     },
+    sparkleIcon: {
+      animation: "sparkle 2s ease-in-out infinite",
+    },
     addToCartBtn: {
       position: "fixed" as const,
       bottom: 28,
@@ -1542,8 +1593,21 @@ export default function App() {
       borderRadius: 65,
       margin: "0 auto 24px",
       position: "relative" as const,
+      overflow: "visible",
+    },
+    avatarInner: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 65,
       overflow: "hidden",
-      boxShadow: `0 12px 40px ${c.accent}40, 0 0 0 3px ${c.accentLight}, 0 0 0 6px ${c.accent}30`,
+      boxShadow: `0 12px 40px ${c.accent}40`,
+    },
+    avatarRing: {
+      position: "absolute" as const,
+      inset: -6,
+      borderRadius: "50%",
+      border: `2px solid ${c.accent}`,
+      animation: "avatarGlow 3s ease-in-out infinite",
     },
     avatarImage: {
       width: "100%",
@@ -1930,6 +1994,10 @@ export default function App() {
       alignItems: "center",
       justifyContent: "center",
       color: "#FFF",
+      transition: "transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    cartQuantityBtnActive: {
+      animation: "cartBounce 0.2s ease",
     },
     cartQuantityValue: {
       width: 40,
@@ -2217,7 +2285,25 @@ export default function App() {
       fontWeight: 600,
       fontFamily: "'Heebo', sans-serif",
       marginTop: 24,
+      transition: "all 0.3s ease",
     }),
+    checkoutSubmitBtnShake: {
+      animation: "shake 0.5s ease",
+    },
+    inputError: {
+      borderColor: "#EF4444 !important",
+      boxShadow: "0 0 0 2px rgba(239, 68, 68, 0.2)",
+    },
+    inputValid: {
+      borderColor: "#22C55E !important",
+    },
+    validCheckmark: {
+      position: "absolute" as const,
+      right: 16,
+      top: "50%",
+      transform: "translateY(-50%)",
+      color: "#22C55E",
+    },
     checkoutFooter: {
       display: "flex",
       justifyContent: "center",
@@ -2471,6 +2557,13 @@ export default function App() {
       position: "relative" as const,
       overflow: "hidden",
     },
+    loyaltyShimmer: {
+      position: "absolute" as const,
+      inset: 0,
+      background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)",
+      backgroundSize: "200% 100%",
+      animation: "shimmer 3s ease-in-out infinite",
+    },
     loyaltyLevel: {
       fontSize: 11,
       fontWeight: 700,
@@ -2609,8 +2702,45 @@ export default function App() {
     <div>
       {/* Hero with atmospheric background */}
       <div style={styles.hero}>
+        {/* Background photo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img 
+          src="/olga.jpg" 
+          alt="" 
+          style={styles.heroImage}
+        />
+        {/* Gradient overlay from transparent to bg */}
+        <div style={styles.heroGradientOverlay} />
         {/* Gradient mesh background */}
         <div style={styles.heroMesh} />
+        {/* Bokeh particles */}
+        <div style={{
+          ...styles.heroBokeh,
+          width: 120,
+          height: 120,
+          top: "20%",
+          left: "10%",
+          background: `${c.accent}40`,
+          animationDelay: "0s",
+        }} />
+        <div style={{
+          ...styles.heroBokeh,
+          width: 80,
+          height: 80,
+          top: "40%",
+          right: "15%",
+          background: `${c.accentLight}30`,
+          animationDelay: "2s",
+        }} />
+        <div style={{
+          ...styles.heroBokeh,
+          width: 60,
+          height: 60,
+          bottom: "30%",
+          left: "60%",
+          background: `${c.accent}25`,
+          animationDelay: "4s",
+        }} />
         {/* Noise texture overlay */}
         <div style={styles.heroNoise} />
         {/* Content */}
@@ -2711,17 +2841,30 @@ export default function App() {
                 style={styles.productCard(isLarge, index)}
                 onClick={() => setSelectedProduct(product)}
               >
-                <div style={styles.productImage(product.brand, isLarge)}>
-                  {/* Subtle shine effect */}
-                  <div style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "50%",
-                    background: "linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)",
-                  }} />
-                </div>
+                    <div style={styles.productImage(product.brand, isLarge)}>
+                      {/* Product placeholder silhouette */}
+                      <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}>
+                        {index % 2 === 0 
+                          ? <Icons.ProductBottle size={isLarge ? 80 : 56} color="#FFF" />
+                          : <Icons.ProductJar size={isLarge ? 80 : 56} color="#FFF" />
+                        }
+                      </div>
+                      {/* Subtle shine effect */}
+                      <div style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: "50%",
+                        background: "linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)",
+                      }} />
+                    </div>
                 {product.featured && (
                   <div style={styles.featuredBadge}>{t.curatedBy}</div>
                 )}
@@ -2818,17 +2961,21 @@ export default function App() {
     <div>
       <div style={styles.brandHero}>
         <div style={styles.avatar}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img 
-            src="/avatar.png" 
-            alt="Ольга Фрегер"
-            style={styles.avatarImage}
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-              (e.target as HTMLImageElement).nextElementSibling?.setAttribute('style', 'display: flex; width: 100%; height: 100%;');
-            }}
-          />
-          <div style={{ ...styles.avatarPlaceholder, display: 'none' }}>О</div>
+          {/* Animated gold ring */}
+          <div style={styles.avatarRing} />
+          <div style={styles.avatarInner}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/olga.jpg"
+              alt="Ольга Фрегер"
+              style={styles.avatarImage}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+                (e.target as HTMLImageElement).nextElementSibling?.setAttribute('style', 'display: flex; width: 100%; height: 100%;');
+              }}
+            />
+            <div style={{ ...styles.avatarPlaceholder, display: 'none' }}>О</div>
+          </div>
         </div>
         <h1 style={styles.brandName}>
           {lang === "he" ? "אולגה פרגר" : "Ольга Фрегер"}
@@ -2948,25 +3095,33 @@ export default function App() {
         <h1 style={styles.userName}>Ko</h1>
       </div>
 
-      {/* Loyalty Card */}
-      <div style={styles.loyaltyCard}>
-        {/* Decorative element */}
-        <div style={{
-          position: "absolute",
-          top: -20,
-          [isRTL ? "left" : "right"]: -20,
-          width: 100,
-          height: 100,
-          borderRadius: 50,
-          background: "rgba(255,255,255,0.1)",
-        }} />
-        <p style={styles.loyaltyLevel}>{t.loyaltyLevel}</p>
-        <h2 style={styles.loyaltyName}>{t.silver}</h2>
-        <div style={styles.progressBar}>
-          <div style={styles.progressFill} />
+        {/* Loyalty Card */}
+        <div style={styles.loyaltyCard}>
+          {/* Shimmer effect */}
+          <div style={styles.loyaltyShimmer} />
+          {/* Decorative element */}
+          <div style={{
+            position: "absolute",
+            top: -20,
+            [isRTL ? "left" : "right"]: -20,
+            width: 100,
+            height: 100,
+            borderRadius: 50,
+            background: "rgba(255,255,255,0.1)",
+          }} />
+          <p style={styles.loyaltyLevel}>
+            <Icons.Star size={12} color="#FFF" /> {t.loyaltyLevel}
+          </p>
+          <h2 style={styles.loyaltyName}>{t.silver}</h2>
+          <div style={styles.progressBar}>
+            <div style={{
+              ...styles.progressFill,
+              animation: "progressFill 1.5s ease-out forwards",
+              "--progress-width": "40%",
+            } as React.CSSProperties} />
+          </div>
+          <p style={styles.progressText}>{"\u20AA"}1,500 {t.toNextLevel}</p>
         </div>
-        <p style={styles.progressText}>{"\u20AA"}1,500 {t.toNextLevel}</p>
-      </div>
 
       {/* Orders */}
       <div style={styles.ordersSection}>
@@ -3212,16 +3367,26 @@ export default function App() {
           </button>
         </div>
 
-<div style={styles.modalImage(selectedProduct.brand)}>
-          <div style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "40%",
-            background: "linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%)",
-          }} />
-        </div>
+            <div style={{ ...styles.modalImage(selectedProduct.brand), position: "relative" }}>
+              {/* Product placeholder silhouette */}
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+                <Icons.ProductBottle size={100} color="#FFF" />
+              </div>
+              <div style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: "40%",
+                background: "linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%)",
+              }} />
+            </div>
 
         <div style={styles.modalContent}>
           <p style={styles.modalBrand}>{selectedProduct.brand}</p>
