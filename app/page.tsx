@@ -4,57 +4,68 @@ import { useState, useEffect, useRef } from "react";
 
 // ═══════════════════════════════════════════════
 // FREGER COSMETICS — TELEGRAM MINI APP
-// Luxury Beauty Digital Boutique
+// Luxury Beauty Digital Boutique v2.0
+// Enhanced with Quiet Luxury animations & depth
 // ═══════════════════════════════════════════════
 
 // ─────────────────────────────────────────────────
-// DESIGN TOKENS
+// DESIGN TOKENS - Enhanced contrast & warmth
 // ─────────────────────────────────────────────────
 
 const tokens = {
   light: {
-    bg: "#FAF8F5",
-    bgSecondary: "#F5F2ED",
-    bgTertiary: "#EDE9E3",
-    text: "#2C2825",
-    textSecondary: "#6B6560",
-    textMuted: "#9B9590",
-    accent: "#C4A77D", // Warm champagne/sand
-    accentHover: "#B39A70",
-    card: "rgba(255, 255, 255, 0.8)",
+    bg: "#FFFBF7",
+    bgSecondary: "#F7F0E8",
+    bgTertiary: "#EDE4D9",
+    text: "#1F1A16",
+    textSecondary: "#5C524A",
+    textMuted: "#8B8078",
+    accent: "#9C7B5C", // Rich warm bronze
+    accentLight: "#C4A882",
+    accentDark: "#7A5D42",
+    card: "rgba(255, 255, 255, 0.95)",
     cardSolid: "#FFFFFF",
-    glass: "rgba(250, 248, 245, 0.85)",
-    border: "rgba(44, 40, 37, 0.08)",
-    shadow: "rgba(44, 40, 37, 0.06)",
+    cardElevated: "#FFFFFF",
+    glass: "rgba(255, 251, 247, 0.92)",
+    border: "rgba(31, 26, 22, 0.06)",
+    borderStrong: "rgba(31, 26, 22, 0.12)",
+    shadow: "0 4px 24px rgba(31, 26, 22, 0.08)",
+    shadowDeep: "0 12px 48px rgba(31, 26, 22, 0.12)",
+    shadowGlow: "0 0 60px rgba(156, 123, 92, 0.15)",
   },
   dark: {
-    bg: "#1A1816",
-    bgSecondary: "#242220",
-    bgTertiary: "#2E2C29",
-    text: "#F5F2ED",
-    textSecondary: "#A8A29E",
-    textMuted: "#78716C",
-    accent: "#D4B896",
-    accentHover: "#E5C9A7",
-    card: "rgba(46, 44, 41, 0.8)",
-    cardSolid: "#2E2C29",
-    glass: "rgba(26, 24, 22, 0.9)",
-    border: "rgba(245, 242, 237, 0.08)",
-    shadow: "rgba(0, 0, 0, 0.3)",
+    bg: "#0F0D0B",
+    bgSecondary: "#1A1714",
+    bgTertiary: "#252220",
+    text: "#F5F0EB",
+    textSecondary: "#B8AFA5",
+    textMuted: "#6B635A",
+    accent: "#C9A87C",
+    accentLight: "#E0C9A3",
+    accentDark: "#A08560",
+    card: "rgba(37, 34, 32, 0.95)",
+    cardSolid: "#1F1C19",
+    cardElevated: "#2A2723",
+    glass: "rgba(15, 13, 11, 0.95)",
+    border: "rgba(245, 240, 235, 0.06)",
+    borderStrong: "rgba(245, 240, 235, 0.12)",
+    shadow: "0 4px 24px rgba(0, 0, 0, 0.3)",
+    shadowDeep: "0 12px 48px rgba(0, 0, 0, 0.5)",
+    shadowGlow: "0 0 60px rgba(201, 168, 124, 0.1)",
   },
 };
 
 // ─────────────────────────────────────────────────
-// i18n TRANSLATIONS
+// i18n TRANSLATIONS - Updated section names
 // ─────────────────────────────────────────────────
 
 const i18n = {
   he: {
-    // Navigation
-    navShowcase: "ויטרינה",
-    navRituals: "טקסים",
-    navAbout: "אודות",
-    navProfile: "הפרופיל שלי",
+    // Navigation - clearer labels
+    navCatalog: "קטלוג",
+    navServices: "שירותים",
+    navBrand: "המותג",
+    navProfile: "פרופיל",
     
     // Header
     cart: "סל קניות",
@@ -71,19 +82,20 @@ const i18n = {
     addToCart: "הוספה לסל",
     viewDetails: "לפרטים",
     completeRoutine: "השלימי את הטיפוח",
+    newArrivals: "חדשים בחנות",
     
     // Product
     ingredients: "רכיבים פעילים",
     recommended: "מומלץ ע״י אולגה",
     
-    // Rituals
-    ritualsTitle: "טקסי טיפוח",
-    ritualsSubtitle: "חוויה אישית בסטודיו",
+    // Services (renamed from Rituals)
+    servicesTitle: "שירותי הסטודיו",
+    servicesSubtitle: "חוויה אישית ומפנקת",
     bookNow: "הזמנת תור",
     duration: "דק׳",
     
-    // About
-    aboutTitle: "העולם של פרגר",
+    // About/Brand
+    brandTitle: "העולם של פרגר",
     aboutRole: "קוסמטיקאית · מאסטר רייקי",
     aboutPhilosophy: "אני מאמינה שיופי אמיתי נובע מאיזון פנימי. כל טיפוח הוא מסע של חיבור לעצמך.",
     yearsExp: "שנות ניסיון",
@@ -92,6 +104,7 @@ const i18n = {
     contactOlga: "לשוחח עם אולגה",
     location: "קריית גת",
     hours: "א׳-ה׳ 9:00-19:00",
+    ourStory: "הסיפור שלנו",
     
     // Profile
     welcomeBack: "שלום,",
@@ -117,11 +130,11 @@ const i18n = {
     emptyFavorites: "עוד אין מועדפים",
   },
   ru: {
-    // Navigation
-    navShowcase: "Витрина",
-    navRituals: "Ритуалы",
-    navAbout: "О нас",
-    navProfile: "Кабинет",
+    // Navigation - clearer labels
+    navCatalog: "Каталог",
+    navServices: "Услуги",
+    navBrand: "Бренд",
+    navProfile: "Профиль",
     
     // Header
     cart: "Корзина",
@@ -138,19 +151,20 @@ const i18n = {
     addToCart: "В корзину",
     viewDetails: "Подробнее",
     completeRoutine: "Дополните уход",
+    newArrivals: "Новинки",
     
     // Product
     ingredients: "Активные ингредиенты",
     recommended: "Рекомендует Ольга",
     
-    // Rituals
-    ritualsTitle: "Ритуалы ухода",
-    ritualsSubtitle: "Персональный опыт в студии",
+    // Services (renamed from Rituals)
+    servicesTitle: "Услуги студии",
+    servicesSubtitle: "Персональный уход и релакс",
     bookNow: "Записаться",
     duration: "мин",
     
-    // About
-    aboutTitle: "Мир Freger",
+    // About/Brand
+    brandTitle: "Мир Freger",
     aboutRole: "Косметолог · Мастер Рейки",
     aboutPhilosophy: "Я верю, что истинная красота рождается из внутренней гармонии. Каждый уход — это путешествие к себе.",
     yearsExp: "лет опыта",
@@ -159,6 +173,7 @@ const i18n = {
     contactOlga: "Написать Ольге",
     location: "Кирьят-Гат",
     hours: "Вс-Чт 9:00-19:00",
+    ourStory: "Наша история",
     
     // Profile
     welcomeBack: "Добро пожаловать,",
@@ -180,7 +195,7 @@ const i18n = {
       processing: "Обработка",
     },
     emptyOrders: "Пока нет заказов",
-    emptyOrdersCta: "Открыть витрину",
+    emptyOrdersCta: "Открыть каталог",
     emptyFavorites: "Пока нет избранного",
   },
 };
@@ -197,7 +212,7 @@ const products = [
     brand: "Dermalosophy",
     category: "anti-age",
     price: 320,
-    image: "linear-gradient(135deg, #E8DDD4 0%, #D4C4B0 100%)",
+    image: "linear-gradient(145deg, #E8DDD4 0%, #D4C4B0 50%, #C9B8A0 100%)",
     desc_he: "סרום אנטי-אייג׳ מתקדם עם רטינול מיוצב",
     desc_ru: "Продвинутая anti-age сыворотка со стабилизированным ретинолом",
     ingredients: ["Retinol", "Vitamin E", "Squalane"],
@@ -210,7 +225,7 @@ const products = [
     brand: "ONmacabim",
     category: "hydration",
     price: 280,
-    image: "linear-gradient(135deg, #F0E6DC 0%, #E0D0C0 100%)",
+    image: "linear-gradient(145deg, #F5EBE0 0%, #E5D5C5 50%, #DBC8B5 100%)",
     desc_he: "קרם עשיר להזנה עמוקה ושיקום מחסום העור",
     desc_ru: "Насыщенный крем для глубокого питания и восстановления барьера кожи",
     ingredients: ["Hyaluronic Acid", "Ceramides", "Shea Butter"],
@@ -223,7 +238,7 @@ const products = [
     brand: "Hikari",
     category: "cleansing",
     price: 145,
-    image: "linear-gradient(135deg, #E5EDE8 0%, #C8D8CE 100%)",
+    image: "linear-gradient(145deg, #E8F0EA 0%, #D0E0D5 50%, #C2D4C8 100%)",
     desc_he: "ג׳ל ניקוי טבעי לעור רגיש",
     desc_ru: "Натуральный очищающий гель для чувствительной кожи",
     ingredients: ["Aloe Vera", "Green Tea", "Chamomile"],
@@ -236,7 +251,7 @@ const products = [
     brand: "Dermalosophy",
     category: "anti-age",
     price: 195,
-    image: "linear-gradient(135deg, #F5EAE0 0%, #E5D5C5 100%)",
+    image: "linear-gradient(145deg, #F8EDE2 0%, #EBD9C8 50%, #E0CCB8 100%)",
     desc_he: "מסכת פילינג עדינה עם AHA ו-BHA",
     desc_ru: "Мягкая пилинг-маска с AHA и BHA кислотами",
     ingredients: ["Glycolic Acid", "Salicylic Acid", "Niacinamide"],
@@ -249,7 +264,7 @@ const products = [
     brand: "ONmacabim",
     category: "anti-age",
     price: 260,
-    image: "linear-gradient(135deg, #EDE5DC 0%, #DDD0C4 100%)",
+    image: "linear-gradient(145deg, #F0E8E0 0%, #E0D0C4 50%, #D5C2B4 100%)",
     desc_he: "קרם עיניים עשיר לטיפול בקמטוטים",
     desc_ru: "Насыщенный крем для глаз против морщин",
     ingredients: ["Peptides", "Caffeine", "Vitamin C"],
@@ -262,7 +277,7 @@ const products = [
     brand: "Hikari",
     category: "cleansing",
     price: 125,
-    image: "linear-gradient(135deg, #E8F0EA 0%, #D0E0D5 100%)",
+    image: "linear-gradient(145deg, #ECF2EE 0%, #D8E4DC 50%, #C8D8CE 100%)",
     desc_he: "טונר טבעי לאיזון ה-pH של העור",
     desc_ru: "Натуральный тоник для баланса pH кожи",
     ingredients: ["Rose Water", "Witch Hazel", "Panthenol"],
@@ -275,7 +290,7 @@ const products = [
     brand: "Dermalosophy",
     category: "anti-age",
     price: 290,
-    image: "linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 100%)",
+    image: "linear-gradient(145deg, #FFF8EC 0%, #FFE8CC 50%, #F8DCB8 100%)",
     desc_he: "סרום מבהיר עם ויטמין C יציב 15%",
     desc_ru: "Осветляющая сыворотка со стабильным витамином C 15%",
     ingredients: ["Vitamin C", "Ferulic Acid", "Vitamin E"],
@@ -288,7 +303,7 @@ const products = [
     brand: "Hikari",
     category: "hydration",
     price: 175,
-    image: "linear-gradient(135deg, #F8EFE5 0%, #EBD9C8 100%)",
+    image: "linear-gradient(145deg, #FAF2E8 0%, #EBD9C8 50%, #E0CDB8 100%)",
     desc_he: "תערובת שמנים טבעיים להזנת העור",
     desc_ru: "Смесь натуральных масел для питания кожи",
     ingredients: ["Jojoba Oil", "Rosehip Oil", "Argan Oil"],
@@ -305,7 +320,7 @@ const services = [
     price: 350,
     desc_he: "טיפול מקיף לניקוי עמוק של העור, חילוץ ראשים שחורים והזנה",
     desc_ru: "Комплексный уход для глубокого очищения кожи, экстракция и питание",
-    gradient: "linear-gradient(135deg, #E8DDD4 0%, #C4A77D 100%)",
+    gradient: "linear-gradient(145deg, #E8DDD4 0%, #D4C4B0 50%, #C4A77D 100%)",
   },
   {
     id: 2,
@@ -315,7 +330,7 @@ const services = [
     price: 250,
     desc_he: "טיפול רייקי משולב עם טיפוח פנים להרגעה ואיזון",
     desc_ru: "Рейки терапия в сочетании с уходом за лицом для расслабления и баланса",
-    gradient: "linear-gradient(135deg, #E5EDE8 0%, #A8C4B4 100%)",
+    gradient: "linear-gradient(145deg, #E5EDE8 0%, #C8D8CE 50%, #A8C4B4 100%)",
   },
   {
     id: 3,
@@ -325,7 +340,7 @@ const services = [
     price: 300,
     desc_he: "פילינג מקצועי והזנה אינטנסיבית לעור זוהר",
     desc_ru: "Профессиональный пилинг и интенсивное питание для сияющей кожи",
-    gradient: "linear-gradient(135deg, #F5EAE0 0%, #D4B896 100%)",
+    gradient: "linear-gradient(145deg, #F5EAE0 0%, #E5D5C5 50%, #D4B896 100%)",
   },
   {
     id: 4,
@@ -335,7 +350,7 @@ const services = [
     price: 200,
     desc_he: "טכניקת עיסוי מתקדמת להרמת ומיצוק קווי הפנים",
     desc_ru: "Продвинутая массажная техника для лифтинга и укрепления контуров лица",
-    gradient: "linear-gradient(135deg, #EDE5DC 0%, #C8B8A8 100%)",
+    gradient: "linear-gradient(145deg, #EDE5DC 0%, #DDD0C4 50%, #C8B8A8 100%)",
   },
 ];
 
@@ -364,7 +379,7 @@ const orders = [
 ];
 
 // ─────────────────────────────────────────────────
-// ICONS (SVG)
+// ICONS (SVG) - Redesigned for clarity
 // ─────────────────────────────────────────────────
 
 const Icons = {
@@ -393,39 +408,36 @@ const Icons = {
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   ),
-  Showcase: ({ size = 20, color = "currentColor" }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="7" height="9" rx="1" />
-      <rect x="14" y="3" width="7" height="5" rx="1" />
-      <rect x="14" y="12" width="7" height="9" rx="1" />
-      <rect x="3" y="16" width="7" height="5" rx="1" />
+  // Catalog - Grid of products
+  Catalog: ({ size = 22, color = "currentColor", filled = false }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="3" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="2" fill={filled ? color : "none"} stroke={color} strokeWidth="1.5" />
     </svg>
   ),
-  Rituals: ({ size = 20, color = "currentColor" }) => (
+  // Services - Spa/hands
+  Services: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2v4" />
-      <path d="M12 18v4" />
-      <circle cx="12" cy="12" r="4" />
-      <path d="M4.93 4.93l2.83 2.83" />
-      <path d="M16.24 16.24l2.83 2.83" />
-      <path d="M2 12h4" />
-      <path d="M18 12h4" />
-      <path d="M4.93 19.07l2.83-2.83" />
-      <path d="M16.24 7.76l2.83-2.83" />
+      <path d="M12 22c5-3 9-7.5 9-12 0-3-2-6-5-6-2 0-3 1-4 3-1-2-2-3-4-3-3 0-5 3-5 6 0 4.5 4 9 9 12z" fill={filled ? color : "none"} />
+      <path d="M12 6v4" />
+      <path d="M10 8h4" />
     </svg>
   ),
-  About: ({ size = 20, color = "currentColor" }) => (
+  // Brand - Diamond/gem shape
+  Brand: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
+      <path d="M6 3h12l4 6-10 12L2 9z" fill={filled ? color : "none"} />
+      <path d="M2 9h20" />
+      <path d="M12 3l-2 6 2 12 2-12-2-6" />
     </svg>
   ),
-  Profile: ({ size = 20, color = "currentColor" }) => (
+  // Profile - User silhouette
+  Profile: ({ size = 22, color = "currentColor", filled = false }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2z" />
-      <path d="M16 3v4" />
-      <path d="M8 3v4" />
-      <path d="M3 11h18" />
+      <circle cx="12" cy="8" r="4" fill={filled ? color : "none"} />
+      <path d="M20 21c0-4-4-6-8-6s-8 2-8 6" fill={filled ? color : "none"} />
     </svg>
   ),
   Close: ({ size = 24, color = "currentColor" }) => (
@@ -481,6 +493,11 @@ const Icons = {
       <polygon points="22 2 15 22 11 13 2 9 22 2" />
     </svg>
   ),
+  Sparkle: ({ size = 16, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+    </svg>
+  ),
 };
 
 // ─────────────────────────────────────────────────
@@ -488,14 +505,15 @@ const Icons = {
 // ─────────────────────────────────────────────────
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState<"showcase" | "rituals" | "about" | "profile">("showcase");
+  const [activeSection, setActiveSection] = useState<"catalog" | "services" | "brand" | "profile">("catalog");
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [lang, setLang] = useState<"he" | "ru">("he");
+  const [lang, setLang] = useState<"he" | "ru">("ru");
   const [cart, setCart] = useState<number[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
   const [activeFilter, setActiveFilter] = useState("all");
   const [expandedOrders, setExpandedOrders] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [animateIn, setAnimateIn] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
 
   const t = i18n[lang];
@@ -504,12 +522,15 @@ export default function App() {
 
   useEffect(() => {
     setMounted(true);
+    setTimeout(() => setAnimateIn(true), 100);
   }, []);
 
   useEffect(() => {
     if (mainRef.current) {
       mainRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
+    setAnimateIn(false);
+    setTimeout(() => setAnimateIn(true), 50);
   }, [activeSection]);
 
   const addToCart = (productId: number) => {
@@ -521,7 +542,7 @@ export default function App() {
     : products.filter((p) => p.category === activeFilter);
 
   // ─────────────────────────────────────────────────
-  // STYLES
+  // STYLES - Enhanced with depth & animations
   // ─────────────────────────────────────────────────
 
   const styles = {
@@ -535,7 +556,7 @@ export default function App() {
       direction: isRTL ? "rtl" : "ltr",
       position: "relative" as const,
       overflow: "hidden",
-      transition: "background-color 0.5s ease, color 0.5s ease",
+      transition: "background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
     },
     header: {
       position: "fixed" as const,
@@ -544,34 +565,35 @@ export default function App() {
       transform: "translateX(-50%)",
       width: "100%",
       maxWidth: 430,
-      height: 56,
+      height: 64,
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       padding: "0 20px",
       backgroundColor: c.glass,
-      backdropFilter: "blur(20px)",
-      WebkitBackdropFilter: "blur(20px)",
+      backdropFilter: "blur(24px) saturate(180%)",
+      WebkitBackdropFilter: "blur(24px) saturate(180%)",
       borderBottom: `1px solid ${c.border}`,
       zIndex: 100,
-      transition: "background-color 0.5s ease",
+      transition: "background-color 0.6s ease",
     },
     logo: {
       fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 22,
+      fontSize: 24,
       fontWeight: 600,
-      letterSpacing: "0.05em",
+      letterSpacing: "0.12em",
       color: c.text,
+      textTransform: "uppercase" as const,
     },
     headerActions: {
       display: "flex",
       alignItems: "center",
-      gap: 12,
+      gap: 8,
     },
     iconBtn: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
+      width: 44,
+      height: 44,
+      borderRadius: 22,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -579,82 +601,88 @@ export default function App() {
       border: "none",
       cursor: "pointer",
       color: c.text,
-      transition: "background-color 0.2s ease",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
     },
     langToggle: {
-      fontSize: 14,
-      fontWeight: 500,
-      padding: "6px 10px",
-      borderRadius: 16,
+      fontSize: 13,
+      fontWeight: 600,
+      padding: "8px 14px",
+      borderRadius: 20,
       backgroundColor: c.bgSecondary,
-      border: "none",
+      border: `1px solid ${c.border}`,
       cursor: "pointer",
       color: c.text,
       fontFamily: "'Inter', sans-serif",
+      letterSpacing: "0.02em",
+      transition: "all 0.3s ease",
     },
     cartBadge: {
       position: "absolute" as const,
-      top: 4,
-      [isRTL ? "left" : "right"]: 4,
+      top: 6,
+      [isRTL ? "left" : "right"]: 6,
       width: 18,
       height: 18,
       borderRadius: 9,
       backgroundColor: c.accent,
-      color: theme === "light" ? "#FFF" : c.bg,
-      fontSize: 11,
-      fontWeight: 600,
+      color: "#FFF",
+      fontSize: 10,
+      fontWeight: 700,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       fontFamily: "'Inter', sans-serif",
+      boxShadow: `0 2px 8px ${c.accent}40`,
     },
     main: {
       height: "100vh",
       overflowY: "auto" as const,
-      paddingTop: 56,
-      paddingBottom: 90,
+      paddingTop: 64,
+      paddingBottom: 100,
     },
     nav: {
       position: "fixed" as const,
-      bottom: 20,
+      bottom: 24,
       left: "50%",
       transform: "translateX(-50%)",
       display: "flex",
       alignItems: "center",
-      gap: 4,
-      padding: "8px 12px",
-      backgroundColor: c.glass,
-      backdropFilter: "blur(20px)",
-      WebkitBackdropFilter: "blur(20px)",
-      borderRadius: 32,
-      border: `1px solid ${c.border}`,
-      boxShadow: `0 8px 32px ${c.shadow}`,
+      gap: 6,
+      padding: "10px 14px",
+      backgroundColor: theme === "light" ? "rgba(255, 255, 255, 0.95)" : "rgba(31, 28, 25, 0.95)",
+      backdropFilter: "blur(24px) saturate(180%)",
+      WebkitBackdropFilter: "blur(24px) saturate(180%)",
+      borderRadius: 40,
+      border: `1px solid ${c.borderStrong}`,
+      boxShadow: c.shadowDeep,
       zIndex: 100,
     },
     navItem: (active: boolean) => ({
-      width: active ? "auto" : 44,
-      height: 44,
-      borderRadius: 22,
+      height: 48,
+      borderRadius: 24,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      gap: 8,
-      padding: active ? "0 16px" : 0,
+      gap: 10,
+      padding: active ? "0 20px" : "0 14px",
       backgroundColor: active ? c.accent : "transparent",
       border: "none",
       cursor: "pointer",
-      color: active ? (theme === "light" ? "#FFF" : c.bg) : c.textSecondary,
-      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      color: active ? "#FFF" : c.textSecondary,
+      transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
       fontFamily: "'Heebo', sans-serif",
       fontSize: 13,
       fontWeight: 500,
+      boxShadow: active ? `0 4px 16px ${c.accent}40` : "none",
     }),
     section: {
-      padding: "24px 20px",
+      padding: "28px 20px",
+      opacity: animateIn ? 1 : 0,
+      transform: animateIn ? "translateY(0)" : "translateY(20px)",
+      transition: "opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
     },
     hero: {
       position: "relative" as const,
-      height: 360,
+      height: 380,
       borderRadius: 0,
       overflow: "hidden",
       marginBottom: 32,
@@ -662,106 +690,119 @@ export default function App() {
     },
     heroContent: {
       position: "absolute" as const,
-      bottom: 40,
-      [isRTL ? "right" : "left"]: 24,
-      [isRTL ? "left" : "right"]: 24,
+      bottom: 48,
+      [isRTL ? "right" : "left"]: 28,
+      [isRTL ? "left" : "right"]: 28,
+      opacity: animateIn ? 1 : 0,
+      transform: animateIn ? "translateY(0)" : "translateY(30px)",
+      transition: "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
     },
     heroTitle: {
-      fontSize: 42,
+      fontSize: 46,
       fontWeight: 300,
-      lineHeight: 1.1,
-      marginBottom: 12,
+      lineHeight: 1.05,
+      marginBottom: 16,
       fontFamily: "'Cormorant Garamond', serif",
+      letterSpacing: "-0.02em",
     },
     heroSubtitle: {
       fontSize: 15,
       color: c.textSecondary,
       fontFamily: "'Heebo', sans-serif",
       fontWeight: 300,
+      lineHeight: 1.5,
     },
     filterRow: {
       display: "flex",
-      gap: 8,
-      marginBottom: 28,
+      gap: 10,
+      marginBottom: 32,
       overflowX: "auto" as const,
       paddingBottom: 4,
       scrollbarWidth: "none" as const,
     },
     filterPill: (active: boolean) => ({
-      padding: "10px 18px",
-      borderRadius: 24,
-      backgroundColor: active ? c.accent : c.bgSecondary,
-      color: active ? (theme === "light" ? "#FFF" : c.bg) : c.text,
-      border: "none",
+      padding: "12px 20px",
+      borderRadius: 28,
+      backgroundColor: active ? c.accent : theme === "light" ? c.cardSolid : c.bgSecondary,
+      color: active ? "#FFF" : c.text,
+      border: active ? "none" : `1px solid ${c.border}`,
       cursor: "pointer",
       fontSize: 14,
       fontWeight: 500,
       fontFamily: "'Heebo', sans-serif",
       whiteSpace: "nowrap" as const,
-      transition: "all 0.2s ease",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      boxShadow: active ? `0 4px 16px ${c.accent}30` : "none",
     }),
     sectionTitle: {
-      fontSize: 22,
+      fontSize: 24,
       fontWeight: 400,
-      marginBottom: 20,
+      marginBottom: 24,
       fontFamily: "'Cormorant Garamond', serif",
+      letterSpacing: "-0.01em",
     },
     bentoGrid: {
       display: "grid",
       gridTemplateColumns: "repeat(2, 1fr)",
       gap: 16,
     },
-    productCard: (large: boolean) => ({
+    productCard: (large: boolean, index: number) => ({
       gridColumn: large ? "span 2" : "span 1",
       position: "relative" as const,
-      borderRadius: 16,
+      borderRadius: 20,
       overflow: "hidden",
       backgroundColor: c.cardSolid,
       cursor: "pointer",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
+      opacity: animateIn ? 1 : 0,
+      transform: animateIn ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
+      transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`,
     }),
     productImage: (gradient: string, large: boolean) => ({
       width: "100%",
-      height: large ? 240 : 180,
+      height: large ? 260 : 200,
       background: gradient,
+      position: "relative" as const,
     }),
     productInfo: {
-      padding: 16,
+      padding: 18,
     },
     productBrand: {
-      fontSize: 11,
-      fontWeight: 600,
-      letterSpacing: "0.08em",
+      fontSize: 10,
+      fontWeight: 700,
+      letterSpacing: "0.12em",
       textTransform: "uppercase" as const,
-      color: c.textMuted,
-      marginBottom: 6,
+      color: c.accent,
+      marginBottom: 8,
       fontFamily: "'Inter', sans-serif",
     },
     productName: {
-      fontSize: 16,
+      fontSize: 17,
       fontWeight: 500,
-      marginBottom: 8,
+      marginBottom: 10,
       fontFamily: "'Cormorant Garamond', serif",
       lineHeight: 1.3,
     },
     productPrice: {
-      fontSize: 15,
-      fontWeight: 600,
-      color: c.accent,
+      fontSize: 16,
+      fontWeight: 700,
+      color: c.text,
       fontFamily: "'Inter', sans-serif",
     },
     featuredBadge: {
       position: "absolute" as const,
-      top: 12,
-      [isRTL ? "left" : "right"]: 12,
-      padding: "6px 12px",
-      borderRadius: 16,
-      backgroundColor: c.glass,
+      top: 14,
+      [isRTL ? "left" : "right"]: 14,
+      padding: "8px 14px",
+      borderRadius: 20,
+      backgroundColor: "rgba(255,255,255,0.95)",
       backdropFilter: "blur(10px)",
       fontSize: 11,
-      fontWeight: 500,
-      color: c.text,
+      fontWeight: 600,
+      color: c.accent,
       fontFamily: "'Heebo', sans-serif",
+      boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
     },
     carousel: {
       display: "flex",
@@ -773,30 +814,41 @@ export default function App() {
       paddingInline: 20,
     },
     carouselCard: {
-      minWidth: 160,
-      borderRadius: 16,
+      minWidth: 170,
+      borderRadius: 20,
       overflow: "hidden",
       backgroundColor: c.cardSolid,
       flexShrink: 0,
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
+      transition: "transform 0.3s ease, box-shadow 0.3s ease",
     },
     quoteBlock: {
-      padding: "32px 24px",
-      margin: "32px 0",
-      backgroundColor: c.bgSecondary,
-      borderRadius: 20,
+      padding: "36px 28px",
+      margin: "36px 0",
+      backgroundColor: theme === "light" ? c.cardSolid : c.bgSecondary,
+      borderRadius: 24,
       textAlign: "center" as const,
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
+      position: "relative" as const,
+      overflow: "hidden",
     },
     quote: {
-      fontSize: 18,
+      fontSize: 19,
       fontStyle: "italic",
       fontFamily: "'Cormorant Garamond', serif",
-      lineHeight: 1.6,
-      marginBottom: 16,
+      lineHeight: 1.7,
+      marginBottom: 20,
+      position: "relative" as const,
+      zIndex: 1,
     },
     quoteAuthor: {
       fontSize: 13,
-      color: c.textMuted,
+      color: c.accent,
       fontFamily: "'Heebo', sans-serif",
+      fontWeight: 600,
+      letterSpacing: "0.05em",
     },
     // Product Detail Modal
     modal: {
@@ -825,73 +877,77 @@ export default function App() {
     },
     modalImage: (gradient: string) => ({
       width: "100%",
-      height: 320,
+      height: 340,
       background: gradient,
       flexShrink: 0,
     }),
     modalContent: {
       flex: 1,
-      padding: "24px 20px",
+      padding: "28px 24px",
       overflowY: "auto" as const,
     },
     modalBrand: {
-      fontSize: 12,
-      fontWeight: 600,
-      letterSpacing: "0.1em",
+      fontSize: 11,
+      fontWeight: 700,
+      letterSpacing: "0.12em",
       textTransform: "uppercase" as const,
       color: c.accent,
-      marginBottom: 8,
+      marginBottom: 10,
       fontFamily: "'Inter', sans-serif",
     },
     modalName: {
-      fontSize: 28,
+      fontSize: 30,
       fontWeight: 400,
-      marginBottom: 16,
+      marginBottom: 20,
       fontFamily: "'Cormorant Garamond', serif",
-      lineHeight: 1.2,
+      lineHeight: 1.15,
+      letterSpacing: "-0.01em",
     },
     modalDesc: {
       fontSize: 15,
-      lineHeight: 1.7,
+      lineHeight: 1.75,
       color: c.textSecondary,
-      marginBottom: 24,
+      marginBottom: 28,
       fontFamily: "'Heebo', sans-serif",
       fontWeight: 300,
     },
     ingredientPills: {
       display: "flex",
       flexWrap: "wrap" as const,
-      gap: 8,
-      marginBottom: 24,
+      gap: 10,
+      marginBottom: 28,
     },
     ingredientPill: {
-      padding: "8px 14px",
-      borderRadius: 20,
+      padding: "10px 16px",
+      borderRadius: 24,
       backgroundColor: c.bgSecondary,
       fontSize: 13,
       fontFamily: "'Inter', sans-serif",
       color: c.text,
+      fontWeight: 500,
+      border: `1px solid ${c.border}`,
     },
     recommendedBadge: {
       display: "flex",
       alignItems: "center",
-      gap: 8,
-      padding: "12px 16px",
-      backgroundColor: c.bgSecondary,
-      borderRadius: 12,
-      marginBottom: 24,
+      gap: 10,
+      padding: "14px 18px",
+      backgroundColor: `${c.accent}15`,
+      borderRadius: 16,
+      marginBottom: 28,
+      border: `1px solid ${c.accent}30`,
     },
     addToCartBtn: {
       position: "fixed" as const,
-      bottom: 24,
+      bottom: 28,
       left: 20,
       right: 20,
       maxWidth: 390,
       margin: "0 auto",
-      padding: "18px 24px",
-      borderRadius: 28,
+      padding: "20px 28px",
+      borderRadius: 32,
       backgroundColor: c.accent,
-      color: theme === "light" ? "#FFF" : c.bg,
+      color: "#FFF",
       border: "none",
       cursor: "pointer",
       fontSize: 16,
@@ -901,139 +957,158 @@ export default function App() {
       alignItems: "center",
       justifyContent: "center",
       gap: 12,
-      boxShadow: `0 8px 24px ${c.shadow}`,
-      transition: "transform 0.2s ease, background-color 0.2s ease",
+      boxShadow: `0 8px 32px ${c.accent}40`,
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
     },
-    // Rituals
-    ritualCard: {
+    // Services
+    serviceCard: (index: number) => ({
       position: "relative" as const,
-      borderRadius: 20,
+      borderRadius: 24,
       overflow: "hidden",
-      marginBottom: 16,
+      marginBottom: 20,
       cursor: "pointer",
-    },
-    ritualGradient: (gradient: string) => ({
-      padding: "28px 24px",
+      boxShadow: c.shadow,
+      opacity: animateIn ? 1 : 0,
+      transform: animateIn ? "translateY(0)" : "translateY(30px)",
+      transition: `all 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`,
+    }),
+    serviceGradient: (gradient: string) => ({
+      padding: "32px 28px",
       background: gradient,
     }),
-    ritualName: {
-      fontSize: 24,
+    serviceName: {
+      fontSize: 26,
       fontWeight: 400,
-      marginBottom: 8,
+      marginBottom: 10,
       fontFamily: "'Cormorant Garamond', serif",
-      color: "#2C2825",
+      color: "#1F1A16",
+      letterSpacing: "-0.01em",
     },
-    ritualMeta: {
+    serviceMeta: {
       display: "flex",
       alignItems: "center",
-      gap: 16,
+      gap: 20,
       fontSize: 14,
-      color: "rgba(44, 40, 37, 0.7)",
+      color: "rgba(31, 26, 22, 0.7)",
       fontFamily: "'Heebo', sans-serif",
+      fontWeight: 500,
     },
-    ritualDesc: {
-      marginTop: 12,
+    serviceDesc: {
+      marginTop: 14,
       fontSize: 14,
-      lineHeight: 1.6,
-      color: "rgba(44, 40, 37, 0.8)",
+      lineHeight: 1.7,
+      color: "rgba(31, 26, 22, 0.75)",
       fontFamily: "'Heebo', sans-serif",
       fontWeight: 300,
     },
     bookBtn: {
-      marginTop: 20,
-      padding: "14px 24px",
-      borderRadius: 24,
-      backgroundColor: "rgba(44, 40, 37, 0.9)",
+      marginTop: 24,
+      padding: "16px 28px",
+      borderRadius: 28,
+      backgroundColor: "rgba(31, 26, 22, 0.9)",
       color: "#FFF",
       border: "none",
       cursor: "pointer",
       fontSize: 14,
-      fontWeight: 500,
+      fontWeight: 600,
       fontFamily: "'Heebo', sans-serif",
+      transition: "all 0.3s ease",
+      boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
     },
-    // About
-    aboutHero: {
+    // Brand/About
+    brandHero: {
       textAlign: "center" as const,
-      padding: "40px 20px",
+      padding: "48px 24px",
     },
     avatar: {
-      width: 120,
-      height: 120,
-      borderRadius: 60,
-      background: `linear-gradient(135deg, ${c.bgTertiary} 0%, ${c.accent} 100%)`,
-      margin: "0 auto 20px",
+      width: 130,
+      height: 130,
+      borderRadius: 65,
+      background: `linear-gradient(145deg, ${c.accentLight} 0%, ${c.accent} 50%, ${c.accentDark} 100%)`,
+      margin: "0 auto 24px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      fontSize: 40,
+      fontSize: 44,
       fontFamily: "'Cormorant Garamond', serif",
-      color: theme === "light" ? "#FFF" : c.bg,
+      color: "#FFF",
+      boxShadow: `0 12px 40px ${c.accent}40`,
+      fontWeight: 300,
     },
-    aboutName: {
-      fontSize: 28,
+    brandName: {
+      fontSize: 30,
       fontWeight: 400,
-      marginBottom: 8,
+      marginBottom: 10,
       fontFamily: "'Cormorant Garamond', serif",
+      letterSpacing: "-0.01em",
     },
-    aboutRole: {
+    brandRole: {
       fontSize: 14,
-      color: c.textMuted,
+      color: c.accent,
       fontFamily: "'Heebo', sans-serif",
-      marginBottom: 24,
+      marginBottom: 28,
+      fontWeight: 500,
+      letterSpacing: "0.02em",
     },
-    aboutPhilosophy: {
-      fontSize: 18,
+    brandPhilosophy: {
+      fontSize: 19,
       fontStyle: "italic",
-      lineHeight: 1.7,
+      lineHeight: 1.75,
       color: c.textSecondary,
       fontFamily: "'Cormorant Garamond', serif",
       maxWidth: 320,
-      margin: "0 auto 40px",
+      margin: "0 auto 44px",
     },
     statsRow: {
       display: "flex",
       justifyContent: "center",
-      gap: 32,
-      marginBottom: 48,
+      gap: 40,
+      marginBottom: 52,
     },
     stat: {
       textAlign: "center" as const,
     },
     statNumber: {
-      fontSize: 36,
+      fontSize: 40,
       fontWeight: 300,
       fontFamily: "'Cormorant Garamond', serif",
       color: c.accent,
+      lineHeight: 1,
     },
     statLabel: {
       fontSize: 12,
       color: c.textMuted,
       fontFamily: "'Heebo', sans-serif",
-      marginTop: 4,
-    },
-    brandCard: {
-      padding: "24px 20px",
-      backgroundColor: c.cardSolid,
-      borderRadius: 16,
-      marginBottom: 12,
-    },
-    brandName: {
-      fontSize: 18,
+      marginTop: 8,
       fontWeight: 500,
-      marginBottom: 4,
+      letterSpacing: "0.03em",
+    },
+    brandCardItem: {
+      padding: "24px 22px",
+      backgroundColor: c.cardSolid,
+      borderRadius: 20,
+      marginBottom: 14,
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
+    },
+    brandCardName: {
+      fontSize: 20,
+      fontWeight: 500,
+      marginBottom: 6,
       fontFamily: "'Cormorant Garamond', serif",
     },
-    brandDesc: {
+    brandCardDesc: {
       fontSize: 13,
       color: c.textSecondary,
       fontFamily: "'Heebo', sans-serif",
+      lineHeight: 1.5,
     },
     contactBtn: {
       width: "100%",
-      padding: "18px 24px",
-      borderRadius: 28,
+      padding: "20px 28px",
+      borderRadius: 32,
       backgroundColor: c.accent,
-      color: theme === "light" ? "#FFF" : c.bg,
+      color: "#FFF",
       border: "none",
       cursor: "pointer",
       fontSize: 16,
@@ -1042,72 +1117,80 @@ export default function App() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      gap: 10,
-      marginTop: 32,
+      gap: 12,
+      marginTop: 36,
+      boxShadow: `0 8px 32px ${c.accent}40`,
+      transition: "all 0.3s ease",
     },
     locationInfo: {
       display: "flex",
       flexDirection: "column" as const,
       alignItems: "center",
-      gap: 8,
-      marginTop: 24,
+      gap: 10,
+      marginTop: 28,
       fontSize: 14,
       color: c.textMuted,
       fontFamily: "'Heebo', sans-serif",
     },
     // Profile
     welcomeCard: {
-      padding: "32px 24px",
+      padding: "36px 28px",
       backgroundColor: c.cardSolid,
-      borderRadius: 20,
+      borderRadius: 24,
       marginBottom: 24,
       textAlign: isRTL ? "right" as const : "left" as const,
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
     },
     welcomeText: {
       fontSize: 14,
       color: c.textMuted,
       fontFamily: "'Heebo', sans-serif",
-      marginBottom: 4,
+      marginBottom: 6,
     },
     userName: {
-      fontSize: 28,
+      fontSize: 32,
       fontWeight: 400,
       fontFamily: "'Cormorant Garamond', serif",
+      letterSpacing: "-0.01em",
     },
     loyaltyCard: {
-      padding: "24px",
-      borderRadius: 20,
-      background: `linear-gradient(135deg, ${c.accent} 0%, ${theme === "light" ? "#B39A70" : "#E5C9A7"} 100%)`,
-      marginBottom: 24,
-      color: theme === "light" ? "#FFF" : c.bg,
+      padding: "28px",
+      borderRadius: 24,
+      background: `linear-gradient(145deg, ${c.accentLight} 0%, ${c.accent} 50%, ${c.accentDark} 100%)`,
+      marginBottom: 28,
+      color: "#FFF",
+      boxShadow: `0 12px 40px ${c.accent}40`,
+      position: "relative" as const,
+      overflow: "hidden",
     },
     loyaltyLevel: {
-      fontSize: 12,
-      fontWeight: 600,
-      letterSpacing: "0.1em",
+      fontSize: 11,
+      fontWeight: 700,
+      letterSpacing: "0.12em",
       textTransform: "uppercase" as const,
-      marginBottom: 4,
+      marginBottom: 6,
       fontFamily: "'Inter', sans-serif",
-      opacity: 0.8,
+      opacity: 0.85,
     },
     loyaltyName: {
-      fontSize: 24,
+      fontSize: 26,
       fontWeight: 500,
       fontFamily: "'Cormorant Garamond', serif",
-      marginBottom: 16,
+      marginBottom: 20,
     },
     progressBar: {
-      height: 4,
-      backgroundColor: "rgba(255,255,255,0.3)",
-      borderRadius: 2,
-      marginBottom: 8,
+      height: 5,
+      backgroundColor: "rgba(255,255,255,0.25)",
+      borderRadius: 3,
+      marginBottom: 10,
       overflow: "hidden",
     },
     progressFill: {
       height: "100%",
       width: "40%",
       backgroundColor: "#FFF",
-      borderRadius: 2,
+      borderRadius: 3,
     },
     progressText: {
       fontSize: 12,
@@ -1116,12 +1199,14 @@ export default function App() {
     },
     ordersSection: {
       backgroundColor: c.cardSolid,
-      borderRadius: 20,
-      marginBottom: 16,
+      borderRadius: 24,
+      marginBottom: 18,
       overflow: "hidden",
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
     },
     ordersHeader: {
-      padding: "20px 24px",
+      padding: "22px 24px",
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
@@ -1133,10 +1218,10 @@ export default function App() {
       fontFamily: "'Heebo', sans-serif",
       display: "flex",
       alignItems: "center",
-      gap: 10,
+      gap: 12,
     },
     orderItem: {
-      padding: "16px 24px",
+      padding: "18px 24px",
       borderTop: `1px solid ${c.border}`,
       display: "flex",
       alignItems: "center",
@@ -1145,11 +1230,11 @@ export default function App() {
     orderInfo: {
       display: "flex",
       flexDirection: "column" as const,
-      gap: 4,
+      gap: 5,
     },
     orderId: {
       fontSize: 14,
-      fontWeight: 600,
+      fontWeight: 700,
       fontFamily: "'Inter', sans-serif",
     },
     orderDate: {
@@ -1158,48 +1243,54 @@ export default function App() {
       fontFamily: "'Heebo', sans-serif",
     },
     orderStatus: (status: string) => ({
-      padding: "6px 12px",
-      borderRadius: 12,
+      padding: "7px 14px",
+      borderRadius: 14,
       fontSize: 11,
-      fontWeight: 600,
+      fontWeight: 700,
       fontFamily: "'Heebo', sans-serif",
       backgroundColor: status === "delivered" 
-        ? "rgba(34, 197, 94, 0.1)" 
+        ? "rgba(34, 197, 94, 0.12)" 
         : status === "shipping" 
-        ? "rgba(59, 130, 246, 0.1)" 
-        : "rgba(251, 191, 36, 0.1)",
+        ? "rgba(59, 130, 246, 0.12)" 
+        : "rgba(251, 191, 36, 0.12)",
       color: status === "delivered" 
-        ? "#22c55e" 
+        ? "#16a34a" 
         : status === "shipping" 
-        ? "#3b82f6" 
-        : "#f59e0b",
+        ? "#2563eb" 
+        : "#d97706",
     }),
     settingsItem: {
       backgroundColor: c.cardSolid,
-      borderRadius: 16,
-      padding: "16px 20px",
-      marginBottom: 12,
+      borderRadius: 20,
+      padding: "18px 22px",
+      marginBottom: 14,
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
+      boxShadow: c.shadow,
+      border: `1px solid ${c.border}`,
     },
     settingsLabel: {
       fontSize: 15,
       fontFamily: "'Heebo', sans-serif",
+      fontWeight: 500,
     },
     themeToggle: {
       display: "flex",
       gap: 8,
     },
     themeBtn: (active: boolean) => ({
-      padding: "8px 14px",
-      borderRadius: 12,
+      padding: "10px 16px",
+      borderRadius: 14,
       backgroundColor: active ? c.accent : c.bgSecondary,
-      color: active ? (theme === "light" ? "#FFF" : c.bg) : c.text,
-      border: "none",
+      color: active ? "#FFF" : c.text,
+      border: active ? "none" : `1px solid ${c.border}`,
       cursor: "pointer",
       fontSize: 13,
       fontFamily: "'Heebo', sans-serif",
+      fontWeight: 500,
+      transition: "all 0.3s ease",
+      boxShadow: active ? `0 2px 8px ${c.accent}30` : "none",
     }),
   };
 
@@ -1207,20 +1298,28 @@ export default function App() {
   // RENDER SECTIONS
   // ─────────────────────────────────────────────────
 
-  const renderShowcase = () => (
+  const renderCatalog = () => (
     <div>
       {/* Hero */}
       <div style={styles.hero}>
+        {/* Glow effect */}
         <div style={{
           position: "absolute",
           inset: 0,
-          background: `radial-gradient(ellipse at ${isRTL ? "30%" : "70%"} 30%, ${c.accent}20 0%, transparent 50%)`,
+          background: `radial-gradient(ellipse at ${isRTL ? "25%" : "75%"} 30%, ${c.accent}25 0%, transparent 55%)`,
         }} />
+        {/* Secondary glow */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: `radial-gradient(ellipse at ${isRTL ? "75%" : "25%"} 70%, ${c.accentLight}15 0%, transparent 45%)`,
+        }} />
+        {/* Noise texture */}
         <div style={{
           position: "absolute",
           inset: 0,
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          opacity: 0.03,
+          opacity: 0.035,
         }} />
         <div style={styles.heroContent}>
           <h1 style={styles.heroTitle}>{t.heroTitle}</h1>
@@ -1252,6 +1351,14 @@ export default function App() {
 
         {/* Quote Block */}
         <div style={styles.quoteBlock}>
+          <div style={{
+            position: "absolute",
+            top: 12,
+            [isRTL ? "right" : "left"]: 20,
+            opacity: 0.1,
+          }}>
+            <Icons.Sparkle size={28} color={c.accent} />
+          </div>
           <p style={styles.quote}>
             {lang === "he" 
               ? "״סרום הרטינול הזה שינה את הטיפוח שלי. אני משתמשת בו כל ערב.״"
@@ -1268,10 +1375,20 @@ export default function App() {
             return (
               <div
                 key={product.id}
-                style={styles.productCard(isLarge)}
+                style={styles.productCard(isLarge, index)}
                 onClick={() => setSelectedProduct(product)}
               >
-                <div style={styles.productImage(product.image, isLarge)} />
+                <div style={styles.productImage(product.image, isLarge)}>
+                  {/* Subtle shine effect */}
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "50%",
+                    background: "linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)",
+                  }} />
+                </div>
                 {product.featured && (
                   <div style={styles.featuredBadge}>{t.curatedBy}</div>
                 )}
@@ -1280,7 +1397,7 @@ export default function App() {
                   <h3 style={styles.productName}>
                     {lang === "he" ? product.name_he : product.name_ru}
                   </h3>
-                  <p style={styles.productPrice}>₪{product.price}</p>
+                  <p style={styles.productPrice}>{"\u20AA"}{product.price}</p>
                 </div>
               </div>
             );
@@ -1288,7 +1405,7 @@ export default function App() {
         </div>
 
         {/* Bestsellers Carousel */}
-        <h2 style={{ ...styles.sectionTitle, marginTop: 40 }}>{t.bestsellers}</h2>
+        <h2 style={{ ...styles.sectionTitle, marginTop: 44 }}>{t.bestsellers}</h2>
         <div style={styles.carousel}>
           {products.filter(p => p.featured).map((product) => (
             <div
@@ -1296,13 +1413,13 @@ export default function App() {
               style={styles.carouselCard}
               onClick={() => setSelectedProduct(product)}
             >
-              <div style={{ ...styles.productImage(product.image, false), height: 140 }} />
-              <div style={{ padding: 12 }}>
-                <p style={{ ...styles.productBrand, fontSize: 10 }}>{product.brand}</p>
-                <h3 style={{ ...styles.productName, fontSize: 14 }}>
+              <div style={{ ...styles.productImage(product.image, false), height: 150 }} />
+              <div style={{ padding: 14 }}>
+                <p style={{ ...styles.productBrand, fontSize: 9 }}>{product.brand}</p>
+                <h3 style={{ ...styles.productName, fontSize: 15 }}>
                   {lang === "he" ? product.name_he : product.name_ru}
                 </h3>
-                <p style={{ ...styles.productPrice, fontSize: 14 }}>₪{product.price}</p>
+                <p style={{ ...styles.productPrice, fontSize: 15 }}>{"\u20AA"}{product.price}</p>
               </div>
             </div>
           ))}
@@ -1311,14 +1428,19 @@ export default function App() {
     </div>
   );
 
-  const renderRituals = () => (
+  const renderServices = () => (
     <div>
       {/* Hero */}
-      <div style={{ ...styles.hero, height: 280 }}>
+      <div style={{ ...styles.hero, height: 300 }}>
         <div style={{
           position: "absolute",
           inset: 0,
-          background: `linear-gradient(180deg, ${c.bgSecondary} 0%, ${c.accent}30 100%)`,
+          background: `linear-gradient(180deg, ${c.bgSecondary} 0%, ${c.accent}20 100%)`,
+        }} />
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: `radial-gradient(ellipse at 50% 80%, ${c.accent}30 0%, transparent 60%)`,
         }} />
         <div style={{
           position: "absolute",
@@ -1326,27 +1448,27 @@ export default function App() {
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
           opacity: 0.04,
         }} />
-        <div style={{ ...styles.heroContent, bottom: 32 }}>
-          <h1 style={{ ...styles.heroTitle, fontSize: 36 }}>{t.ritualsTitle}</h1>
-          <p style={styles.heroSubtitle}>{t.ritualsSubtitle}</p>
+        <div style={{ ...styles.heroContent, bottom: 40 }}>
+          <h1 style={{ ...styles.heroTitle, fontSize: 40 }}>{t.servicesTitle}</h1>
+          <p style={styles.heroSubtitle}>{t.servicesSubtitle}</p>
         </div>
       </div>
 
       <div style={styles.section}>
-        {services.map((service) => (
-          <div key={service.id} style={styles.ritualCard}>
-            <div style={styles.ritualGradient(service.gradient)}>
-              <h3 style={styles.ritualName}>
+        {services.map((service, index) => (
+          <div key={service.id} style={styles.serviceCard(index)}>
+            <div style={styles.serviceGradient(service.gradient)}>
+              <h3 style={styles.serviceName}>
                 {lang === "he" ? service.name_he : service.name_ru}
               </h3>
-              <div style={styles.ritualMeta}>
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                  <Icons.Clock size={14} color="rgba(44, 40, 37, 0.7)" />
+              <div style={styles.serviceMeta}>
+                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <Icons.Clock size={15} color="rgba(31, 26, 22, 0.6)" />
                   {service.duration} {t.duration}
                 </span>
-                <span>₪{service.price}</span>
+                <span style={{ fontWeight: 700 }}>{"\u20AA"}{service.price}</span>
               </div>
-              <p style={styles.ritualDesc}>
+              <p style={styles.serviceDesc}>
                 {lang === "he" ? service.desc_he : service.desc_ru}
               </p>
               <button style={styles.bookBtn}>
@@ -1359,15 +1481,15 @@ export default function App() {
     </div>
   );
 
-  const renderAbout = () => (
+  const renderBrand = () => (
     <div>
-      <div style={styles.aboutHero}>
-        <div style={styles.avatar}>О</div>
-        <h1 style={styles.aboutName}>
+      <div style={styles.brandHero}>
+        <div style={styles.avatar}>O</div>
+        <h1 style={styles.brandName}>
           {lang === "he" ? "אולגה פרגר" : "Ольга Фрегер"}
         </h1>
-        <p style={styles.aboutRole}>{t.aboutRole}</p>
-        <p style={styles.aboutPhilosophy}>{t.aboutPhilosophy}</p>
+        <p style={styles.brandRole}>{t.aboutRole}</p>
+        <p style={styles.brandPhilosophy}>{t.aboutPhilosophy}</p>
 
         {/* Stats */}
         <div style={styles.statsRow}>
@@ -1387,31 +1509,31 @@ export default function App() {
       </div>
 
       <div style={styles.section}>
-        <h2 style={styles.sectionTitle}>{t.brands}</h2>
+        <h2 style={styles.sectionTitle}>{t.ourStory}</h2>
         
         {[
           { name: "Dermalosophy", desc: lang === "he" ? "קוסמצבטיקה אקטיבית, רטינול, חומצות" : "Активная космецевтика, ретинол, кислоты" },
           { name: "ONmacabim", desc: lang === "he" ? "אנטי-אייג׳ מקצועי" : "Профессиональный anti-age" },
           { name: "Hikari", desc: lang === "he" ? "קוסמצבטיקה טבעית" : "Натуральная космецевтика" },
         ].map((brand) => (
-          <div key={brand.name} style={styles.brandCard}>
-            <h3 style={styles.brandName}>{brand.name}</h3>
-            <p style={styles.brandDesc}>{brand.desc}</p>
+          <div key={brand.name} style={styles.brandCardItem}>
+            <h3 style={styles.brandCardName}>{brand.name}</h3>
+            <p style={styles.brandCardDesc}>{brand.desc}</p>
           </div>
         ))}
 
         <button style={styles.contactBtn}>
-          <Icons.Send size={18} color={theme === "light" ? "#FFF" : c.bg} />
+          <Icons.Send size={18} color="#FFF" />
           {t.contactOlga}
         </button>
 
         <div style={styles.locationInfo}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <Icons.MapPin size={14} color={c.textMuted} />
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Icons.MapPin size={15} color={c.textMuted} />
             {t.location}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <Icons.Clock size={14} color={c.textMuted} />
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Icons.Clock size={15} color={c.textMuted} />
             {t.hours}
           </div>
         </div>
@@ -1429,12 +1551,22 @@ export default function App() {
 
       {/* Loyalty Card */}
       <div style={styles.loyaltyCard}>
+        {/* Decorative element */}
+        <div style={{
+          position: "absolute",
+          top: -20,
+          [isRTL ? "left" : "right"]: -20,
+          width: 100,
+          height: 100,
+          borderRadius: 50,
+          background: "rgba(255,255,255,0.1)",
+        }} />
         <p style={styles.loyaltyLevel}>{t.loyaltyLevel}</p>
         <h2 style={styles.loyaltyName}>{t.silver}</h2>
         <div style={styles.progressBar}>
           <div style={styles.progressFill} />
         </div>
-        <p style={styles.progressText}>₪1,500 {t.toNextLevel}</p>
+        <p style={styles.progressText}>{"\u20AA"}1,500 {t.toNextLevel}</p>
       </div>
 
       {/* Orders */}
@@ -1444,12 +1576,12 @@ export default function App() {
           onClick={() => setExpandedOrders(!expandedOrders)}
         >
           <span style={styles.ordersTitle}>
-            <Icons.Package size={18} color={c.text} />
+            <Icons.Package size={20} color={c.text} />
             {t.myOrders}
           </span>
           <div style={{ 
             transform: expandedOrders ? "rotate(180deg)" : "rotate(0deg)",
-            transition: "transform 0.2s ease",
+            transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
           }}>
             <Icons.ChevronDown size={20} color={c.textMuted} />
           </div>
@@ -1458,7 +1590,7 @@ export default function App() {
           <div key={order.id} style={styles.orderItem}>
             <div style={styles.orderInfo}>
               <span style={styles.orderId}>{order.id}</span>
-              <span style={styles.orderDate}>{order.date} · {order.items} {lang === "he" ? "פריטים" : "товара"} · ₪{order.total}</span>
+              <span style={styles.orderDate}>{order.date} · {order.items} {lang === "he" ? "פריטים" : "товара"} · {"\u20AA"}{order.total}</span>
             </div>
             <span style={styles.orderStatus(order.status)}>
               {t.orderStatus[order.status as keyof typeof t.orderStatus]}
@@ -1471,14 +1603,14 @@ export default function App() {
       <div style={styles.ordersSection}>
         <div style={styles.ordersHeader}>
           <span style={styles.ordersTitle}>
-            <Icons.Heart size={18} color={c.text} />
+            <Icons.Heart size={20} color={c.text} />
             {t.favorites}
           </span>
         </div>
       </div>
 
       {/* Settings */}
-      <h2 style={{ ...styles.sectionTitle, marginTop: 32 }}>{t.settings}</h2>
+      <h2 style={{ ...styles.sectionTitle, marginTop: 36 }}>{t.settings}</h2>
       
       <div style={styles.settingsItem}>
         <span style={styles.settingsLabel}>{t.language}</span>
@@ -1487,13 +1619,13 @@ export default function App() {
             style={styles.themeBtn(lang === "he")}
             onClick={() => setLang("he")}
           >
-            עברית
+            {"\u05E2\u05D1\u05E8\u05D9\u05EA"}
           </button>
           <button 
             style={styles.themeBtn(lang === "ru")}
             onClick={() => setLang("ru")}
           >
-            Русский
+            {"\u0420\u0443\u0441\u0441\u043A\u0438\u0439"}
           </button>
         </div>
       </div>
@@ -1518,12 +1650,12 @@ export default function App() {
 
       <div style={{ 
         textAlign: "center", 
-        marginTop: 40, 
+        marginTop: 44, 
         fontSize: 13, 
         color: c.textMuted,
         fontFamily: "'Heebo', sans-serif",
       }}>
-        <p>{t.help} · v1.0.0</p>
+        <p>{t.help} · v2.0.0</p>
       </div>
     </div>
   );
@@ -1535,21 +1667,40 @@ export default function App() {
     return (
       <div style={{
         ...styles.modal,
-        animation: "slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        animation: "slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
       }}>
         <div style={styles.modalHeader}>
           <button 
-            style={{ ...styles.iconBtn, backgroundColor: c.glass, backdropFilter: "blur(10px)" }}
+            style={{ 
+              ...styles.iconBtn, 
+              backgroundColor: "rgba(255,255,255,0.95)", 
+              backdropFilter: "blur(10px)",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
+            }}
             onClick={() => setSelectedProduct(null)}
           >
-            <Icons.Close size={20} color={c.text} />
+            <Icons.Close size={20} color="#1F1A16" />
           </button>
-          <button style={{ ...styles.iconBtn, backgroundColor: c.glass, backdropFilter: "blur(10px)" }}>
-            <Icons.Heart size={20} color={c.text} />
+          <button style={{ 
+            ...styles.iconBtn, 
+            backgroundColor: "rgba(255,255,255,0.95)", 
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
+          }}>
+            <Icons.Heart size={20} color="#1F1A16" />
           </button>
         </div>
 
-        <div style={styles.modalImage(selectedProduct.image)} />
+        <div style={styles.modalImage(selectedProduct.image)}>
+          <div style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "40%",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%)",
+          }} />
+        </div>
 
         <div style={styles.modalContent}>
           <p style={styles.modalBrand}>{selectedProduct.brand}</p>
@@ -1560,7 +1711,7 @@ export default function App() {
             {lang === "he" ? selectedProduct.desc_he : selectedProduct.desc_ru}
           </p>
 
-          <h3 style={{ ...styles.sectionTitle, fontSize: 16, marginBottom: 12 }}>
+          <h3 style={{ ...styles.sectionTitle, fontSize: 17, marginBottom: 14 }}>
             {t.ingredients}
           </h3>
           <div style={styles.ingredientPills}>
@@ -1571,33 +1722,33 @@ export default function App() {
 
           {selectedProduct.featured && (
             <div style={styles.recommendedBadge}>
-              <Icons.Check size={16} color={c.accent} />
-              <span style={{ fontSize: 14, fontFamily: "'Heebo', sans-serif" }}>
+              <Icons.Check size={18} color={c.accent} />
+              <span style={{ fontSize: 14, fontFamily: "'Heebo', sans-serif", fontWeight: 500, color: c.accent }}>
                 {t.recommended}
               </span>
             </div>
           )}
 
-          <h3 style={{ ...styles.sectionTitle, fontSize: 16, marginTop: 32 }}>
+          <h3 style={{ ...styles.sectionTitle, fontSize: 17, marginTop: 36 }}>
             {t.completeRoutine}
           </h3>
-          <div style={{ ...styles.carousel, marginBottom: 100 }}>
+          <div style={{ ...styles.carousel, marginBottom: 110 }}>
             {products
               .filter(p => p.id !== selectedProduct.id && p.category === selectedProduct.category)
               .slice(0, 3)
               .map((product) => (
                 <div
                   key={product.id}
-                  style={{ ...styles.carouselCard, minWidth: 140 }}
+                  style={{ ...styles.carouselCard, minWidth: 150 }}
                   onClick={() => setSelectedProduct(product)}
                 >
-                  <div style={{ ...styles.productImage(product.image, false), height: 100 }} />
-                  <div style={{ padding: 10 }}>
-                    <p style={{ ...styles.productBrand, fontSize: 9 }}>{product.brand}</p>
-                    <h3 style={{ ...styles.productName, fontSize: 13 }}>
+                  <div style={{ ...styles.productImage(product.image, false), height: 110 }} />
+                  <div style={{ padding: 12 }}>
+                    <p style={{ ...styles.productBrand, fontSize: 8 }}>{product.brand}</p>
+                    <h3 style={{ ...styles.productName, fontSize: 14 }}>
                       {lang === "he" ? product.name_he : product.name_ru}
                     </h3>
-                    <p style={{ ...styles.productPrice, fontSize: 13 }}>₪{product.price}</p>
+                    <p style={{ ...styles.productPrice, fontSize: 14 }}>{"\u20AA"}{product.price}</p>
                   </div>
                 </div>
               ))}
@@ -1611,7 +1762,7 @@ export default function App() {
             setSelectedProduct(null);
           }}
         >
-          {t.addToCart} · ₪{selectedProduct.price}
+          {t.addToCart} · {"\u20AA"}{selectedProduct.price}
         </button>
       </div>
     );
@@ -1622,7 +1773,7 @@ export default function App() {
   return (
     <>
       <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Heebo:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Heebo:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
       <style>{`
@@ -1632,7 +1783,16 @@ export default function App() {
           from { transform: translateY(100%); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+          from { transform: scale(0.95); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
         ::-webkit-scrollbar { display: none; }
+        button:active { transform: scale(0.97); }
       `}</style>
 
       <div style={styles.app}>
@@ -1644,7 +1804,7 @@ export default function App() {
               style={styles.langToggle}
               onClick={() => setLang(lang === "he" ? "ru" : "he")}
             >
-              {lang === "he" ? "🇷🇺" : "🇮🇱"}
+              {lang === "he" ? "RU" : "HE"}
             </button>
             <button 
               style={styles.iconBtn}
@@ -1667,21 +1827,21 @@ export default function App() {
 
         {/* Main Content */}
         <main style={styles.main} ref={mainRef}>
-          {activeSection === "showcase" && renderShowcase()}
-          {activeSection === "rituals" && renderRituals()}
-          {activeSection === "about" && renderAbout()}
+          {activeSection === "catalog" && renderCatalog()}
+          {activeSection === "services" && renderServices()}
+          {activeSection === "brand" && renderBrand()}
           {activeSection === "profile" && renderProfile()}
         </main>
 
-        {/* Navigation */}
+        {/* Navigation - Redesigned icons */}
         <nav style={styles.nav}>
           {[
-            { id: "showcase", icon: Icons.Showcase, label: t.navShowcase },
-            { id: "rituals", icon: Icons.Rituals, label: t.navRituals },
-            { id: "about", icon: Icons.About, label: t.navAbout },
-            { id: "profile", icon: Icons.Profile, label: t.navProfile },
+            { id: "catalog", Icon: Icons.Catalog, label: t.navCatalog },
+            { id: "services", Icon: Icons.Services, label: t.navServices },
+            { id: "brand", Icon: Icons.Brand, label: t.navBrand },
+            { id: "profile", Icon: Icons.Profile, label: t.navProfile },
           ].map((item) => {
-            const Icon = item.icon;
+            const { Icon } = item;
             const isActive = activeSection === item.id;
             return (
               <button
@@ -1690,8 +1850,9 @@ export default function App() {
                 onClick={() => setActiveSection(item.id as typeof activeSection)}
               >
                 <Icon 
-                  size={20} 
-                  color={isActive ? (theme === "light" ? "#FFF" : c.bg) : c.textSecondary} 
+                  size={22} 
+                  color={isActive ? "#FFF" : c.textSecondary} 
+                  filled={isActive}
                 />
                 {isActive && <span>{item.label}</span>}
               </button>
