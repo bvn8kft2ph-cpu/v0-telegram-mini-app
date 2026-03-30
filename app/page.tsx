@@ -136,6 +136,18 @@ const i18n = {
     emptyOrders: "עוד אין הזמנות",
     emptyOrdersCta: "לגלות מוצרים",
     emptyFavorites: "עוד אין מועדפים",
+    // Order details
+    orderDetails: "פרטי הזמנה",
+    orderProducts: "מוצרים",
+    orderSubtotal: "סכום ביניים",
+    orderDiscount: "הנחה",
+    orderTotal: "סה״כ",
+    trackingNumber: "מספר מעקב",
+    copyTracking: "העתק",
+    invoiceNumber: "מספר חשבונית",
+    downloadInvoice: "הורד חשבונית",
+    deliveredOn: "נמסר בתאריך",
+    estimatedDelivery: "משלוח צפוי",
     // Consents
     consents: "הסכמות",
     consentOrders: "עיבוד הזמנות ונתונים",
@@ -219,6 +231,18 @@ const i18n = {
     emptyOrders: "Пока нет заказов",
     emptyOrdersCta: "Открыть каталог",
     emptyFavorites: "Пока нет избранного",
+    // Order details
+    orderDetails: "Детали заказа",
+    orderProducts: "Товары",
+    orderSubtotal: "Подытог",
+    orderDiscount: "Скидка",
+    orderTotal: "Итого",
+    trackingNumber: "Номер отслеживания",
+    copyTracking: "Копировать",
+    invoiceNumber: "Номер счёта",
+    downloadInvoice: "Скачать счёт",
+    deliveredOn: "Доставлен",
+    estimatedDelivery: "Ожидаемая доставка",
     // Consents
     consents: "Согласия",
     consentOrders: "Обработка заказов и данных",
@@ -401,22 +425,52 @@ const orders = [
     id: "FRG-2847",
     date: "25.03.2026",
     total: 465,
+    subtotal: 515,
+    discount: 50,
+    discountCode: "WELCOME10",
     status: "delivered",
     items: 2,
+    products: [
+      { productId: 1, quantity: 1, price: 320 },
+      { productId: 3, quantity: 1, price: 145 },
+    ],
+    tracking: null,
+    deliveredDate: "27.03.2026",
+    invoiceNumber: "INV-2847-2026",
   },
   {
     id: "FRG-2912",
     date: "28.03.2026",
     total: 320,
+    subtotal: 320,
+    discount: 0,
+    discountCode: null,
     status: "shipping",
     items: 1,
+    products: [
+      { productId: 1, quantity: 1, price: 320 },
+    ],
+    tracking: "IL123456789",
+    deliveredDate: null,
+    invoiceNumber: "INV-2912-2026",
   },
   {
     id: "FRG-2956",
     date: "30.03.2026",
     total: 580,
+    subtotal: 655,
+    discount: 75,
+    discountCode: "SILVER15",
     status: "processing",
     items: 3,
+    products: [
+      { productId: 7, quantity: 1, price: 290 },
+      { productId: 2, quantity: 1, price: 280 },
+      { productId: 6, quantity: 1, price: 125 },
+    ],
+    tracking: null,
+    deliveredDate: null,
+    invoiceNumber: "INV-2956-2026",
   },
 ];
 
@@ -526,6 +580,42 @@ const Icons = {
       <line x1="12" y1="22.08" x2="12" y2="12" />
     </svg>
   ),
+  Truck: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="1" y="3" width="15" height="13" rx="2" />
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+      <circle cx="5.5" cy="18.5" r="2.5" />
+      <circle cx="18.5" cy="18.5" r="2.5" />
+    </svg>
+  ),
+  FileText: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <line x1="10" y1="9" x2="8" y2="9" />
+    </svg>
+  ),
+  Copy: ({ size = 16, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+  ),
+  ArrowLeft: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </svg>
+  ),
+  Download: ({ size = 20, color = "currentColor" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
+  ),
   Clock: ({ size = 16, color = "currentColor" }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
@@ -608,6 +698,7 @@ export default function App() {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [expandedOrders, setExpandedOrders] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<typeof orders[0] | null>(null);
   const [consents, setConsents] = useState({
     orders: true,
     procedures: true,
@@ -1483,6 +1574,214 @@ export default function App() {
       color: c.text,
       fontWeight: 400,
     },
+    // Order Detail Modal
+    orderDetailOverlay: {
+      position: "fixed" as const,
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.6)",
+      zIndex: 200,
+      display: "flex",
+      alignItems: "flex-end",
+      justifyContent: "center",
+      animation: "fadeIn 0.3s ease",
+    },
+    orderDetailModal: {
+      width: "100%",
+      maxWidth: 430,
+      maxHeight: "92vh",
+      backgroundColor: c.bg,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column" as const,
+      animation: "slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    orderDetailHeader: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "20px 24px",
+      borderBottom: `1px solid ${c.border}`,
+      backgroundColor: c.cardSolid,
+    },
+    orderDetailBackBtn: {
+      width: 40,
+      height: 40,
+      borderRadius: 12,
+      backgroundColor: c.bgSecondary,
+      border: "none",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    orderDetailTitle: {
+      fontSize: 18,
+      fontWeight: 600,
+      fontFamily: "'Cormorant Garamond', serif",
+      color: c.text,
+    },
+    orderDetailContent: {
+      flex: 1,
+      overflowY: "auto" as const,
+      padding: 24,
+    },
+    orderDetailStatusBadge: (status: string) => ({
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 6,
+      padding: "8px 14px",
+      borderRadius: 20,
+      fontSize: 13,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      backgroundColor: status === "delivered" ? "#22C55E20" : status === "shipping" ? "#3B82F620" : "#F59E0B20",
+      color: status === "delivered" ? "#22C55E" : status === "shipping" ? "#3B82F6" : "#F59E0B",
+    }),
+    orderDetailSection: {
+      marginBottom: 28,
+    },
+    orderDetailSectionTitle: {
+      fontSize: 14,
+      fontWeight: 600,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.textMuted,
+      textTransform: "uppercase" as const,
+      letterSpacing: "0.05em",
+      marginBottom: 16,
+    },
+    orderProductItem: {
+      display: "flex",
+      alignItems: "center",
+      gap: 14,
+      padding: "14px 0",
+      borderBottom: `1px solid ${c.border}`,
+    },
+    orderProductImage: (brand: string) => ({
+      width: 60,
+      height: 60,
+      borderRadius: 12,
+      background: brandGradients[theme][brand as keyof typeof brandGradients.light] || brandGradients[theme]["Dermalosophy"],
+      flexShrink: 0,
+    }),
+    orderProductInfo: {
+      flex: 1,
+    },
+    orderProductName: {
+      fontSize: 14,
+      fontWeight: 500,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+      marginBottom: 4,
+    },
+    orderProductBrand: {
+      fontSize: 12,
+      color: c.textMuted,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    orderProductPrice: {
+      fontSize: 15,
+      fontWeight: 600,
+      color: c.text,
+      fontFamily: "'Inter', sans-serif",
+    },
+    orderSummaryRow: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "12px 0",
+      borderBottom: `1px solid ${c.border}`,
+    },
+    orderSummaryLabel: {
+      fontSize: 14,
+      color: c.textSecondary,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    orderSummaryValue: {
+      fontSize: 14,
+      fontWeight: 500,
+      color: c.text,
+      fontFamily: "'Inter', sans-serif",
+    },
+    orderSummaryTotal: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "16px 0",
+      marginTop: 8,
+    },
+    orderSummaryTotalLabel: {
+      fontSize: 16,
+      fontWeight: 600,
+      color: c.text,
+      fontFamily: "'Heebo', sans-serif",
+    },
+    orderSummaryTotalValue: {
+      fontSize: 20,
+      fontWeight: 700,
+      color: c.accent,
+      fontFamily: "'Inter', sans-serif",
+    },
+    trackingCard: {
+      backgroundColor: c.cardSolid,
+      borderRadius: 16,
+      padding: 18,
+      border: `1px solid ${c.border}`,
+      marginBottom: 16,
+    },
+    trackingRow: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    trackingInfo: {
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+    },
+    trackingCode: {
+      fontSize: 15,
+      fontWeight: 600,
+      fontFamily: "'Courier New', monospace",
+      color: c.text,
+      letterSpacing: "0.05em",
+    },
+    copyBtn: {
+      padding: "8px 14px",
+      borderRadius: 10,
+      backgroundColor: c.bgSecondary,
+      border: "none",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      gap: 6,
+      fontSize: 12,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.textSecondary,
+    },
+    invoiceBtn: {
+      width: "100%",
+      padding: "16px 20px",
+      borderRadius: 14,
+      backgroundColor: c.cardSolid,
+      border: `1px solid ${c.border}`,
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    invoiceInfo: {
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+    },
+    invoiceText: {
+      fontSize: 14,
+      fontWeight: 500,
+      fontFamily: "'Heebo', sans-serif",
+      color: c.text,
+    },
     // Profile
     welcomeCard: {
       padding: "36px 28px",
@@ -2030,14 +2329,21 @@ export default function App() {
           </div>
         </div>
         {expandedOrders && orders.map((order) => (
-          <div key={order.id} style={styles.orderItem}>
+          <div 
+            key={order.id} 
+            style={{ ...styles.orderItem, cursor: "pointer" }}
+            onClick={() => setSelectedOrder(order)}
+          >
             <div style={styles.orderInfo}>
               <span style={styles.orderId}>{order.id}</span>
               <span style={styles.orderDate}>{order.date} · {order.items} {lang === "he" ? "פריטים" : "товара"} · {"\u20AA"}{order.total}</span>
             </div>
-            <span style={styles.orderStatus(order.status)}>
-              {t.orderStatus[order.status as keyof typeof t.orderStatus]}
-            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={styles.orderStatus(order.status)}>
+                {t.orderStatus[order.status as keyof typeof t.orderStatus]}
+              </span>
+              <Icons.ChevronRight size={18} color={c.textMuted} />
+            </div>
           </div>
         ))}
       </div>
@@ -2373,9 +2679,124 @@ export default function App() {
           })}
         </nav>
 
-        {/* Product Modal */}
-        {selectedProduct && renderProductModal()}
-      </div>
+      {/* Product Modal */}
+      {selectedProduct && renderProductModal()}
+
+      {/* Order Detail Modal */}
+      {selectedOrder && (
+        <div style={styles.orderDetailOverlay} onClick={() => setSelectedOrder(null)}>
+          <div style={styles.orderDetailModal} onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div style={styles.orderDetailHeader}>
+              <button style={styles.orderDetailBackBtn} onClick={() => setSelectedOrder(null)}>
+                <Icons.ArrowLeft size={20} color={c.text} />
+              </button>
+              <span style={styles.orderDetailTitle}>{t.orderDetails}</span>
+              <span style={styles.orderDetailStatusBadge(selectedOrder.status)}>
+                {selectedOrder.status === "shipping" && <Icons.Truck size={14} />}
+                {t.orderStatus[selectedOrder.status as keyof typeof t.orderStatus]}
+              </span>
+            </div>
+
+            {/* Content */}
+            <div style={styles.orderDetailContent}>
+              {/* Order ID & Date */}
+              <div style={{ marginBottom: 24, textAlign: "center" }}>
+                <p style={{ fontSize: 22, fontWeight: 600, fontFamily: "'Cormorant Garamond', serif", color: c.text, marginBottom: 6 }}>
+                  {selectedOrder.id}
+                </p>
+                <p style={{ fontSize: 13, color: c.textMuted, fontFamily: "'Heebo', sans-serif" }}>
+                  {selectedOrder.date}
+                  {selectedOrder.deliveredDate && ` · ${t.deliveredOn}: ${selectedOrder.deliveredDate}`}
+                </p>
+              </div>
+
+              {/* Tracking */}
+              {selectedOrder.tracking && (
+                <div style={styles.orderDetailSection}>
+                  <p style={styles.orderDetailSectionTitle}>{t.trackingNumber}</p>
+                  <div style={styles.trackingCard}>
+                    <div style={styles.trackingRow}>
+                      <div style={styles.trackingInfo}>
+                        <Icons.Truck size={20} color={c.accent} />
+                        <span style={styles.trackingCode}>{selectedOrder.tracking}</span>
+                      </div>
+                      <button 
+                        style={styles.copyBtn}
+                        onClick={() => navigator.clipboard.writeText(selectedOrder.tracking || "")}
+                      >
+                        <Icons.Copy size={14} color={c.textSecondary} />
+                        {t.copyTracking}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Products */}
+              <div style={styles.orderDetailSection}>
+                <p style={styles.orderDetailSectionTitle}>{t.orderProducts}</p>
+                {selectedOrder.products.map((item, idx) => {
+                  const product = products.find(p => p.id === item.productId);
+                  if (!product) return null;
+                  return (
+                    <div key={idx} style={styles.orderProductItem}>
+                      <div style={styles.orderProductImage(product.brand)} />
+                      <div style={styles.orderProductInfo}>
+                        <p style={styles.orderProductName}>
+                          {lang === "he" ? product.name_he : product.name_ru}
+                        </p>
+                        <p style={styles.orderProductBrand}>{product.brand}</p>
+                      </div>
+                      <span style={styles.orderProductPrice}>{"\u20AA"}{item.price}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Summary */}
+              <div style={styles.orderDetailSection}>
+                <div style={styles.orderSummaryRow}>
+                  <span style={styles.orderSummaryLabel}>{t.orderSubtotal}</span>
+                  <span style={styles.orderSummaryValue}>{"\u20AA"}{selectedOrder.subtotal}</span>
+                </div>
+                {selectedOrder.discount > 0 && (
+                  <div style={styles.orderSummaryRow}>
+                    <span style={{ ...styles.orderSummaryLabel, color: "#22C55E" }}>
+                      {t.orderDiscount} ({selectedOrder.discountCode})
+                    </span>
+                    <span style={{ ...styles.orderSummaryValue, color: "#22C55E" }}>
+                      -{"\u20AA"}{selectedOrder.discount}
+                    </span>
+                  </div>
+                )}
+                <div style={styles.orderSummaryTotal}>
+                  <span style={styles.orderSummaryTotalLabel}>{t.orderTotal}</span>
+                  <span style={styles.orderSummaryTotalValue}>{"\u20AA"}{selectedOrder.total}</span>
+                </div>
+              </div>
+
+              {/* Invoice */}
+              <div style={styles.orderDetailSection}>
+                <p style={styles.orderDetailSectionTitle}>{t.invoiceNumber}</p>
+                <button style={styles.invoiceBtn}>
+                  <div style={styles.invoiceInfo}>
+                    <Icons.FileText size={20} color={c.accent} />
+                    <span style={styles.invoiceText}>{selectedOrder.invoiceNumber}</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ fontSize: 13, color: c.textMuted, fontFamily: "'Heebo', sans-serif" }}>
+                      {t.downloadInvoice}
+                    </span>
+                    <Icons.Download size={18} color={c.textMuted} />
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
     </>
   );
 }
