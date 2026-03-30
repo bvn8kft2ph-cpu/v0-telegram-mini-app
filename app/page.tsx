@@ -158,7 +158,7 @@ const i18n = {
     curatedBy: "Выбор Ольги",
     addToCart: "В корзину",
     viewDetails: "Подробнее",
-    completeRoutine: "Дополните уход",
+    completeRoutine: "Допо��ните уход",
     newArrivals: "Новинки",
     
     // Product
@@ -706,30 +706,30 @@ export default function App() {
     },
     nav: {
       position: "fixed" as const,
-      bottom: 24,
+      bottom: 20,
       left: "50%",
       transform: "translateX(-50%)",
       display: "flex",
       alignItems: "center",
-      gap: 6,
-      padding: "10px 14px",
-      backgroundColor: theme === "light" ? "rgba(255, 255, 255, 0.95)" : "rgba(31, 28, 25, 0.95)",
+      gap: 4,
+      padding: "8px 12px",
+      backgroundColor: theme === "light" ? "rgba(255, 255, 255, 0.96)" : "rgba(31, 28, 25, 0.96)",
       backdropFilter: "blur(24px) saturate(180%)",
       WebkitBackdropFilter: "blur(24px) saturate(180%)",
-      borderRadius: 40,
+      borderRadius: 20,
       border: `1px solid ${c.borderStrong}`,
       boxShadow: c.shadowDeep,
       zIndex: 100,
     },
     navItem: (active: boolean) => ({
-      height: 48,
-      borderRadius: 24,
+      height: 54,
+      borderRadius: 16,
       display: "flex",
       flexDirection: "column" as const,
       alignItems: "center",
       justifyContent: "center",
-      gap: 2,
-      padding: "0 14px",
+      gap: 3,
+      padding: "6px 12px",
       backgroundColor: active ? c.accent : "transparent",
       border: "none",
       cursor: "pointer",
@@ -739,7 +739,7 @@ export default function App() {
       fontSize: 10,
       fontWeight: 500,
       boxShadow: active ? `0 4px 16px ${c.accent}40` : "none",
-      minWidth: 58,
+      minWidth: 56,
     }),
     section: {
       padding: "28px 20px",
@@ -1679,7 +1679,19 @@ export default function App() {
   const renderBrand = () => (
     <div>
       <div style={styles.brandHero}>
-        <div style={styles.avatar}>O</div>
+        <div style={styles.avatar}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src="/avatar.png" 
+            alt="Ольга Фрегер"
+            style={styles.avatarImage}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).nextElementSibling?.setAttribute('style', 'display: flex; width: 100%; height: 100%;');
+            }}
+          />
+          <div style={{ ...styles.avatarPlaceholder, display: 'none' }}>О</div>
+        </div>
         <h1 style={styles.brandName}>
           {lang === "he" ? "אולגה פרגר" : "Ольга Фрегер"}
         </h1>
@@ -2065,12 +2077,16 @@ export default function App() {
                 style={styles.navItem(isActive)}
                 onClick={() => setActiveSection(item.id as typeof activeSection)}
               >
-                <Icon 
-                  size={22} 
-                  color={isActive ? "#FFF" : c.textSecondary} 
+                <Icon
+                  size={20}
+                  color={isActive ? "#FFF" : c.textSecondary}
                   filled={isActive}
                 />
-                {isActive && <span>{item.label}</span>}
+                <span style={{ 
+                  fontSize: 10, 
+                  fontWeight: isActive ? 600 : 500,
+                  marginTop: 2,
+                }}>{item.label}</span>
               </button>
             );
           })}
