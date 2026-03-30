@@ -143,7 +143,10 @@ const i18n = {
     orderDiscount: "הנחה",
     orderTotal: "סה״כ",
     trackingNumber: "מספר מעקב",
+    trackingAwait: "ממתין למספר מעקב",
+    trackingProof: "שמור כהוכחת משלוח",
     copyTracking: "העתק",
+    copied: "הועתק",
     invoiceNumber: "מספר חשבונית",
     downloadInvoice: "הורד חשבונית",
     deliveredOn: "נמסר בתאריך",
@@ -238,7 +241,10 @@ const i18n = {
     orderDiscount: "Скидка",
     orderTotal: "Итого",
     trackingNumber: "Номер отслеживания",
+    trackingAwait: "Ожидает номер отслеживания",
+    trackingProof: "Сохраните как доказательство доставки",
     copyTracking: "Копировать",
+    copied: "Скопировано",
     invoiceNumber: "Номер счёта",
     downloadInvoice: "Скачать счёт",
     deliveredOn: "Доставлен",
@@ -434,7 +440,7 @@ const orders = [
       { productId: 1, quantity: 1, price: 320 },
       { productId: 3, quantity: 1, price: 145 },
     ],
-    tracking: null,
+    tracking: "IL987654321",
     deliveredDate: "27.03.2026",
     invoiceNumber: "INV-2847-2026",
   },
@@ -2711,27 +2717,83 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Tracking */}
-              {selectedOrder.tracking && (
-                <div style={styles.orderDetailSection}>
-                  <p style={styles.orderDetailSectionTitle}>{t.trackingNumber}</p>
-                  <div style={styles.trackingCard}>
-                    <div style={styles.trackingRow}>
-                      <div style={styles.trackingInfo}>
-                        <Icons.Truck size={20} color={c.accent} />
-                        <span style={styles.trackingCode}>{selectedOrder.tracking}</span>
+              {/* Tracking - Always visible as proof of delivery */}
+              <div style={styles.orderDetailSection}>
+                <p style={styles.orderDetailSectionTitle}>{t.trackingNumber}</p>
+                <div style={styles.trackingCard}>
+                  {selectedOrder.tracking ? (
+                    <>
+                      <div style={styles.trackingRow}>
+                        <div style={styles.trackingInfo}>
+                          <Icons.Truck size={20} color={c.accent} />
+                          <span style={styles.trackingCode}>{selectedOrder.tracking}</span>
+                        </div>
+                        <button
+                          style={styles.copyBtn}
+                          onClick={() => {
+                            navigator.clipboard.writeText(selectedOrder.tracking || "");
+                          }}
+                        >
+                          <Icons.Copy size={14} color={c.textSecondary} />
+                          {t.copyTracking}
+                        </button>
                       </div>
-                      <button 
-                        style={styles.copyBtn}
-                        onClick={() => navigator.clipboard.writeText(selectedOrder.tracking || "")}
-                      >
-                        <Icons.Copy size={14} color={c.textSecondary} />
-                        {t.copyTracking}
-                      </button>
+                      {/* Proof of delivery note */}
+                      <p style={{
+                        fontSize: 12,
+                        color: c.textMuted,
+                        fontFamily: "'Heebo', sans-serif",
+                        marginTop: 12,
+                        paddingTop: 12,
+                        borderTop: `1px solid ${c.border}`,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
+                      }}>
+                        <Icons.Check size={14} color="#22C55E" />
+                        {t.trackingProof}
+                      </p>
+                    </>
+                  ) : (
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      padding: "8px 0",
+                    }}>
+                      <div style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 12,
+                        backgroundColor: c.bgSecondary,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}>
+                        <Icons.Package size={20} color={c.textMuted} />
+                      </div>
+                      <div>
+                        <p style={{
+                          fontSize: 14,
+                          fontWeight: 500,
+                          color: c.text,
+                          fontFamily: "'Heebo', sans-serif",
+                          marginBottom: 2,
+                        }}>
+                          {t.trackingAwait}
+                        </p>
+                        <p style={{
+                          fontSize: 12,
+                          color: c.textMuted,
+                          fontFamily: "'Heebo', sans-serif",
+                        }}>
+                          {t.orderStatus.processing}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              )}
+              </div>
 
               {/* Products */}
               <div style={styles.orderDetailSection}>
