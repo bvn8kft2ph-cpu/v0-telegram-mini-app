@@ -73,6 +73,10 @@ const i18n = {
     // Showcase
     heroTitle: "יופי אותנטי",
     heroSubtitle: "קוסמטיקה מקצועית לטיפוח עור מושלם",
+    selectBrand: "בחירת מותג",
+    selectCategory: "בחירת קטגוריה",
+    allBrands: "כל המותגים",
+    allCategories: "כל הקטגוריות",
     filterAll: "הכל",
     filterAntiAge: "אנטי-אייג׳",
     filterHydration: "לחות",
@@ -142,6 +146,10 @@ const i18n = {
     // Showcase
     heroTitle: "Истинная красота",
     heroSubtitle: "Профессиональная косметика для совершенной кожи",
+    selectBrand: "Выбрать бренд",
+    selectCategory: "Выбрать категорию",
+    allBrands: "Все бренды",
+    allCategories: "Все категории",
     filterAll: "Все",
     filterAntiAge: "Anti-age",
     filterHydration: "Увлажнение",
@@ -200,7 +208,7 @@ const i18n = {
   },
 };
 
-// ─────────────────────────────────────────────────
+// ────────��────────────────────────────────────────
 // MOCK DATA
 // ─────────────────────────────────────────────────
 
@@ -510,11 +518,20 @@ export default function App() {
   const [lang, setLang] = useState<"he" | "ru">("ru");
   const [cart, setCart] = useState<number[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<typeof products[0] | null>(null);
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [expandedOrders, setExpandedOrders] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [animateIn, setAnimateIn] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  // Extract unique brands from products
+  const brands = [...new Set(products.map(p => p.brand))];
+  
+  // Get categories available for selected brand (or all if no brand selected)
+  const availableCategories = selectedBrand
+    ? [...new Set(products.filter(p => p.brand === selectedBrand).map(p => p.category))]
+    : [...new Set(products.map(p => p.category))];
 
   const t = i18n[lang];
   const c = tokens[theme];
@@ -537,11 +554,27 @@ export default function App() {
     setCart((prev) => [...prev, productId]);
   };
 
-  const filteredProducts = activeFilter === "all" 
-    ? products 
-    : products.filter((p) => p.category === activeFilter);
+  // Handle brand selection - reset category when brand changes
+  const handleBrandSelect = (brand: string | null) => {
+    setSelectedBrand(brand);
+    setSelectedCategory(null); // Reset category when brand changes
+  };
 
-  // ─────────────────────────────────────────────────
+  // Filter products based on selected brand and category
+  const filteredProducts = products.filter(p => {
+    const brandMatch = !selectedBrand || p.brand === selectedBrand;
+    const categoryMatch = !selectedCategory || p.category === selectedCategory;
+    return brandMatch && categoryMatch;
+  });
+
+  // Category labels mapping
+  const categoryLabels: Record<string, { he: string; ru: string }> = {
+    "anti-age": { he: "אנטי-אייג׳", ru: "Anti-age" },
+    "hydration": { he: "לחות", ru: "Увлажнение" },
+    "cleansing": { he: "ניקוי", ru: "Очищение" },
+  };
+
+  // ─────────────────────────────────���───────────────
   // STYLES - Enhanced with depth & animations
   // ─────────────────────────────────────────────────
 
@@ -720,6 +753,62 @@ export default function App() {
       paddingBottom: 4,
       scrollbarWidth: "none" as const,
     },
+    filterSection: {
+      marginBottom: 28,
+    },
+    filterLabel: {
+      fontSize: 12,
+      fontWeight: 600,
+      color: c.textMuted,
+      fontFamily: "'Heebo', sans-serif",
+      letterSpacing: "0.05em",
+      textTransform: "uppercase" as const,
+      marginBottom: 14,
+    },
+    brandRow: {
+      display: "flex",
+      gap: 12,
+      overflowX: "auto" as const,
+      paddingBottom: 6,
+      scrollbarWidth: "none" as const,
+      marginBottom: 8,
+    },
+    brandPill: (active: boolean) => ({
+      padding: "14px 22px",
+      borderRadius: 20,
+      backgroundColor: active ? c.accent : theme === "light" ? c.cardSolid : c.bgSecondary,
+      color: active ? "#FFF" : c.text,
+      border: active ? "none" : `1px solid ${c.borderStrong}`,
+      cursor: "pointer",
+      fontSize: 15,
+      fontFamily: "'Heebo', sans-serif",
+      fontWeight: active ? 600 : 500,
+      whiteSpace: "nowrap" as const,
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      boxShadow: active ? `0 4px 16px ${c.accent}35` : c.shadow,
+      transform: active ? "scale(1.02)" : "scale(1)",
+    }),
+    categoryRow: {
+      display: "flex",
+      gap: 10,
+      overflowX: "auto" as const,
+      paddingBottom: 6,
+      scrollbarWidth: "none" as const,
+    },
+    categoryPill: (active: boolean, disabled: boolean) => ({
+      padding: "11px 18px",
+      borderRadius: 16,
+      backgroundColor: active ? `${c.accent}18` : theme === "light" ? c.cardSolid : c.bgSecondary,
+      color: active ? c.accent : disabled ? c.textMuted : c.textSecondary,
+      border: active ? `1.5px solid ${c.accent}` : `1px solid ${c.border}`,
+      cursor: disabled ? "not-allowed" : "pointer",
+      fontSize: 13,
+      fontFamily: "'Heebo', sans-serif",
+      fontWeight: active ? 600 : 500,
+      whiteSpace: "nowrap" as const,
+      transition: "all 0.25s ease",
+      opacity: disabled ? 0.5 : 1,
+    }),
     filterPill: (active: boolean) => ({
       padding: "12px 20px",
       borderRadius: 28,
@@ -1327,24 +1416,67 @@ export default function App() {
         </div>
       </div>
 
-      <div style={styles.section}>
-        {/* Filters */}
-        <div style={styles.filterRow}>
-          {[
-            { id: "all", label: t.filterAll },
-            { id: "anti-age", label: t.filterAntiAge },
-            { id: "hydration", label: t.filterHydration },
-            { id: "cleansing", label: t.filterCleansing },
-          ].map((filter) => (
+  <div style={styles.section}>
+        {/* Brand Selection */}
+        <div style={styles.filterSection}>
+          <p style={styles.filterLabel}>{t.selectBrand}</p>
+          <div style={styles.brandRow}>
             <button
-              key={filter.id}
-              style={styles.filterPill(activeFilter === filter.id)}
-              onClick={() => setActiveFilter(filter.id)}
+              style={styles.brandPill(selectedBrand === null)}
+              onClick={() => handleBrandSelect(null)}
             >
-              {filter.label}
+              {t.allBrands}
             </button>
-          ))}
+            {brands.map((brand) => (
+              <button
+                key={brand}
+                style={styles.brandPill(selectedBrand === brand)}
+                onClick={() => handleBrandSelect(brand)}
+              >
+                {brand}
+              </button>
+            ))}
+          </div>
         </div>
+
+        {/* Category Selection */}
+        <div style={styles.filterSection}>
+          <p style={styles.filterLabel}>{t.selectCategory}</p>
+          <div style={styles.categoryRow}>
+            <button
+              style={styles.categoryPill(selectedCategory === null, false)}
+              onClick={() => setSelectedCategory(null)}
+            >
+              {t.allCategories}
+            </button>
+            {["anti-age", "hydration", "cleansing"].map((cat) => {
+              const isAvailable = availableCategories.includes(cat);
+              return (
+                <button
+                  key={cat}
+                  style={styles.categoryPill(selectedCategory === cat, !isAvailable)}
+                  onClick={() => isAvailable && setSelectedCategory(cat)}
+                  disabled={!isAvailable}
+                >
+                  {categoryLabels[cat][lang]}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Results count */}
+        <p style={{
+          fontSize: 13,
+          color: c.textMuted,
+          fontFamily: "'Heebo', sans-serif",
+          marginBottom: 24,
+        }}>
+          {lang === "he" 
+            ? `${filteredProducts.length} מוצרים`
+            : `${filteredProducts.length} ${filteredProducts.length === 1 ? "продукт" : filteredProducts.length < 5 ? "продукта" : "продуктов"}`
+          }
+        </p>
 
         {/* Curated Section */}
         <h2 style={styles.sectionTitle}>{t.curatedBy}</h2>
@@ -1362,7 +1494,7 @@ export default function App() {
           <p style={styles.quote}>
             {lang === "he" 
               ? "״סרום הרטינול הזה שינה את הטיפוח שלי. אני משתמשת בו כל ערב.״"
-              : "«Эта сыворотка с ретинолом изменила мой уход. Я использую её каждый вечер.»"
+              : "«Эта сыворотка с ретинолом изменила мо�� уход. Я использую её каждый вечер.»"
             }
           </p>
           <p style={styles.quoteAuthor}>— {lang === "he" ? "אולגה פרגר" : "Ольга Фрегер"}</p>
