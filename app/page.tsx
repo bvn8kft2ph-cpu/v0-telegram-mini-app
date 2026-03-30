@@ -382,7 +382,7 @@ const products = [
     category: "hydration",
     price: 280,
     oldPrice: null,
-    desc_he: "קרם עשיר להזנה עמוקה ושיקום מחסום העור",
+    desc_he: "קרם ��שיר להזנה עמוקה ושיקום מחסום העור",
     desc_ru: "Насыщенный крем для глубокого питания и восстановления барьера кожи",
     ingredients: ["Hyaluronic Acid", "Ceramides", "Shea Butter"],
     featured: true,
@@ -810,7 +810,7 @@ const Icons = {
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<"catalog" | "services" | "brand" | "profile">("catalog");
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [lang, setLang] = useState<"he" | "ru">("ru");
   const [cart, setCart] = useState<{productId: number; quantity: number}[]>([
     { productId: 2, quantity: 1 }, // Mock initial cart
