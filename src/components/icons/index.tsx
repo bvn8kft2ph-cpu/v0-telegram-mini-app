@@ -307,6 +307,15 @@ export const AppleMapsIcon = ({ size = 24 }: IconProps) => (
   </svg>
 );
 
+// Calendar icon for bookings
+export const CalendarIcon = ({ size = 20, color = "currentColor" }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2"/>
+    <path d="M16 2v4M8 2v4M3 10h18"/>
+    <rect x="7" y="14" width="3" height="3" rx="0.5"/>
+  </svg>
+);
+
 // Legacy Icons object for backward compatibility
 export const Icons = {
   Cart: CartIcon,
@@ -345,6 +354,7 @@ export const Icons = {
   Waze: WazeIcon,
   GoogleMaps: GoogleMapsIcon,
   AppleMaps: AppleMapsIcon,
+  Calendar: CalendarIcon,
 };
 
 export default Icons;

@@ -4,7 +4,7 @@ import React from "react";
 import { Icons } from "../icons";
 import { orders } from "../../data/orders";
 import { products } from "../../data/products";
-import type { Lang, Theme, Order, Consents } from "../../types";
+import type { Lang, Theme, Order, Consents, ServiceBooking } from "../../types";
 import type { Translations } from "../../i18n/he";
 
 interface ProfileSectionProps {
@@ -27,6 +27,11 @@ interface ProfileSectionProps {
   toggleExpandedFavorites: () => void;
   onOrderClick: (order: Order) => void;
   addToCart: (productId: number) => void;
+  // Bookings
+  upcomingBookings: ServiceBooking[];
+  expandedBookings: boolean;
+  toggleExpandedBookings: () => void;
+  onCancelBooking: (bookingId: string) => void;
 }
 
 export function ProfileSection({
@@ -47,6 +52,10 @@ export function ProfileSection({
   toggleExpandedFavorites,
   onOrderClick,
   addToCart,
+  upcomingBookings,
+  expandedBookings,
+  toggleExpandedBookings,
+  onCancelBooking,
 }: ProfileSectionProps) {
   return (
     <div style={styles.section}>
@@ -119,6 +128,120 @@ export function ProfileSection({
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Bookings */}
+      <div style={styles.ordersSection}>
+        <div 
+          style={styles.ordersHeader}
+          onClick={toggleExpandedBookings}
+        >
+          <span style={styles.ordersTitle}>
+            <Icons.Calendar size={20} color={c.text} />
+            {t.myBookings}
+            {upcomingBookings.length > 0 && (
+              <span style={{
+                marginInlineStart: 8,
+                fontSize: 12,
+                color: c.textMuted,
+                fontWeight: 400,
+              }}>
+                ({upcomingBookings.length})
+              </span>
+            )}
+          </span>
+          <div style={{
+            transform: expandedBookings ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}>
+            <Icons.ChevronDown size={20} color={c.textMuted} />
+          </div>
+        </div>
+        
+        {expandedBookings && upcomingBookings.length > 0 && (
+          <>
+            {upcomingBookings.map((booking) => {
+              const bookingDate = new Date(booking.date);
+              const today = new Date();
+              const tomorrow = new Date(today);
+              tomorrow.setDate(tomorrow.getDate() + 1);
+              
+              const isToday = booking.date === today.toISOString().split("T")[0];
+              const isTomorrow = booking.date === tomorrow.toISOString().split("T")[0];
+              
+              const dateLabel = isToday 
+                ? t.today 
+                : isTomorrow 
+                ? t.tomorrow 
+                : `${bookingDate.getDate()}/${bookingDate.getMonth() + 1}`;
+
+              const statusColor = booking.status === "confirmed" 
+                ? "#22C55E" 
+                : booking.status === "cancelled" 
+                ? "#EF4444" 
+                : c.accent;
+
+              return (
+                <div 
+                  key={booking.id} 
+                  style={{
+                    ...styles.orderItem,
+                    opacity: booking.status === "cancelled" ? 0.5 : 1,
+                  }}
+                >
+                  <div style={styles.orderInfo}>
+                    <span style={styles.orderId}>
+                      {lang === "he" ? booking.serviceName_he : booking.serviceName_ru}
+                    </span>
+                    <span style={styles.orderDate}>
+                      {dateLabel} · {booking.time}
+                    </span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span style={{
+                      fontSize: 11,
+                      fontWeight: 500,
+                      padding: "4px 10px",
+                      borderRadius: 8,
+                      backgroundColor: `${statusColor}15`,
+                      color: statusColor,
+                      fontFamily: "'Heebo', sans-serif",
+                    }}>
+                      {booking.status === "confirmed" ? t.confirmed : 
+                       booking.status === "cancelled" ? t.cancelled : t.pending}
+                    </span>
+                    {booking.status !== "cancelled" && (
+                      <button
+                        style={{
+                          background: "none",
+                          border: "none",
+                          padding: 8,
+                          cursor: "pointer",
+                          color: c.textMuted,
+                        }}
+                        onClick={() => onCancelBooking(booking.id)}
+                      >
+                        <Icons.Close size={16} color={c.textMuted} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        )}
+        
+        {expandedBookings && upcomingBookings.length === 0 && (
+          <div style={{
+            padding: "24px 0",
+            textAlign: "center",
+            color: c.textMuted,
+            fontSize: 14,
+            fontFamily: "'Heebo', sans-serif",
+          }}>
+            {t.noUpcomingBookings}
+          </div>
+        )}
       </div>
 
       {/* Favorites */}
