@@ -85,7 +85,7 @@ export function ProductModal({
         }} />
       </div>
 
-      <div style={{ ...styles.modalContent, paddingBottom: 100 }}>
+      <div style={styles.modalContent}>
         <p style={styles.modalBrand}>{product.brand}</p>
         <h1 style={styles.modalName}>
           {lang === "he" ? product.name_he : product.name_ru}
@@ -142,6 +142,9 @@ export function ProductModal({
             </div>
           ))}
         </div>
+
+        {/* Spacer to clear the fixed Add to Cart button */}
+        <div style={{ height: 120, flexShrink: 0 }} />
       </div>
 
       <button 
