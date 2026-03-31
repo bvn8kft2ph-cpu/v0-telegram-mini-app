@@ -213,9 +213,7 @@ export function CatalogSection({
                     background: "linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%)",
                   }} />
                 </div>
-                {product.featured && (
-                  <div style={styles.featuredBadge}>{t.curatedBy}</div>
-                )}
+
                 <div style={styles.productInfo}>
                   <p style={styles.productBrand}>{product.brand}</p>
                   <h3 style={styles.productName}>
