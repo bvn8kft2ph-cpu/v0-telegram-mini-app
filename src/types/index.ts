@@ -72,3 +72,40 @@ export interface Consents {
   marketing: boolean;
   photos: boolean;
 }
+
+// ─────────────────────────────────────────────────
+// SERVICE BOOKING
+// ─────────────────────────────────────────────────
+
+export interface TimeSlot {
+  time: string;       // "09:00", "10:30", etc.
+  available: boolean;
+}
+
+export interface BookingDay {
+  date: string;        // ISO date "2026-04-01"
+  dayName_he: string;  // "א׳", "ב׳", etc.
+  dayName_ru: string;  // "Вс", "Пн", etc.
+  dayNumber: number;   // 1-31
+  month_he: string;    // "אפריל"
+  month_ru: string;    // "апреля"
+  isToday: boolean;
+  isTomorrow: boolean;
+  isClosed: boolean;   // Saturday
+  slots: TimeSlot[];
+}
+
+export interface ServiceBooking {
+  id: string;
+  serviceId: number;
+  serviceName_he: string;
+  serviceName_ru: string;
+  date: string;
+  time: string;
+  status: "confirmed" | "pending" | "cancelled";
+  customerName: string;
+  customerPhone: string;
+  createdAt: string;
+}
+
+export type BookingStep = "select-date" | "select-time" | "confirm" | "success";

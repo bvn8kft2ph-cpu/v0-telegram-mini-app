@@ -8,3 +8,4 @@ export { useProducts } from "./useProducts";
 export { useModals } from "./useModals";
 export { useFavorites } from "./useFavorites";
 export { useConsents } from "./useConsents";
+export { useBooking } from "./useBooking";

@@ -12,11 +12,12 @@ import { useFavorites } from "../src/hooks/useFavorites";
 import { useConsents } from "../src/hooks/useConsents";
 import { useCheckout } from "../src/hooks/useCheckout";
 import { useStyles } from "../src/hooks/useStyles";
+import { useBooking } from "../src/hooks/useBooking";
 
 // Components
 import { Icons } from "../src/components/icons";
 import { CatalogSection, ServicesSection, BrandSection, ProfileSection } from "../src/components/sections";
-import { ProductModal, CartModal, CheckoutModal, OrderDetailModal } from "../src/components/modals";
+import { ProductModal, CartModal, CheckoutModal, OrderDetailModal, BookingModal } from "../src/components/modals";
 
 // Types
 import type { Section } from "../src/types";
@@ -39,12 +40,14 @@ export default function App() {
   const favorites = useFavorites();
   const consents = useConsents();
   const checkout = useCheckout({ cartSubtotal: cart.cartSubtotal });
+  const booking = useBooking();
 
   // ─────────────────────────────────────────────────
   // LOCAL STATE
   // ─────────────────────────────────────────────────
   const [activeSection, setActiveSection] = useState<Section>("catalog");
   const [animateIn, setAnimateIn] = useState(true);
+  const [expandedBookings, setExpandedBookings] = useState(false);
   const mainRef = useRef<HTMLElement>(null);
 
   // Compute mounted state
@@ -203,6 +206,7 @@ export default function App() {
               t={t}
               lang={lang}
               c={c}
+              onBookService={booking.openBooking}
             />
           )}
           {activeSection === "brand" && (
@@ -233,6 +237,10 @@ export default function App() {
               toggleExpandedFavorites={modals.toggleExpandedFavorites}
               onOrderClick={modals.openOrder}
               addToCart={cart.addToCart}
+              upcomingBookings={booking.upcomingBookings}
+              expandedBookings={expandedBookings}
+              toggleExpandedBookings={() => setExpandedBookings(!expandedBookings)}
+              onCancelBooking={booking.cancelBooking}
             />
           )}
         </main>
@@ -342,6 +350,39 @@ export default function App() {
             c={c}
             order={modals.selectedOrder}
             onClose={modals.closeOrder}
+          />
+        )}
+
+        {/* Booking Modal */}
+        {booking.selectedService && (
+          <BookingModal
+            styles={styles}
+            t={t}
+            lang={lang}
+            c={c}
+            isRTL={isRTL}
+            service={booking.selectedService}
+            bookingStep={booking.bookingStep}
+            availableDays={booking.availableDays}
+            availableSlots={booking.availableSlots}
+            selectedDate={booking.selectedDate}
+            selectedDay={booking.selectedDay}
+            selectedTime={booking.selectedTime}
+            customerName={booking.customerName}
+            customerPhone={booking.customerPhone}
+            onClose={booking.closeBooking}
+            onSelectDate={booking.selectDate}
+            onSelectTime={booking.selectTime}
+            onConfirm={booking.confirmBooking}
+            onReset={booking.resetBooking}
+            onGoBackToDate={booking.goBackToDate}
+            onGoBackToTime={booking.goBackToTime}
+            setCustomerName={booking.setCustomerName}
+            setCustomerPhone={booking.setCustomerPhone}
+            onBackToServices={() => {
+              booking.closeBooking();
+              setActiveSection("services");
+            }}
           />
         )}
       </div>

@@ -2,7 +2,7 @@
 
 import { Icons } from "../icons";
 import { services } from "../../data/services";
-import type { Lang } from "../../types";
+import type { Lang, Service } from "../../types";
 import type { Translations } from "../../i18n/he";
 
 interface ServicesSectionProps {
@@ -10,6 +10,7 @@ interface ServicesSectionProps {
   t: Translations;
   lang: Lang;
   c: ReturnType<typeof import("../../hooks/useStyles").useStyles>["colors"];
+  onBookService: (service: Service) => void;
 }
 
 export function ServicesSection({
@@ -17,6 +18,7 @@ export function ServicesSection({
   t,
   lang,
   c,
+  onBookService,
 }: ServicesSectionProps) {
   return (
     <div>
@@ -61,7 +63,10 @@ export function ServicesSection({
               <p style={styles.serviceDesc}>
                 {lang === "he" ? service.desc_he : service.desc_ru}
               </p>
-              <button style={styles.bookBtn}>
+              <button 
+                style={styles.bookBtn}
+                onClick={() => onBookService(service)}
+              >
                 {t.bookNow}
               </button>
             </div>
