@@ -124,7 +124,7 @@ export function ProductModal({
         <h3 style={{ ...styles.sectionTitle, fontSize: 17, marginTop: 36 }}>
           {t.completeRoutine}
         </h3>
-        <div style={{ ...styles.carousel, paddingBottom: 120 }}>
+        <div style={{ ...styles.carousel, paddingBottom: 160 }}>
           {relatedProducts.map((relatedProduct) => (
             <div
               key={relatedProduct.id}
