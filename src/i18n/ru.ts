@@ -1,0 +1,146 @@
+// ═══════════════════════════════════════════════
+// RUSSIAN TRANSLATIONS
+// ═══════════════════════════════════════════════
+
+import type { Translations } from "./he";
+
+export const ru: Translations = {
+  // Navigation - clearer labels
+  navCatalog: "Витрина",
+  navServices: "Ритуалы",
+  navBrand: "О нас",
+  navProfile: "Кабинет",
+  
+  // Header
+  cart: "Корзина",
+  
+  // Showcase
+  heroTitle: "Истинная красота",
+  heroSubtitle: "Профессиональная косметика для совершенной кожи",
+  selectBrand: "Выбрать бренд",
+  selectCategory: "Выбрать категорию",
+  allBrands: "Все бренды",
+  allCategories: "Все категории",
+  filterAll: "Все",
+  filterAntiAge: "Anti-age",
+  filterHydration: "Увлажнение",
+  filterCleansing: "Очищение",
+  bestsellers: "Бестселлеры",
+  curatedBy: "Выбор Ольги",
+  addToCart: "В корзину",
+  viewDetails: "Подробнее",
+  completeRoutine: "Дополните уход",
+  newArrivals: "Новинки",
+  
+  // Product
+  ingredients: "Активные ингредиенты",
+  recommended: "Рекомендует Ольга",
+  
+  // Services (renamed from Rituals)
+  servicesTitle: "Услуги студии",
+  servicesSubtitle: "Персональный уход и релакс",
+  bookNow: "Записаться",
+  duration: "мин",
+  
+  // About/Brand
+  brandTitle: "Мир Freger",
+  aboutRole: "Косметолог · Мастер Рейки",
+  aboutPhilosophy: "Я верю, что истинная красота рождается из внутренней гармонии. Каждый уход — это путешествие к себе.",
+  yearsExp: "лет опыта",
+  brands: "бренда",
+  products: "продуктов",
+  contactOlga: "Написать Ольге",
+  whatsappOlga: "Написать в WhatsApp",
+  openInWaze: "Открыть в Waze",
+  openInGoogle: "Открыть в Google Maps",
+  openInApple: "Открыть в Apple Maps",
+  location: "Кирьят-Гат",
+  hours: "Вс-Чт 9:00-19:00",
+  ourStory: "Наша история",
+  
+  // Profile
+  welcomeBack: "Добро пожаловать,",
+  loyaltyLevel: "Уровень лояльности",
+  silver: "Silver",
+  gold: "Gold",
+  toNextLevel: "до следующего уровня",
+  myOrders: "Мои заказы",
+  favorites: "Избранное",
+  settings: "Настройки",
+  language: "Язык",
+  theme: "Тема",
+  light: "Светлая",
+  dark: "Тёмная",
+  help: "Помощь",
+  orderStatus: {
+    delivered: "Доставлен",
+    shipping: "В пути",
+    processing: "Обработка",
+  },
+  emptyOrders: "Пока нет заказов",
+  emptyOrdersCta: "Открыть каталог",
+  emptyFavorites: "Пока нет избранного",
+  favoritesReminder: "Ждут в избранном",
+  addToCartReminder: "Добавьте в корзину и насладитесь красотой",
+  // Order details
+  orderDetails: "Детали заказа",
+  orderProducts: "Товары",
+  orderSubtotal: "Подытог",
+  orderDiscount: "Скидка",
+  orderTotal: "Итого",
+  trackingNumber: "Номер отслеживания",
+  trackingAwait: "Ожидает номер отслеживания",
+  trackingProof: "Сохраните как доказательство доставки",
+  copyTracking: "Копировать",
+  copied: "Скопировано",
+  invoiceNumber: "Номер счёта",
+  downloadInvoice: "Скачать счёт",
+  deliveredOn: "Доставлен",
+  estimatedDelivery: "Ожидаемая доставка",
+  // Consents
+  consents: "Согласия",
+  consentOrders: "Обработка заказов и данных",
+  consentProcedures: "Косметологические процедуры",
+  consentMarketing: "Маркетинговые рассылки",
+  consentPhotos: "Публикация фото до/после",
+  // Cart & Checkout
+  cartTitle: "Корзина",
+  cartEmpty: "Корзина пуста",
+  cartBackToCatalog: "Назад в каталог",
+  cartClearAll: "Очистить корзину",
+  checkout: "Оформить заказ",
+  checkoutTitle: "Оформление заказа",
+  back: "Назад",
+  // Customer data
+  customerData: "Данные покупателя",
+  firstName: "Имя",
+  lastName: "Фамилия",
+  email: "Email",
+  phone: "Телефон",
+  // Delivery
+  delivery: "Доставка",
+  deliveryBoxit: "Локер Boxit",
+  deliveryCourier: "Курьер HFD до двери",
+  deliveryPickup: "Самовывоз",
+  freeDelivery: "Бесплатно",
+  freeFrom: "бесплатно от",
+  // Promo
+  promoCode: "Промокод",
+  promoPlaceholder: "CODE",
+  promoApply: "Применить",
+  // Summary
+  subtotal: "Подытог",
+  deliveryFee: "Доставка",
+  total: "Итого",
+  inclVat: "включая НДС 18%",
+  // Payment
+  paymentCount: "Количество платежей",
+  singlePayment: "Один платёж (без рассрочки)",
+  payments: "платежей",
+  // Terms
+  termsAgree: "Я согласен(-на) с Условиями использования и Политикой конфиденциальности",
+  proceedToPayment: "Перейти к оплате",
+  termsOfUse: "Условия использования",
+  privacyPolicy: "Политика конфиденциальности",
+  accessibility: "Доступность",
+};
