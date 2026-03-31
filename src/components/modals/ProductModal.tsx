@@ -85,7 +85,7 @@ export function ProductModal({
         }} />
       </div>
 
-      <div style={styles.modalContent}>
+      <div style={{ ...styles.modalContent, paddingBottom: 100 }}>
         <p style={styles.modalBrand}>{product.brand}</p>
         <h1 style={styles.modalName}>
           {lang === "he" ? product.name_he : product.name_ru}
@@ -124,7 +124,7 @@ export function ProductModal({
         <h3 style={{ ...styles.sectionTitle, fontSize: 17, marginTop: 36 }}>
           {t.completeRoutine}
         </h3>
-        <div style={{ ...styles.carousel, paddingBottom: 160 }}>
+        <div style={styles.carousel}>
           {relatedProducts.map((relatedProduct) => (
             <div
               key={relatedProduct.id}
