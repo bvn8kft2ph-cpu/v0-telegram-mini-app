@@ -3,7 +3,57 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   FREGER COSMETICS — Design Tokens
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :root {
+  /* Background colors */
+  --fc-bg: #FFFBF7;
+  --fc-bg-secondary: #F7F0E8;
+  --fc-bg-tertiary: #EDE4D9;
+  
+  /* Text colors */
+  --fc-text: #1F1A16;
+  --fc-text-secondary: #5C524A;
+  --fc-text-muted: #8B8078;
+  
+  /* Accent colors */
+  --fc-accent: #9C7B5C;
+  --fc-accent-light: #C4A882;
+  --fc-accent-dark: #7A5D42;
+  
+  /* Card & Surface colors */
+  --fc-card: rgba(255, 255, 255, 0.95);
+  --fc-card-solid: #FFFFFF;
+  --fc-card-elevated: #FFFFFF;
+  --fc-glass: rgba(255, 251, 247, 0.92);
+  
+  /* Border colors */
+  --fc-border: rgba(31, 26, 22, 0.06);
+  --fc-border-strong: rgba(31, 26, 22, 0.12);
+  
+  /* Shadows */
+  --fc-shadow: 0 4px 24px rgba(31, 26, 22, 0.08);
+  --fc-shadow-deep: 0 12px 48px rgba(31, 26, 22, 0.12);
+  --fc-shadow-glow: 0 0 60px rgba(156, 123, 92, 0.15);
+  
+  /* Radius */
+  --fc-radius-sm: 12px;
+  --fc-radius-md: 16px;
+  --fc-radius-lg: 20px;
+  --fc-radius-xl: 24px;
+  --fc-radius-2xl: 28px;
+  
+  /* Glass effect values */
+  --fc-glass-blur: 24px;
+  --fc-glass-saturate: 180%;
+  
+  /* Timing functions */
+  --fc-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --fc-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* shadcn compatibility */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -23,20 +73,39 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+}
+
+[data-theme="dark"] {
+  /* Background colors */
+  --fc-bg: #0F0D0B;
+  --fc-bg-secondary: #1A1714;
+  --fc-bg-tertiary: #252220;
+  
+  /* Text colors */
+  --fc-text: #F5F0EB;
+  --fc-text-secondary: #B8AFA5;
+  --fc-text-muted: #6B635A;
+  
+  /* Accent colors */
+  --fc-accent: #C9A87C;
+  --fc-accent-light: #E0C9A3;
+  --fc-accent-dark: #A08560;
+  
+  /* Card & Surface colors */
+  --fc-card: rgba(37, 34, 32, 0.95);
+  --fc-card-solid: #1F1C19;
+  --fc-card-elevated: #2A2723;
+  --fc-glass: rgba(15, 13, 11, 0.95);
+  
+  /* Border colors */
+  --fc-border: rgba(245, 240, 235, 0.06);
+  --fc-border-strong: rgba(245, 240, 235, 0.12);
+  
+  /* Shadows */
+  --fc-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --fc-shadow-deep: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --fc-shadow-glow: 0 0 60px rgba(201, 168, 124, 0.1);
 }
 
 .dark {
@@ -59,24 +128,31 @@
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  /* Freger Cosmetics Fonts */
+  --font-heading: var(--font-cormorant), 'Cormorant Garamond', serif;
+  --font-body: var(--font-heebo), 'Heebo', sans-serif;
+  --font-mono: var(--font-inter), 'Inter', sans-serif;
+  --font-sans: var(--font-heebo), 'Heebo', sans-serif;
+  
+  /* Freger Cosmetics Colors */
+  --color-fc-bg: var(--fc-bg);
+  --color-fc-bg-secondary: var(--fc-bg-secondary);
+  --color-fc-bg-tertiary: var(--fc-bg-tertiary);
+  --color-fc-text: var(--fc-text);
+  --color-fc-text-secondary: var(--fc-text-secondary);
+  --color-fc-text-muted: var(--fc-text-muted);
+  --color-fc-accent: var(--fc-accent);
+  --color-fc-accent-light: var(--fc-accent-light);
+  --color-fc-accent-dark: var(--fc-accent-dark);
+  --color-fc-card: var(--fc-card);
+  --color-fc-card-solid: var(--fc-card-solid);
+  --color-fc-border: var(--fc-border);
+  --color-fc-border-strong: var(--fc-border-strong);
+  
+  /* shadcn compatibility */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -96,23 +172,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
@@ -122,9 +185,18 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Touch optimization */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
-/* Freger Cosmetics Animations */
+/* ═══════════════════════════════════════════════════════════════════════════
+   FREGER COSMETICS — Animations
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -133,6 +205,16 @@
 @keyframes slideUp {
   from { transform: translateY(100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 @keyframes bokehFloat {
@@ -205,7 +287,87 @@
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* Reduced motion */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes cardEntry {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FREGER COSMETICS — Utility Classes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.fc-glass {
+  background: var(--fc-glass);
+  backdrop-filter: blur(var(--fc-glass-blur)) saturate(var(--fc-glass-saturate));
+  -webkit-backdrop-filter: blur(var(--fc-glass-blur)) saturate(var(--fc-glass-saturate));
+}
+
+.fc-card {
+  background: var(--fc-card);
+  border-radius: var(--fc-radius-lg);
+  box-shadow: var(--fc-shadow);
+}
+
+.fc-card-elevated {
+  background: var(--fc-card-elevated);
+  border-radius: var(--fc-radius-xl);
+  box-shadow: var(--fc-shadow-deep);
+}
+
+.fc-transition {
+  transition: all 0.3s var(--fc-ease);
+}
+
+.fc-transition-fast {
+  transition: all 0.15s var(--fc-ease);
+}
+
+.fc-animate-entry {
+  animation: cardEntry 0.4s var(--fc-ease) backwards;
+}
+
+.fc-animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.fc-animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.fc-animate-glow {
+  animation: avatarGlow 3s ease-in-out infinite;
+}
+
+.fc-animate-bokeh {
+  animation: bokehFloat 8s ease-in-out infinite;
+}
+
+/* Touch target minimum 44x44 */
+.fc-touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Accessibility — Reduced Motion
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -214,4 +376,17 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
