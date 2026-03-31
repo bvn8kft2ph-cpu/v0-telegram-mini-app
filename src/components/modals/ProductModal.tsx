@@ -38,8 +38,14 @@ export function ProductModal({
     <div style={{
       ...styles.modal,
       animation: "slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+      display: "flex",
+      flexDirection: "column" as const,
+      overflowY: "hidden",
     }}>
-      <div style={styles.modalHeader}>
+      {/* Scrollable content area */}
+      <div style={{ flex: 1, overflowY: "auto" as const }}>
+        <div style={{ position: "relative" }}>
+          <div style={styles.modalHeader}>
         <button 
           style={{ 
             ...styles.iconBtn, 
@@ -142,20 +148,41 @@ export function ProductModal({
             </div>
           ))}
         </div>
-
-        {/* Spacer to clear the fixed Add to Cart button */}
-        <div style={{ height: 120, flexShrink: 0 }} />
+        </div>
       </div>
 
-      <button 
-        style={styles.addToCartBtn}
-        onClick={() => {
-          onAddToCart(product.id);
-          onClose();
-        }}
-      >
-        {t.addToCart} · {"\u20AA"}{product.price}
-      </button>
+      {/* Fixed footer button */}
+      <div style={{
+        flexShrink: 0,
+        paddingTop: 16,
+        paddingLeft: 24,
+        paddingRight: 24,
+        paddingBottom: 28,
+        backgroundColor: c.bg,
+        borderTop: `1px solid ${c.border}`,
+      }}>
+        <button 
+          style={{
+            width: "100%",
+            padding: "18px",
+            borderRadius: 20,
+            backgroundColor: c.accent,
+            color: "#FFF",
+            border: "none",
+            fontSize: 16,
+            fontWeight: 600,
+            fontFamily: "'Heebo', sans-serif",
+            cursor: "pointer",
+            boxShadow: `0 8px 32px ${c.accent}50`,
+          }}
+          onClick={() => {
+            onAddToCart(product.id);
+            onClose();
+          }}
+        >
+          {t.addToCart} · {"\u20AA"}{product.price}
+        </button>
+      </div>
     </div>
   );
 }
