@@ -180,6 +180,9 @@ export function useStyles(theme: Theme, lang: Lang, animateIn: boolean = true) {
         opacity: animateIn ? 1 : 0,
         transform: animateIn ? "translateY(0)" : "translateY(20px)",
         transition: "opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+        position: "relative" as const,
+        zIndex: 1,
+        backgroundColor: c.bg,
       },
       sectionTitle: {
         fontSize: 22,
@@ -196,7 +199,8 @@ export function useStyles(theme: Theme, lang: Lang, animateIn: boolean = true) {
         position: "relative" as const,
         height: 320,
         overflow: "hidden",
-        marginBottom: -40,
+        marginBottom: 0,
+        zIndex: 0,
       },
       heroImage: {
         position: "absolute" as const,
