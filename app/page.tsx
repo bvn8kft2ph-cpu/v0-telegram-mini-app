@@ -382,7 +382,7 @@ const products = [
     category: "hydration",
     price: 280,
     oldPrice: null,
-    desc_he: "קרם ��שיר להזנה עמוקה ושיקום מחסום העור",
+    desc_he: "קרם ����שיר להזנה עמוקה ושיקום מחסום העור",
     desc_ru: "Насыщенный крем для глубокого питания и восстановления барьера кожи",
     ingredients: ["Hyaluronic Acid", "Ceramides", "Shea Butter"],
     featured: true,
@@ -390,7 +390,7 @@ const products = [
   {
     id: 3,
     name_he: "ג׳ל ניקוי עדין",
-    name_ru: "Мягк��й очищающий гель",
+    name_ru: "Мягк����й очищающий гель",
     brand: "Hikari",
     category: "cleansing",
     price: 145,
@@ -2818,9 +2818,11 @@ export default function App() {
             position: "absolute",
             top: 12,
             [isRTL ? "right" : "left"]: 20,
-            opacity: 0.1,
+            opacity: 0.15,
           }}>
-            <Icons.Sparkle size={28} color={c.accent} />
+            <span style={styles.sparkleIcon}>
+              <Icons.Sparkle size={28} color={c.accent} />
+            </span>
           </div>
           <p style={styles.quote}>
             {lang === "he" 
